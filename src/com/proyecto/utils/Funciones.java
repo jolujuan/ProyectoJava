@@ -12,7 +12,6 @@ import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 import com.proyecto.clases.Actor;
@@ -131,7 +130,7 @@ public class Funciones {
 				Funciones.registrarUsuario();
 			}
 		} catch (Exception e) {
-			System.out.println("Error: " + e);
+			System.err.println("Error: " + e);
 		}
 		return nomUser;
 	}// ---------------------------------------------------------------------------------------------------------------
@@ -180,7 +179,7 @@ public class Funciones {
 			scanner.close();
 
 		} catch (Exception e) {
-			System.out.println("Error: " + e);
+			System.err.println("Error: " + e);
 		}
 		return ultimo;
 
@@ -211,7 +210,7 @@ public class Funciones {
 
 			System.out.println("\nUsuario guardado correctamente" + " \u2714" + "\n");
 		} catch (Exception e) {
-			System.out.println("Error: " + e);
+			System.err.println("Error: " + e);
 		}
 	}// ---------------------------------------------------------------------------------------------------------------
 
@@ -235,31 +234,32 @@ public class Funciones {
 			boolean login = false;
 			while ((linia = br.readLine()) != null && !trobat) {
 				String[] dades = linia.split("[|]");
-				
-			    if (dades.length >= 6) {  // asegurarse de que hay suficientes columnas
-			    	dades[0] = dades[0].trim();
-			    	dades[5] = dades[5].trim();
 
-				if (dades[0].equals(usr)) {
-					trobat = true;
-					if (dades[5].equals(pwd)) {
-						System.out.println("\nHola " + usr + ", has iniciado sesion " + "\u2714");
-						// missatge benvinguda, nom apellido
-						System.out.println(nomUser);
-						login = true;
-					} else {
+				if (dades.length >= 6) { // asegurarse de que hay suficientes columnas
+					dades[0] = dades[0].trim();
+					dades[5] = dades[5].trim();
+
+					if (dades[0].equals(usr)) {
 						trobat = true;
-						System.out.println("ERROR. Contraseña errónea para el usuario " + usr);
+						if (dades[5].equals(pwd)) {
+							System.out.println("\nHola " + usr + ", has iniciado sesion " + "\u2714");
+							// missatge benvinguda, nom apellido
+							System.out.println(nomUser);
+							login = true;
+						} else {
+							trobat = true;
+							System.out.println("ERROR. Contraseña errónea para el usuario " + usr);
+						}
 					}
 				}
-			}}
+			}
 			if (!trobat) {
 				System.out.println("ERROR. No se encontró un usuario con el nombre: " + usr);
 			}
 			br.close();
 			return login;
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.err.println("Error: " + e);
 			return false;
 		}
 	}
@@ -318,13 +318,13 @@ public class Funciones {
 			System.out.println(PelisGeneral.size());
 
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			System.err.println("Error: " + ex);
 		} finally {
 			if (oos != null) {
 				try {
 					oos.close();
 				} catch (Exception ex) {
-					ex.printStackTrace();
+					System.err.println("Error: " + ex);
 				}
 			}
 		}
@@ -371,7 +371,7 @@ public class Funciones {
 			oos.flush();
 			oos.close();
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			System.err.println("Error en registrar general.actor.llista " + ex);
 		} finally {
 			if (oos != null) {
 				try {
@@ -460,7 +460,7 @@ public class Funciones {
 						System.out.println();
 					}
 				} catch (Exception ex) {
-					System.err.println("Se ha mostrado correctamente");
+					System.err.println("Error en llegir peliculas.llista " + ex);
 				}
 
 				reader.close();
@@ -490,7 +490,7 @@ public class Funciones {
 						System.out.println();
 					}
 				} catch (Exception ex) {
-					System.err.println("Se ha mostrado correctamente");
+					System.err.println("Error en llegir actores.llista " + ex);
 				}
 
 				reader.close();
@@ -521,7 +521,7 @@ public class Funciones {
 						System.out.println();
 					}
 				} catch (Exception ex) {
-					System.err.println("Se ha mostrado correctamente");
+					System.err.println("Error en llegir directores.llista " + ex);
 				}
 
 				reader.close();
@@ -580,13 +580,13 @@ public class Funciones {
 			oos.flush();
 			oos.close();
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			System.err.println("Error en registrar personal.pelicula.llista " + ex);
 		} finally {
 			if (oos != null) {
 				try {
 					oos.close();
 				} catch (Exception ex) {
-					ex.printStackTrace();
+					System.err.println("Error en registrar personal.pelicula.llista " + ex);
 				}
 			}
 		}
@@ -638,13 +638,13 @@ public class Funciones {
 			oos.flush();
 			oos.close();
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			System.err.println("Error en registrar personal.actor.llista " + ex);
 		} finally {
 			if (oos != null) {
 				try {
 					oos.close();
 				} catch (Exception ex) {
-					ex.printStackTrace();
+					System.err.println("Error en registrar personal.actor.llista " + ex);
 				}
 			}
 		}
@@ -695,13 +695,13 @@ public class Funciones {
 			oos.flush();
 			oos.close();
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			System.err.println("Error en registrar personal.director.llista " + ex);
 		} finally {
 			if (oos != null) {
 				try {
 					oos.close();
 				} catch (Exception ex) {
-					ex.printStackTrace();
+					System.err.println("Error en registrar personal.director.llista " + ex);
 				}
 			}
 		}
@@ -732,15 +732,14 @@ public class Funciones {
 						System.out.println();
 					}
 				} catch (Exception ex) {
-					System.err.println("Se ha mostrado correctamente");
+					System.err.println("Error en mostrar personal.pelicula.llista " + ex);
 				}
 
 				reader.close();
 				file.close();
 			} catch (Exception ex) {
-				System.err.println("Error en llegir peliculas.llista " + ex);
+				System.err.println("Error en mostrar personal.pelicula.llista " + ex);
 			}
-
 		}
 	}
 
@@ -766,13 +765,13 @@ public class Funciones {
 						System.out.println();
 					}
 				} catch (Exception ex) {
-					System.err.println("Se ha mostrado correctamente");
+					System.err.println("Error en mostrar personal.actor.llista " + ex);
 				}
 
 				reader.close();
 				file.close();
 			} catch (Exception ex) {
-				System.err.println("Error en llegir actor.llista " + ex);
+				System.err.println("Error en mostrar personal.actor.llista " + ex);
 			}
 
 		}
@@ -800,13 +799,13 @@ public class Funciones {
 						System.out.println();
 					}
 				} catch (Exception ex) {
-					System.err.println("Se ha mostrado correctamente");
+					System.err.println("Error en mostrar personal.director.llista " + ex);
 				}
 
 				reader.close();
 				file.close();
 			} catch (Exception ex) {
-				System.err.println("Error en llegir director.llista " + ex);
+				System.err.println("Error en mostrar personal.director.llista " + ex);
 			}
 
 		}
@@ -829,6 +828,7 @@ public class Funciones {
 			reader.close();
 			file.close();
 		} catch (Exception ex) {
+			System.err.println("Error: "+ex);
 		}
 		// cargar listageneralActor
 		try {
@@ -845,6 +845,7 @@ public class Funciones {
 			reader.close();
 			file.close();
 		} catch (Exception ex) {
+			System.err.println("Error: " + ex);
 		}
 		// cargar listagenralDirector
 		try {
@@ -854,11 +855,13 @@ public class Funciones {
 			try {
 
 			} catch (Exception ex) {
+				System.err.println("Error: " + ex);
 			}
 
 			reader.close();
 			file.close();
 		} catch (Exception ex) {
+			System.err.println("Error: " + ex);
 		}
 		// cargarlistaspersonales
 		try {
@@ -869,14 +872,15 @@ public class Funciones {
 			try {
 
 			} catch (Exception ex) {
+				System.err.println("Error: " + ex);
 			}
 
 			reader.close();
 			file.close();
 		} catch (Exception ex) {
+			System.err.println("Error: " + ex);
 		}
 
-		//
 		try {
 			// obrim fitxer per a lectura
 			FileInputStream file = new FileInputStream(
@@ -885,14 +889,15 @@ public class Funciones {
 			try {
 
 			} catch (Exception ex) {
+				System.err.println("Error: " + ex);
 			}
 
 			reader.close();
 			file.close();
 		} catch (Exception ex) {
+			System.err.println("Error: " + ex);
 		}
 
-		//
 		try {
 			// obrim fitxer per a lectura
 			FileInputStream file = new FileInputStream(
@@ -901,11 +906,13 @@ public class Funciones {
 			try {
 
 			} catch (Exception ex) {
+				System.err.println("Error: " + ex);
 			}
 
 			reader.close();
 			file.close();
 		} catch (Exception ex) {
+			System.err.println("Error: "+ex);
 		}
 	}
 	// ELIMINAR USUARIO //
