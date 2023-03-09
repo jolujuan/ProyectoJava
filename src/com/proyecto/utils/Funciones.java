@@ -22,6 +22,11 @@ import com.proyecto.users.User;
 import com.proyecto.users.User.Rol;
 
 public class Funciones {
+
+	public static void mostrarColaboradores() {
+
+	}
+
 	static Scanner leer = new Scanner(System.in);
 	SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
 
@@ -244,7 +249,6 @@ public class Funciones {
 						if (dades[5].equals(pwd)) {
 							System.out.println("\nHola " + usr + ", has iniciado sesion " + "\u2714");
 							// missatge benvinguda, nom apellido
-							System.out.println(nomUser);
 							login = true;
 						} else {
 							trobat = true;
@@ -828,7 +832,7 @@ public class Funciones {
 			reader.close();
 			file.close();
 		} catch (Exception ex) {
-			System.err.println("Error: "+ex);
+			System.err.println("Error: " + ex);
 		}
 		// cargar listageneralActor
 		try {
@@ -912,9 +916,10 @@ public class Funciones {
 			reader.close();
 			file.close();
 		} catch (Exception ex) {
-			System.err.println("Error: "+ex);
+			System.err.println("Error: " + ex);
 		}
 	}
+
 	// ELIMINAR USUARIO //
 
 	// ETC ETC //
