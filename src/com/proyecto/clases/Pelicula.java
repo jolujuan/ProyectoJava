@@ -66,7 +66,8 @@ public class Pelicula implements Serializable {
 
 	@Override
 	public String toString() {
-		return idPelicula + "-. " + nombrePelicula;
+		return "Id Pelicula: " + idPelicula + "\nNombre: " + nombrePelicula + "\nDuracion: " + duracion + "\nAño: "
+				+ anioEmision + "\nGenero: " + genero;
 	}
 
 }
