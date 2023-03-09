@@ -249,7 +249,6 @@ public class Funciones {
 						if (dades[5].equals(pwd)) {
 							System.out.println("\nHola " + usr + ", has iniciado sesion " + "\u2714");
 							// missatge benvinguda, nom apellido
-							System.out.println(nomUser);
 							login = true;
 						} else {
 							trobat = true;
