@@ -507,7 +507,7 @@ public class Funciones {
 
 	// MOSTRAR DATOS LISTA ACTOR GENERAL
 	public static void mostrarListaGeneralPelicula() {
-		File vacio = new File("src/com/proyecto/listasPeliculas/actores.llista");
+		File vacio = new File("src/com/proyecto/listasPeliculas/peliculas.llista");
 		if (vacio.length() < 0 || vacio.length() == 0) {
 			System.out.println("No hay nada que mostrar");
 		} else {
