@@ -309,6 +309,7 @@ public class Funciones {
 		Pelicula peliculasCreadas = new Pelicula(pelicula, duracio, fechaEmisio, genero);
 //		System.out.println(PelisGeneral.size());
 		PelisGeneral.add(peliculasCreadas);
+		
 
 		// serialització
 		ObjectOutputStream oos = null;
