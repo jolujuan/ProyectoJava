@@ -2,8 +2,8 @@
  * 
  */
 /**
- * @author thesa
+ * @author Ismael, Jose Luis, Edu, Hrisi, Javier
  *
  */
-module ProyectoJava {
+module PROYECTO_JAVA {
 }
