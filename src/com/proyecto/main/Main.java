@@ -37,6 +37,7 @@ public class Main {
 								System.out.println(
 										"\n-> 1. Ver Peliculas \n-> 2. Ver Actores \n-> 3. Ver Directores \n-> 4. Salir");
 								menuTerciario = ControlErrores.validarTerciario();
+//								Funciones.cargarArrayslist();
 								switch (menuTerciario) {
 								case 1:
 									System.out.println("-----Ver Peliculas (Lista GENERAL)-----");

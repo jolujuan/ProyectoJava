@@ -3,6 +3,7 @@ package com.proyecto.utils;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -32,8 +33,8 @@ public class Funciones {
 		MostrarNombreIsma colaborador2 = new MostrarNombreIsma();
 		MostrarNombreJavier colaborador3 = new MostrarNombreJavier();
 		MostrarNombreJoselu colaborador4 = new MostrarNombreJoselu();
-		
-		System.out.println(colaborador1+"\n"+colaborador2+"\n"+colaborador3+"\n"+colaborador4+"\n");
+
+		System.out.println(colaborador1 + "\n" + colaborador2 + "\n" + colaborador3 + "\n" + colaborador4 + "\n");
 	}
 
 	static Scanner leer = new Scanner(System.in);
@@ -282,6 +283,46 @@ public class Funciones {
 		return nomUserFinal = usr;
 	}
 
+	// LEER Y GUARDAR ULTIMO ID PELICULA
+	// ---------------------------------------------------------------------------------------------------------------
+
+	public static int guardarIdPelicula() {
+
+		File file = new File("src/com/proyecto/utils/IDS/IdPelicula.txt");
+		int ultimoIdPelicula = 0;
+
+		if (file.exists() && file.length() > 0) {
+			// Si el archivo existe y no está vacío, leer el último ID
+			try (Scanner scanner = new Scanner(file)) {
+				String lastLine = null;
+				while (scanner.hasNextLine()) {
+					lastLine = scanner.nextLine();
+				}
+				if (lastLine != null) {
+					// Eliminar el salto de línea y convertir a entero
+					ultimoIdPelicula = Integer.parseInt(lastLine.trim());
+				}
+			} catch (FileNotFoundException e) {
+				// Mostrar si el archivo no puede encontrarse
+				System.err.println("No se puede leer el archivo: " + e.getMessage());
+			} catch (NumberFormatException e) {
+				// Mostrar si el archivo no contiene un numero
+				System.err.println("El archivo no contiene un número válido: " + e.getMessage());
+			}
+		}
+		int nuevoIdpelicula = ultimoIdPelicula + 1;
+
+		// Escribir el nuevo ID en el archivo
+		try (PrintWriter escriureIdPelicula = new PrintWriter(new FileWriter(file, true))) {
+			escriureIdPelicula.println(nuevoIdpelicula);
+			System.out.println("ID Pelicula guardado correctamente: " + nuevoIdpelicula);
+		} catch (IOException e) {
+			// Mostrar si el archivo no se puede escribir en el archivo
+			System.err.println("No se puede escribir en el archivo: " + e.getMessage());
+		}
+		return nuevoIdpelicula;
+	}
+
 	// PEDIR Y GUARDAR DATOS LISTAS GENERALES
 	// ---------------------------------------------------------------------------------------------------------------
 
@@ -299,17 +340,20 @@ public class Funciones {
 		System.out.println("Introduce el genero:");
 		String genero = ControlErrores.validarString();
 
-		registrarListaGeneralPelicula(pelicula, duracio, fechaEmisio, genero);
+		// Guardar el id si se cierra el programa
+		int nuevoIdPelicula = guardarIdPelicula();
+
+		registrarListaGeneralPelicula(nuevoIdPelicula, pelicula, duracio, fechaEmisio, genero);
 		System.out.println("Se ha guardado correctamente " + "\u2714");
 	}
 
 	// GUARDAR DATOS PELICULA GENERAL
-	public static void registrarListaGeneralPelicula(String pelicula, int duracio, String fechaEmisio, String genero) {
-//		Pelicula.setCountIdPelicula(PelisGeneral.size());
-		Pelicula peliculasCreadas = new Pelicula(pelicula, duracio, fechaEmisio, genero);
-//		System.out.println(PelisGeneral.size());
+	public static void registrarListaGeneralPelicula(int nuevoIdPelicula, String pelicula, int duracio,
+			String fechaEmisio, String genero) {
+
+		// Crear la nueva Pelicula
+		Pelicula peliculasCreadas = new Pelicula(nuevoIdPelicula, pelicula, duracio, fechaEmisio, genero);
 		PelisGeneral.add(peliculasCreadas);
-		
 
 		// serialització
 		ObjectOutputStream oos = null;
@@ -319,8 +363,7 @@ public class Funciones {
 			// només tindrem un ArrayList d'objectes
 
 			// Guardar antes de crear el usuario la longitud del arrayList
-//			Pelicula.setCountIdPelicula(PelisGeneral.size
-//			System.out.println("Va a guardar con variable: " + PelisGeneral.size());
+//					Pelicula.setCountIdPelicula(PelisGeneral.size());
 
 			fout = new FileOutputStream("src/com/proyecto/listasPeliculas/peliculas.llista", false);
 			oos = new ObjectOutputStream(fout);
@@ -329,16 +372,21 @@ public class Funciones {
 			oos.flush();
 			oos.close();
 
-//			System.out.println(PelisGeneral.size());
-
 		} catch (Exception ex) {
-			System.err.println("Error: " + ex);
+			System.err.println("Error en registrar general.pelicula.llista " + ex);
 		} finally {
 			if (oos != null) {
 				try {
 					oos.close();
 				} catch (Exception ex) {
-					System.err.println("Error: " + ex);
+					ex.printStackTrace();
+				}
+			}
+			if (fout != null) {
+				try {
+					fout.close();
+				} catch (Exception ex) {
+					ex.printStackTrace();
 				}
 			}
 		}
@@ -364,8 +412,8 @@ public class Funciones {
 
 	// GUARDAR DATOS LISTA ACTOR GENERAL
 	public static void registrarListaGeneralActor(String nom, int edad, String apellidos, String nacionalidad) {
+		
 		Actor actoresCreados = new Actor(nom, apellidos, edad, nacionalidad);
-//		System.out.println(ActorGeneral.size());
 		ActorGeneral.add(actoresCreados);
 
 		// serialització
@@ -438,13 +486,16 @@ public class Funciones {
 			oos.writeObject(DirectorGeneral);
 			oos.flush();
 			oos.close();
+
 		} catch (Exception ex) {
+			System.err.println("Error: "+ex);
 			ex.printStackTrace();
 		} finally {
 			if (oos != null) {
 				try {
 					oos.close();
 				} catch (Exception ex) {
+					System.err.println("Error: "+ex);
 					ex.printStackTrace();
 				}
 			}
@@ -456,8 +507,7 @@ public class Funciones {
 
 	// MOSTRAR DATOS LISTA ACTOR GENERAL
 	public static void mostrarListaGeneralPelicula() {
-		File vacio = new File("src/com/proyecto/listasPeliculas/peliculas.llista");
-		
+		File vacio = new File("src/com/proyecto/listasPeliculas/actores.llista");
 		if (vacio.length() < 0 || vacio.length() == 0) {
 			System.out.println("No hay nada que mostrar");
 		} else {
@@ -468,19 +518,20 @@ public class Funciones {
 				try {
 					// llegim l'objecte que hi ha al fitxer (1 sol array List)
 					PelisGeneral = (ArrayList<Pelicula>) reader.readObject();
-					System.out.println("La lista general de pelicules es:\n");
-					for (Pelicula peli : PelisGeneral) {
-						System.out.println(peli.toString());
+
+					System.out.println("La lista general de pelicula es:\n");
+					for (Pelicula pelicula : PelisGeneral) {
+						System.out.println(pelicula.toString());
 						System.out.println();
 					}
 				} catch (Exception ex) {
-					System.err.println("Error en llegir peliculas.llista " + ex);
+					System.err.println("Error en llegir pelicula.llista " + ex);
 				}
 
 				reader.close();
 				file.close();
 			} catch (Exception ex) {
-				System.err.println("Error en llegir peliculas.llista " + ex);
+				System.err.println("Error en llegir pelicula.llista " + ex);
 			}
 		}
 	}
