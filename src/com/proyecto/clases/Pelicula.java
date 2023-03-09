@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Pelicula implements Serializable {
 
 	/// ATRIBUTOS PELICULAS ///
-	private static int countIdPelicula = 0;
+//	private static int countIdPelicula = 0;
 	private int idPelicula;
 	private String nombrePelicula;
 	private int duracion;
@@ -13,10 +13,10 @@ public class Pelicula implements Serializable {
 	private String genero;
 
 	/// CONSTRUCTOR ///
-	public Pelicula(String nombrePelicula, int duracion, String anioEmision, String genero) {
+	public Pelicula(int idPelicula,String nombrePelicula, int duracion, String anioEmision, String genero) {
 		super();
-		countIdPelicula++;
-		this.idPelicula = countIdPelicula; // ID AUTOINCREMENTADO
+//		countIdPelicula++;
+		this.idPelicula = idPelicula; // ID AUTOINCREMENTADO
 		this.nombrePelicula = nombrePelicula;
 		this.duracion = duracion;
 		this.anioEmision = anioEmision;
@@ -28,9 +28,9 @@ public class Pelicula implements Serializable {
 		return idPelicula;
 	}
 
-//	public void setIdPelicula(int idPelicula) {
-//		this.idPelicula = idPelicula;
-//	}
+	public void setIdPelicula(int idPelicula) {
+		this.idPelicula = idPelicula;
+	}
 
 	public String getNombrePelicula() {
 		return nombrePelicula;
