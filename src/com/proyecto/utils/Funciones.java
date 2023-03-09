@@ -14,28 +14,17 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import com.proyecto.Ismael.MostrarNombreIsma;
 import com.proyecto.clases.Actor;
 import com.proyecto.clases.Director;
 import com.proyecto.clases.Pelicula;
-import com.proyecto.edu.MostrarNombreEdu;
-import com.proyecto.javier.MostrarNombreJavier;
-import com.proyecto.joseluis.MostrarNombreJoselu;
 import com.proyecto.users.Cliente;
 import com.proyecto.users.User;
 import com.proyecto.users.User.Rol;
 
 public class Funciones {
 
-	//Mostrar los colaboradores del proyecto
 	public static void mostrarColaboradores() {
-		MostrarNombreEdu colaborador1 = new MostrarNombreEdu();
-		MostrarNombreIsma colaborado2 = new MostrarNombreIsma();
-		MostrarNombreJavier colaborador3 = new MostrarNombreJavier();
-		MostrarNombreJoselu coloborador4 = new MostrarNombreJoselu();
 
-		System.out.println(
-				colaborador1 +"\n"+ colaborado2 +"\n"+ colaborador3 +"\n"+ coloborador4+"\n");
 	}
 
 	static Scanner leer = new Scanner(System.in);
@@ -155,12 +144,12 @@ public class Funciones {
 	public static void retornarId(int numero, String rutaArchivo) throws IOException {
 		// Crear un objeto File para el archivo en la ruta especificada
 		File archivo = new File(rutaArchivo);
-		// Crear un objeto Scanner para leer el archivo
+		// Crear un objeto Scanner para leer el archivo.
 		Scanner scanner = new Scanner(archivo);
 
 		boolean estaVacio = !scanner.hasNext();
 
-		// Verificar si el número ya existe en el archivo
+		// Verificar si el número ya existe en el archivo.
 		boolean existeNumero = false;
 		while (scanner.hasNextInt()) {
 			int num = scanner.nextInt();
