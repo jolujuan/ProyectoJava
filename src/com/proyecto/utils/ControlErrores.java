@@ -190,7 +190,7 @@ public class ControlErrores {
 						correcto = true;
 					}
 				} catch (DateTimeParseException e) {
-					System.out.println("Error: Fecha no valida.");
+					System.out.println("Error: " + e);
 				}
 			}
 		} while (!correcto);
