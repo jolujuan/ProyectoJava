@@ -396,7 +396,7 @@ public class Funciones {
 		}
 	}// ---------------------------------------------------------------------------------------------------------------
 
-	// PEDIR DATOS LISTA DIRECTOR GENERAL
+	// PEDIR DATOS LISTA DIRECTOR GENERAL.
 	public static void pedirListaGeneralDirector() {
 		System.out.println("Introduce el nombre del director:");
 		String nom = ControlErrores.validarString();
