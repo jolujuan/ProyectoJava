@@ -25,11 +25,12 @@ public class Main {
 				System.out.println("-----Iniciar Sesion-----");
 				if(Funciones.validaUsuario()) {
 					do {
+
 						System.out.println(
 								"\n-> 1. Ver lista general \n-> 2. Ver lista personal \n-> 3. Añadir nuevo elemento a lista general \n-> 4. Añadir nuevo elemento a lista personal \n-> 5. Salir");
 						menuSecundario = ControlErrores.validarSecundario();
+						Funciones.cargarArrayslist();
 						switch (menuSecundario) {
-						 
 						case 1:
 							System.out.println("-----Ver lista GENERAL-----");
 

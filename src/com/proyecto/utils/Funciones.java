@@ -307,7 +307,7 @@ public class Funciones {
 	public static void registrarListaGeneralPelicula(String pelicula, int duracio, String fechaEmisio, String genero) {
 //		Pelicula.setCountIdPelicula(PelisGeneral.size());
 		Pelicula peliculasCreadas = new Pelicula(pelicula, duracio, fechaEmisio, genero);
-		System.out.println(PelisGeneral.size());
+//		System.out.println(PelisGeneral.size());
 		PelisGeneral.add(peliculasCreadas);
 
 		// serialització
@@ -328,7 +328,7 @@ public class Funciones {
 			oos.flush();
 			oos.close();
 
-			System.out.println(PelisGeneral.size());
+//			System.out.println(PelisGeneral.size());
 
 		} catch (Exception ex) {
 			System.err.println("Error: " + ex);
@@ -362,10 +362,10 @@ public class Funciones {
 	}
 
 	// GUARDAR DATOS LISTA ACTOR GENERAL
-	public static void registrarListaGeneralActor(String pelicula, int duracio, String fechaEmisio, String genero) {
-		Pelicula peliculasCreadas = new Pelicula(pelicula, duracio, fechaEmisio, genero);
-		System.out.println(ActorGeneral.size());
-		PelisGeneral.add(peliculasCreadas);
+	public static void registrarListaGeneralActor(String nom, int edad, String apellidos, String nacionalidad) {
+		Actor actoresCreados = new Actor(nom, apellidos, edad, nacionalidad);
+//		System.out.println(ActorGeneral.size());
+		ActorGeneral.add(actoresCreados);
 
 		// serialització
 		ObjectOutputStream oos = null;
@@ -410,16 +410,16 @@ public class Funciones {
 		System.out.println("Introduce los goyas del director:");
 		String goyas = ControlErrores.validarString();
 
-		registrarListaGeneralDirector(nom, edad, apellidos, goyas);
+		registrarListaGeneralDirector(nom, apellidos, edad, goyas);
 
 		System.out.println("Se ha guardado correctamente " + "\u2714");
 	}
 
 	// GUARDAR DATOS LISTA DIRECTOR GENERAL
-	public static void registrarListaGeneralDirector(String pelicula, int duracio, String fechaEmisio, String genero) {
-		Pelicula peliculasCreadas = new Pelicula(pelicula, duracio, fechaEmisio, genero);
-		System.out.println(DirectorGeneral.size());
-		PelisGeneral.add(peliculasCreadas);
+	public static void registrarListaGeneralDirector(String nom, String apellidos, int edad, String goyas) {
+		Director directoresCreados = new Director(nom, apellidos, edad, goyas);
+//		System.out.println(DirectorGeneral.size());
+		DirectorGeneral.add(directoresCreados);
 
 		// serialització
 		ObjectOutputStream oos = null;
@@ -456,10 +456,10 @@ public class Funciones {
 	// MOSTRAR DATOS LISTA ACTOR GENERAL
 	public static void mostrarListaGeneralPelicula() {
 		File vacio = new File("src/com/proyecto/listasPeliculas/peliculas.llista");
+		
 		if (vacio.length() < 0 || vacio.length() == 0) {
 			System.out.println("No hay nada que mostrar");
 		} else {
-
 			try {
 				// obrim fitxer per a lectura
 				FileInputStream file = new FileInputStream("src/com/proyecto/listasPeliculas/peliculas.llista");
@@ -467,7 +467,7 @@ public class Funciones {
 				try {
 					// llegim l'objecte que hi ha al fitxer (1 sol array List)
 					PelisGeneral = (ArrayList<Pelicula>) reader.readObject();
-					System.out.println("La lista general de pelicules es");
+					System.out.println("La lista general de pelicules es:\n");
 					for (Pelicula peli : PelisGeneral) {
 						System.out.println(peli.toString());
 						System.out.println();
@@ -497,7 +497,7 @@ public class Funciones {
 				try {
 					// llegim l'objecte que hi ha al fitxer (1 sol array List)
 					ActorGeneral = (ArrayList<Actor>) reader.readObject();
-					System.out.println("La lista general de pelicules es");
+					System.out.println("La lista general de actor es:\n");
 					for (Actor actor : ActorGeneral) {
 						System.out.println(actor.toString());
 						System.out.println();
@@ -528,7 +528,7 @@ public class Funciones {
 				try {
 					// llegim l'objecte que hi ha al fitxer (1 sol array List)
 					DirectorGeneral = (ArrayList<Director>) reader.readObject();
-					System.out.println("La lista general de pelicules es");
+					System.out.println("La lista general de director es:\n");
 					for (Director director : DirectorGeneral) {
 						System.out.println(director.toString());
 						System.out.println();
@@ -835,13 +835,13 @@ public class Funciones {
 				// llegim l'objecte que hi ha al fitxer (1 sol array List)
 				PelisGeneral = (ArrayList<Pelicula>) reader.readObject();
 			} catch (Exception ex) {
-				System.err.println("Se ha mostrado correctamente");
+//				System.err.println("Se ha mostrado correctamente");
 			}
 
 			reader.close();
 			file.close();
 		} catch (Exception ex) {
-			System.err.println("Error: " + ex);
+//			System.err.println("Error: " + ex);
 		}
 		// cargar listageneralActor
 		try {
@@ -858,7 +858,7 @@ public class Funciones {
 			reader.close();
 			file.close();
 		} catch (Exception ex) {
-			System.err.println("Error: " + ex);
+//			System.err.println("Error: " + ex);
 		}
 		// cargar listagenralDirector
 		try {
@@ -868,13 +868,13 @@ public class Funciones {
 			try {
 
 			} catch (Exception ex) {
-				System.err.println("Error: " + ex);
+//				System.err.println("Error: " + ex);
 			}
 
 			reader.close();
 			file.close();
 		} catch (Exception ex) {
-			System.err.println("Error: " + ex);
+//			System.err.println("Error: " + ex);
 		}
 		// cargarlistaspersonales
 		try {
@@ -885,13 +885,13 @@ public class Funciones {
 			try {
 
 			} catch (Exception ex) {
-				System.err.println("Error: " + ex);
+//				System.err.println("Error: " + ex);
 			}
 
 			reader.close();
 			file.close();
 		} catch (Exception ex) {
-			System.err.println("Error: " + ex);
+//			System.err.println("Error: " + ex);
 		}
 
 		try {
@@ -902,13 +902,13 @@ public class Funciones {
 			try {
 
 			} catch (Exception ex) {
-				System.err.println("Error: " + ex);
+//				System.err.println("Error: " + ex);
 			}
 
 			reader.close();
 			file.close();
 		} catch (Exception ex) {
-			System.err.println("Error: " + ex);
+//			System.err.println("Error: " + ex);
 		}
 
 		try {
@@ -919,13 +919,13 @@ public class Funciones {
 			try {
 
 			} catch (Exception ex) {
-				System.err.println("Error: " + ex);
+//				System.err.println("Error: " + ex);
 			}
 
 			reader.close();
 			file.close();
 		} catch (Exception ex) {
-			System.err.println("Error: " + ex);
+//			System.err.println("Error: " + ex);
 		}
 	}
 
