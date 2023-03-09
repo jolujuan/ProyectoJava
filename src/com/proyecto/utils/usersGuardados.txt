@@ -15,3 +15,4 @@ admin            |000|admin             |admin             |admin@admin.com     
 12isma           |012|isma              |isma              |isma@hotmail.com              |12345             |xzativa      |USUARIO     |10/04/2002    
 13ruben          |013|ruben             |soriano           |ruben@gmail.com               |12345             |canals       |USUARIO     |10/08/2002    
 14marcos         |014|marcos            |giner             |marcos@hotmail.com            |12345             |xativa       |USUARIO     |10/11/2000    
+16joseluis       |016|jose luis         |juan esteve       |joseluis@hotmail.com          |canals            |canals       |USUARIO     |30/04/2002    

@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Actor implements Serializable {
 
 	/// ATRIBUTOS ACTORES ///
-	private static int countIdActor = 0;
+//	private static int countIdActor = 0;
 	private int idActor;
 	private String nombreActor;
 	private String apellidoActor;
@@ -13,10 +13,10 @@ public class Actor implements Serializable {
 	private String nacionalidadActor;
 
 	/// CONSTRUCTOR ///
-	public Actor(String nombreActor, String apellidoActor, int edadActor, String nacionalidadActor) {
+	public Actor(int idActor, String nombreActor, String apellidoActor, int edadActor, String nacionalidadActor) {
 		super();
-		countIdActor++;
-		this.idActor = countIdActor; // ID AUTOINCREMENTADO
+//		countIdActor++;
+		this.idActor = idActor; // ID AUTOINCREMENTADO
 		this.nombreActor = nombreActor;
 		this.apellidoActor = apellidoActor;
 		this.edadActor = edadActor;
@@ -28,9 +28,9 @@ public class Actor implements Serializable {
 		return idActor;
 	}
 
-//	public void setIdActor(int idActor) {
-//		this.idActor = idActor;
-//	}
+	public void setIdActor(int idActor) {
+		this.idActor = idActor;
+	}
 
 	public String getNombreActor() {
 		return nombreActor;
@@ -66,7 +66,7 @@ public class Actor implements Serializable {
 
 	@Override
 	public String toString() {
-		return idActor + "-. " + nombreActor;
+		return idActor + "-. " + nombreActor + " " + apellidoActor;
 	}
 
 }
