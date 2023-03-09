@@ -145,7 +145,7 @@ public class Funciones {
 
 		boolean estaVacio = !scanner.hasNext();
 
-		// Verificar si el número ya existe en el archivo
+		// Verificar si el número ya existe en el archivo.
 		boolean existeNumero = false;
 		while (scanner.hasNextInt()) {
 			int num = scanner.nextInt();
