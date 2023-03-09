@@ -12,7 +12,6 @@ admin            |000|admin             |admin             |admin@admin.com     
 9pepe            |009|pepe              |pepepepepe        |pepe@gmail.com                |12345             |Agullent     |USUARIO     |12/12/1999    
 10clara          |010|Clara             |revertmico        |clara@gmail.com               |12345             |onti         |USUARIO     |12/12/2000    
 1joseluis        |011|joseluis          |juan              |joseluis@gmail.com            |canals            |canals       |USUARIO     |30/04/2002    
-
 12isma           |012|isma              |isma              |isma@hotmail.com              |12345             |xzativa      |USUARIO     |10/04/2002    
 13ruben          |013|ruben             |soriano           |ruben@gmail.com               |12345             |canals       |USUARIO     |10/08/2002    
 14marcos         |014|marcos            |giner             |marcos@hotmail.com            |12345             |xativa       |USUARIO     |10/11/2000    
