@@ -155,7 +155,7 @@ public class Funciones {
 			}
 		}
 
-		// Si el número no existe en el archivo, agregarlo al final
+		// Si el número no existe en el archivo, agregarlo al final.
 		if (!existeNumero) {
 			// Crear un objeto FileWriter con la opción de agregar al final del archivo
 			FileWriter writer = new FileWriter(archivo, !estaVacio);
