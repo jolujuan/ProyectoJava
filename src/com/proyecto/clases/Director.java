@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Director implements Serializable {
 
 	/// ATRIBUTOS DIRECTOR ///
-	private static int countIdDirector = 0;
+//	private static int countIdDirector = 0;
 	private int idDirector;
 	private String nombreDirector;
 	private String apellidoDirector;
@@ -13,10 +13,10 @@ public class Director implements Serializable {
 	private String goyas;
 
 	/// CONSTRUCTOR ///
-	public Director(String nombreDirector, String apellidoDirector, int edadDirector, String goyas) {
+	public Director(int idDirector, String nombreDirector, String apellidoDirector, int edadDirector, String goyas) {
 		super();
-		countIdDirector++;
-		this.idDirector = countIdDirector; // ID AUTOINCREMENTADO
+//		countIdDirector++;
+		this.idDirector = idDirector; // ID AUTOINCREMENTADO
 		this.nombreDirector = nombreDirector;
 		this.apellidoDirector = apellidoDirector;
 		this.edadDirector = edadDirector;
@@ -28,9 +28,9 @@ public class Director implements Serializable {
 		return idDirector;
 	}
 
-//	public void setIdDirector(int idDirector) {
-//		this.idDirector = idDirector;
-//	}
+	public void setIdDirector(int idDirector) {
+		this.idDirector = idDirector;
+	}
 
 	public String getNombreDirector() {
 		return nombreDirector;
@@ -66,7 +66,7 @@ public class Director implements Serializable {
 
 	@Override
 	public String toString() {
-		return idDirector + "-. " + nombreDirector;
+		return idDirector + "-. " + nombreDirector + " " + apellidoDirector;
 	}
 
 }

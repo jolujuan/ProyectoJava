@@ -107,7 +107,7 @@ public class ControlErrores {
 		boolean verdad = false;
 
 		do {
-			cadena = entrada.nextLine().trim().replace("\t", " ").replace(" ", "");
+			cadena = entrada.nextLine().trim().replaceAll("\\s+", " ").replaceAll("\\t+", " ");
 
 			if (cadena.equals("")) {
 				System.out.println("Error: El campo no puede estar vacio.");
