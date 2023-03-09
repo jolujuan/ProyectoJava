@@ -879,6 +879,12 @@ public class Funciones {
 	// Cargar los arrayList al principio del programa
 	public static void cargarArrayslist() {
 		// cargar listageneralPelis
+		File peligenral = new File("src/com/proyecto/listasPeliculas/peliculas.llista");
+		if (peligenral.length()==0 ||peligenral.length()<0) {
+			
+		}else {
+			
+		
 		try {
 			// obrim fitxer per a lectura
 			FileInputStream file = new FileInputStream("src/com/proyecto/listasPeliculas/peliculas.llista");
@@ -895,7 +901,15 @@ public class Funciones {
 		} catch (Exception ex) {
 //			System.err.println("Error: " + ex);
 		}
+		}
+		
+	
 		// cargar listageneralActor
+		
+		File actorGeneral = new File("src/com/proyecto/listasPeliculas/actores.llista");
+		if (actorGeneral.length()==0 ||actorGeneral.length()<0) {
+			
+		}else {
 		try {
 			// obrim fitxer per a lectura
 			FileInputStream file = new FileInputStream("src/com/proyecto/listasPeliculas/actores.llista");
@@ -912,7 +926,12 @@ public class Funciones {
 		} catch (Exception ex) {
 //			System.err.println("Error: " + ex);
 		}
+		}
 		// cargar listagenralDirector
+		File directorGeneral = new File("src/com/proyecto/listasPeliculas/directores.llista");
+		if (directorGeneral.length()==0 ||directorGeneral.length()<0) {
+			
+		}else {
 		try {
 			// obrim fitxer per a lectura
 			FileInputStream file = new FileInputStream("src/com/proyecto/listasPeliculas/directores.llista");
@@ -928,7 +947,13 @@ public class Funciones {
 		} catch (Exception ex) {
 //			System.err.println("Error: " + ex);
 		}
+		}
 		// cargarlistaspersonales
+		
+		File directorPersonal = new File("src/com/proyecto/usuariosCarpetas/" + nomUserFinal + "/director.llista");
+		if (directorPersonal.length()==0 ||directorPersonal.length()<0) {
+			
+		}else {
 		try {
 			// obrim fitxer per a lectura
 			FileInputStream file = new FileInputStream(
@@ -945,7 +970,11 @@ public class Funciones {
 		} catch (Exception ex) {
 //			System.err.println("Error: " + ex);
 		}
-
+		}
+		File peliculaPersonal = new File("src/com/proyecto/usuariosCarpetas/" + nomUserFinal + "/pelicula.llista");
+		if (peliculaPersonal.length()==0 ||peliculaPersonal.length()<0) {
+			
+		}else {
 		try {
 			// obrim fitxer per a lectura
 			FileInputStream file = new FileInputStream(
@@ -962,7 +991,12 @@ public class Funciones {
 		} catch (Exception ex) {
 //			System.err.println("Error: " + ex);
 		}
+		}
 
+		File actorPersonal = new File("src/com/proyecto/usuariosCarpetas/" + nomUserFinal + "/actor.llista");
+		if (actorPersonal.length()==0 ||actorPersonal.length()<0) {
+			
+		}else {
 		try {
 			// obrim fitxer per a lectura
 			FileInputStream file = new FileInputStream(
@@ -978,6 +1012,7 @@ public class Funciones {
 			file.close();
 		} catch (Exception ex) {
 //			System.err.println("Error: " + ex);
+		}
 		}
 	}
 
