@@ -10,10 +10,10 @@ public class Director implements Serializable {
 	private String nombreDirector;
 	private String apellidoDirector;
 	private int edadDirector;
-	private boolean goyas;
+	private String goyas;
 
 	/// CONSTRUCTOR ///
-	public Director(String nombreDirector, String apellidoDirector, int edadDirector, boolean goyas) {
+	public Director(String nombreDirector, String apellidoDirector, int edadDirector, String goyas) {
 		super();
 		countIdDirector++;
 		this.idDirector = countIdDirector; // ID AUTOINCREMENTADO
@@ -56,11 +56,11 @@ public class Director implements Serializable {
 		this.edadDirector = edadDirector;
 	}
 
-	public boolean isGoyas() {
+	public String isGoyas() {
 		return goyas;
 	}
 
-	public void setGoyas(boolean goyas) {
+	public void setGoyas(String goyas) {
 		this.goyas = goyas;
 	}
 
