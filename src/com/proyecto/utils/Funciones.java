@@ -140,7 +140,7 @@ public class Funciones {
 	public static void retornarId(int numero, String rutaArchivo) throws IOException {
 		// Crear un objeto File para el archivo en la ruta especificada
 		File archivo = new File(rutaArchivo);
-		// Crear un objeto Scanner para leer el archivo
+		// Crear un objeto Scanner para leer el archivo.
 		Scanner scanner = new Scanner(archivo);
 
 		boolean estaVacio = !scanner.hasNext();
