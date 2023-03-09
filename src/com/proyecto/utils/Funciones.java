@@ -14,9 +14,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import com.proyecto.Ismael.MostrarNombreIsma;
 import com.proyecto.clases.Actor;
 import com.proyecto.clases.Director;
 import com.proyecto.clases.Pelicula;
+import com.proyecto.edu.MostrarNombreEdu;
+import com.proyecto.javier.MostrarNombreJavier;
+import com.proyecto.joseluis.MostrarNombreJoselu;
 import com.proyecto.users.Cliente;
 import com.proyecto.users.User;
 import com.proyecto.users.User.Rol;
@@ -24,7 +28,12 @@ import com.proyecto.users.User.Rol;
 public class Funciones {
 
 	public static void mostrarColaboradores() {
-
+		MostrarNombreEdu colaborador1 = new MostrarNombreEdu();
+		MostrarNombreIsma colaborador2 = new MostrarNombreIsma();
+		MostrarNombreJavier colaborador3 = new MostrarNombreJavier();
+		MostrarNombreJoselu colaborador4 = new MostrarNombreJoselu();
+		
+		System.out.println(colaborador1+"\n"+colaborador2+"\n"+colaborador3+"\n"+colaborador4+"\n");
 	}
 
 	static Scanner leer = new Scanner(System.in);
