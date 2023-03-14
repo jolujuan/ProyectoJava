@@ -28,7 +28,7 @@ import com.proyecto.users.User.Rol;
 
 public class Funciones {
 
-	//MOSTRAR CREADORES DEL CODIGO //
+	// MOSTRAR CREADORES DEL CODIGO //
 	public static void mostrarColaboradores() {
 		MostrarNombreEdu colaborador1 = new MostrarNombreEdu();
 		MostrarNombreIsma colaborador2 = new MostrarNombreIsma();
@@ -42,8 +42,8 @@ public class Funciones {
 	SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
 
 	// Fuera del metodo para no reinicializar
-	public static int conId = 1;
-	public static int finalId = 1;
+//	public static int conId = 1;
+//	public static int finalId = 1;
 
 	// Varible nombre usuario
 	public static String nomUser = "";
@@ -85,33 +85,21 @@ public class Funciones {
 		// registro finish
 		System.out.println("Registro completado");
 
-		// Con este metodo podremos ver cual fue el ultimo id utilizado, ahora
-		// simplemente debemos aumentar 1 en el id para el siguiente use
-		try {
-			int numeroId = 0;
-			numeroId = ultimoNumero("src/com/proyecto/utils/idUser.txt");
-
-			conId = numeroId + 1;
-			finalId = conId;
-			retornarId(conId, "src/com/proyecto/utils/idUser.txt");
-		} catch (Exception e) {
-			System.out.println("No se ha podido crear tu id");
-		}
+		// Array List como null, para guardar solo información de los usuarios
+		// Obtenemos el ID de usuario con una funcion en la clase
+		Cliente N1 = new Cliente(User.getId(), usuario, apellidos, contraseña, email, poblacion, User.Rol.USUARIO,
+				fecha, null, null, null);
 
 		// Creamos el usuario con la funcion
-		nomUser = obtenerNomUser(finalId, email);
-
-		// Array List (Actor, Director, Peliculas) como null, para guardar solo la
-		// información de los usuarios
-		Cliente N1 = new Cliente(finalId, usuario, apellidos, contraseña, email, poblacion, User.Rol.USUARIO, fecha,
-				null, null, null);
+		nomUser = obtenerNomUser(User.getId(), email);
 
 		// Mostramos los datos del cliente y su numro de usuario
 		System.out.println("\n" + N1.toString());
 		System.out.println("Tu nombre de usuario es: " + nomUser);
 
 		// Pasamos los parametros del objeto a la funcíon guardar usuarios
-		guardarUsuario(nomUser, finalId, usuario, apellidos, email, contraseña, poblacion, User.Rol.USUARIO, fecha);
+		guardarUsuario(nomUser, User.getId(), usuario, apellidos, email, contraseña, poblacion, User.Rol.USUARIO,
+				fecha);
 		// Pasamos el parametro usuario para crear carpeta
 		crearCarpeta(nomUser);
 
@@ -151,57 +139,6 @@ public class Funciones {
 		return nomUser;
 	}
 
-	// CREAR ARCHIVO ID //
-	// ---------------------------------------------------------------------------------------------------------------
-	public static void retornarId(int numero, String rutaArchivo) throws IOException {
-		// Crear un objeto File para el archivo en la ruta especificada
-		File archivo = new File(rutaArchivo);
-		// Crear un objeto Scanner para leer el archivo.
-		Scanner scanner = new Scanner(archivo);
-
-		boolean estaVacio = !scanner.hasNext();
-
-		// Verificar si el número ya existe en el archivo.
-		boolean existeNumero = false;
-		while (scanner.hasNextInt()) {
-			int num = scanner.nextInt();
-			if (num == numero) {
-				existeNumero = true;
-				break;
-			}
-		}
-
-		// Si el número no existe en el archivo, agregarlo al final.
-		if (!existeNumero) {
-			// Crear un objeto FileWriter con la opción de agregar al final del archivo
-			FileWriter writer = new FileWriter(archivo, !estaVacio);
-
-			writer.write(" " + numero + " ");
-			writer.close();
-		}
-		scanner.close();
-	}
-
-	// OBTENER NUMERO ID //
-	public static int ultimoNumero(String rutaArchivo) {
-		// Crear un objeto File para el archivo en la ruta especificada
-		int ultimo = 0;
-		try {
-			File archivo = new File(rutaArchivo);
-			Scanner scanner = new Scanner(archivo);
-
-			while (scanner.hasNextInt()) {
-				ultimo = scanner.nextInt();
-			}
-			scanner.close();
-
-		} catch (Exception e) {
-			System.err.println("Error: " + e);
-		}
-		return ultimo;
-
-	}
-
 	// GUARDAR USUARIOS EN FICHERO TXT //
 	// ---------------------------------------------------------------------------------------------------------------
 	public static void guardarUsuario(String nomUser, int ID, String nombre, String apellidos, String email,
@@ -217,9 +154,9 @@ public class Funciones {
 			// Comprobar si el archivo está vacío para escribir el encabezado
 			if (file.length() == 0) {
 				escriureUser.println(
-						"USUARIO          |ID | Nombre           | Apellidos        | Email                        | Contraseña       | Población   | Rol        | Fecha        ");
+						"#USUARIO         |ID | Nombre           | Apellidos        | Email                        | Contraseña       | Población   | Rol        | Fecha        ");
 				escriureUser.println(
-						"-----------------+---+------------------+------------------+------------------------------+------------------+-------------+------------+--------------");
+						"#----------------+---+------------------+------------------+------------------------------+------------------+-------------+------------+--------------");
 			}
 
 			// Escribir los datos del usuario en el archivo
