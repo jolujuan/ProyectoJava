@@ -61,7 +61,6 @@ public class User {
 
 		try {
 			BufferedReader llegir = new BufferedReader(new FileReader(fitxer));
-
 			String line;
 			try {
 				while ((line = llegir.readLine()) != null) {
