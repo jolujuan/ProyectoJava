@@ -41,10 +41,6 @@ public class Funciones {
 	static Scanner leer = new Scanner(System.in);
 	SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
 
-	// Fuera del metodo para no reinicializar
-//	public static int conId = 1;
-//	public static int finalId = 1;
-
 	// Varible nombre usuario
 	public static String nomUser = "";
 	public static String userCarpeta = "";
@@ -226,7 +222,7 @@ public class Funciones {
 	// LEER Y GUARDAR ULTIMO ID PELICULA //
 	// ---------------------------------------------------------------------------------------------------------------
 
-	public static int guardarIdPelicula() {
+	/*public static int guardarIdPelicula() {
 
 		File file = new File("src/com/proyecto/utils/IDS/IdPelicula.txt");
 		int ultimoIdPelicula = 0;
@@ -260,7 +256,7 @@ public class Funciones {
 			System.err.println("No se puede escribir en el archivo: " + e.getMessage());
 		}
 		return nuevoIdpelicula;
-	}
+	}*/
 
 	// LEER Y GUARDAR ULTIMO ID PELICULA //
 	// ---------------------------------------------------------------------------------------------------------------
@@ -342,6 +338,8 @@ public class Funciones {
 	// PEDIR Y GUARDAR DATOS LISTAS GENERALES //
 	// ---------------------------------------------------------------------------------------------------------------
 
+	
+	
 	// PEDIR DATOS LISTA PELICULA GENERAL
 	public static void pedirListaGeneralPelicula() {
 		System.out.println("Introduce el nombre de la pelicula:");
@@ -357,18 +355,18 @@ public class Funciones {
 		String genero = ControlErrores.validarString();
 
 		// Guardar el id si se cierra el programa
-		int nuevoIdPelicula = guardarIdPelicula();
+//		int nuevoIdPelicula = guardarIdPelicula();
 
-		registrarListaGeneralPelicula(nuevoIdPelicula, pelicula, duracio, fechaEmisio, genero);
+		registrarListaGeneralPelicula( pelicula, duracio, fechaEmisio, genero);
 		System.out.println("Se ha guardado correctamente " + "\u2714");
 	}
 
 	// GUARDAR DATOS PELICULA GENERAL //
-	public static void registrarListaGeneralPelicula(int nuevoIdPelicula, String pelicula, int duracio,
+	public static void registrarListaGeneralPelicula( String pelicula, int duracio,
 			String fechaEmisio, String genero) {
 
 		// Crear la nueva Pelicula
-		Pelicula peliculasCreadas = new Pelicula(nuevoIdPelicula, pelicula, duracio, fechaEmisio, genero);
+		Pelicula peliculasCreadas = new Pelicula( pelicula, duracio, fechaEmisio, genero);
 		PelisGeneral.add(peliculasCreadas);
 
 		// serialització
@@ -499,7 +497,7 @@ public class Funciones {
 			fout = new FileOutputStream("src/com/proyecto/listasPeliculas/directores.llista", false);
 			oos = new ObjectOutputStream(fout);
 			// escrivim ArrayList sencer en el fitxer (1 sol objecte)
-			oos.writeObject(DirectorGeneral);
+			oos.writeObject(DirectorGeneral+"");
 			oos.flush();
 			oos.close();
 
@@ -521,10 +519,11 @@ public class Funciones {
 	// MOSTRAR LISTAS GENERALES
 	// ---------------------------------------------------------------------------------------------------------------
 
-	// MOSTRAR LISTA GENERAL ACTOR //
+	// MOSTRAR LISTA GENERAL PELICULA //
 	public static void mostrarListaGeneralPelicula() {
 		File vacio = new File("src/com/proyecto/listasPeliculas/peliculas.llista");
-		if (vacio.length() < 0 || vacio.length() == 0) {
+		System.out.println("tamaño: "+vacio.length());
+		if ( vacio.length() == 0) {
 			System.out.println("No hay nada que mostrar");
 		} else {
 			try {
@@ -533,21 +532,20 @@ public class Funciones {
 				ObjectInputStream reader = new ObjectInputStream(file);
 				try {
 					// llegim l'objecte que hi ha al fitxer (1 sol array List)
-					PelisGeneral = (ArrayList<Pelicula>) reader.readObject();
-
+					ArrayList<Pelicula> PelisLeidas = (ArrayList<Pelicula>) reader.readObject();
+					
 					System.out.println("La lista general de Peliculas es:\n");
-					for (Pelicula pelicula : PelisGeneral) {
+					for (Pelicula pelicula : PelisLeidas) {
 						System.out.println(pelicula.toString());
-						System.out.println();
 					}
 				} catch (Exception ex) {
-					System.err.println("Error en llegir pelicula.llista " + ex);
+					System.err.println("Error en llegir pelicula.llista1" + ex);
 				}
 
 				reader.close();
 				file.close();
 			} catch (Exception ex) {
-				System.err.println("Error en llegir pelicula.llista " + ex);
+				System.err.println("Error en llegir pelicula.llista2" + ex);
 			}
 		}
 	}
