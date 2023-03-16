@@ -219,127 +219,9 @@ public class Funciones {
 		return nomUserFinal = usr;
 	}
 
-	// LEER Y GUARDAR ULTIMO ID PELICULA //
-	// ---------------------------------------------------------------------------------------------------------------
-
-	/*public static int guardarIdPelicula() {
-
-		File file = new File("src/com/proyecto/utils/IDS/IdPelicula.txt");
-		int ultimoIdPelicula = 0;
-
-		if (file.exists() && file.length() > 0) {
-			// Si el archivo existe y no está vacío, leer el último ID
-			try (Scanner scanner = new Scanner(file)) {
-				String lastLine = null;
-				while (scanner.hasNextLine()) {
-					lastLine = scanner.nextLine();
-				}
-				if (lastLine != null) {
-					// Eliminar el salto de línea y convertir a entero
-					ultimoIdPelicula = Integer.parseInt(lastLine.trim());
-				}
-			} catch (FileNotFoundException e) {
-				// Mostrar si el archivo no puede encontrarse
-				System.err.println("No se puede leer el archivo: " + e.getMessage());
-			} catch (NumberFormatException e) {
-				// Mostrar si el archivo no contiene un numero
-				System.err.println("El archivo no contiene un número válido: " + e.getMessage());
-			}
-		}
-		int nuevoIdpelicula = ultimoIdPelicula + 1;
-
-		// Escribir el nuevo ID en el archivo
-		try (PrintWriter escriureIdPelicula = new PrintWriter(new FileWriter(file, true))) {
-			escriureIdPelicula.println(nuevoIdpelicula);
-		} catch (IOException e) {
-			// Mostrar si el archivo no se puede escribir en el archivo
-			System.err.println("No se puede escribir en el archivo: " + e.getMessage());
-		}
-		return nuevoIdpelicula;
-	}*/
-
-	// LEER Y GUARDAR ULTIMO ID PELICULA //
-	// ---------------------------------------------------------------------------------------------------------------
-	public static int guardarIdActor() {
-
-		File file = new File("src/com/proyecto/utils/IDS/IdActor.txt");
-		int ultimoIdACtor = 0;
-
-		if (file.exists() && file.length() > 0) {
-			// Si el archivo existe y no está vacío, leer el último ID
-			try (Scanner scanner = new Scanner(file)) {
-				String lastLine = null;
-				while (scanner.hasNextLine()) {
-					lastLine = scanner.nextLine();
-				}
-				if (lastLine != null) {
-					// Eliminar el salto de línea y convertir a entero
-					ultimoIdACtor = Integer.parseInt(lastLine.trim());
-				}
-			} catch (FileNotFoundException e) {
-				// Mostrar si el archivo no puede encontrarse
-				System.err.println("No se puede leer el archivo: " + e.getMessage());
-			} catch (NumberFormatException e) {
-				// Mostrar si el archivo no contiene un numero
-				System.err.println("El archivo no contiene un número válido: " + e.getMessage());
-			}
-		}
-		int nuevoIdActor = ultimoIdACtor + 1;
-
-		// Escribir el nuevo ID en el archivo
-		try (PrintWriter escriureIdPelicula = new PrintWriter(new FileWriter(file, true))) {
-			escriureIdPelicula.println(nuevoIdActor);
-		} catch (IOException e) {
-			// Mostrar si el archivo no se puede escribir en el archivo
-			System.err.println("No se puede escribir en el archivo: " + e.getMessage());
-		}
-		return nuevoIdActor;
-	}
-
-	// LEER Y GUARDAR ULTIMO ID PELICULA //
-	// ---------------------------------------------------------------------------------------------------------------
-	public static int guardarIdDirector() {
-
-		File file = new File("src/com/proyecto/utils/IDS/IdDirector.txt");
-		int ultimoIdDirector = 0;
-
-		if (file.exists() && file.length() > 0) {
-			// Si el archivo existe y no está vacío, leer el último ID
-			try (Scanner scanner = new Scanner(file)) {
-				String lastLine = null;
-				while (scanner.hasNextLine()) {
-					lastLine = scanner.nextLine();
-				}
-				if (lastLine != null) {
-					// Eliminar el salto de línea y convertir a entero
-					ultimoIdDirector = Integer.parseInt(lastLine.trim());
-				}
-			} catch (FileNotFoundException e) {
-				// Mostrar si el archivo no puede encontrarse
-				System.err.println("No se puede leer el archivo: " + e.getMessage());
-			} catch (NumberFormatException e) {
-				// Mostrar si el archivo no contiene un numero
-				System.err.println("El archivo no contiene un número válido: " + e.getMessage());
-			}
-		}
-		int nuevoIdDirector = ultimoIdDirector + 1;
-
-		// Escribir el nuevo ID en el archivo
-		try (PrintWriter escriureIdPelicula = new PrintWriter(new FileWriter(file, true))) {
-			escriureIdPelicula.println(nuevoIdDirector);
-			System.out.println("ID Pelicula guardado correctamente: " + nuevoIdDirector);
-		} catch (IOException e) {
-			// Mostrar si el archivo no se puede escribir en el archivo
-			System.err.println("No se puede escribir en el archivo: " + e.getMessage());
-		}
-		return nuevoIdDirector;
-	}
-
 	// PEDIR Y GUARDAR DATOS LISTAS GENERALES //
 	// ---------------------------------------------------------------------------------------------------------------
 
-	
-	
 	// PEDIR DATOS LISTA PELICULA GENERAL
 	public static void pedirListaGeneralPelicula() {
 		System.out.println("Introduce el nombre de la pelicula:");
@@ -354,19 +236,15 @@ public class Funciones {
 		System.out.println("Introduce el genero:");
 		String genero = ControlErrores.validarString();
 
-		// Guardar el id si se cierra el programa
-//		int nuevoIdPelicula = guardarIdPelicula();
-
-		registrarListaGeneralPelicula( pelicula, duracio, fechaEmisio, genero);
+		registrarListaGeneralPelicula(pelicula, duracio, fechaEmisio, genero);
 		System.out.println("Se ha guardado correctamente " + "\u2714");
 	}
 
 	// GUARDAR DATOS PELICULA GENERAL //
-	public static void registrarListaGeneralPelicula( String pelicula, int duracio,
-			String fechaEmisio, String genero) {
+	public static void registrarListaGeneralPelicula(String pelicula, int duracio, String fechaEmisio, String genero) {
 
 		// Crear la nueva Pelicula
-		Pelicula peliculasCreadas = new Pelicula( pelicula, duracio, fechaEmisio, genero);
+		Pelicula peliculasCreadas = new Pelicula(pelicula, duracio, fechaEmisio, genero);
 		PelisGeneral.add(peliculasCreadas);
 
 		// serialització
@@ -418,18 +296,14 @@ public class Funciones {
 		System.out.println("Introduce la nacionalidad del actor:");
 		String nacionalidad = ControlErrores.validarString();
 
-		// Guardar el id si se cierra el programa
-		int nuevoIdActor = guardarIdActor();
-
-		registrarListaGeneralActor(nuevoIdActor, nom, edad, apellidos, nacionalidad);
+		registrarListaGeneralActor(nom, apellidos, edad, nacionalidad);
 		System.out.println("Se ha guardado correctamente " + "\u2714");
 	}
 
 	// GUARDAR DATOS LISTA ACTOR GENERAL //
-	public static void registrarListaGeneralActor(int nuevoIdActor, String nom, int edad, String apellidos,
-			String nacionalidad) {
+	public static void registrarListaGeneralActor(String nom, String apellidos, int edad, String nacionalidad) {
 
-		Actor actoresCreados = new Actor(nuevoIdActor, nom, apellidos, edad, nacionalidad);
+		Actor actoresCreados = new Actor(nom, apellidos, edad, nacionalidad);
 		ActorGeneral.add(actoresCreados);
 
 		// serialització
@@ -471,20 +345,16 @@ public class Funciones {
 		int edad = ControlErrores.validarInt();
 
 		System.out.println("Introduce los goyas del director:");
-		String goyas = ControlErrores.validarString();
+		int goyas = ControlErrores.validarInt();
 
-		// Guardar el id si se cierra el programa
-		int nuevoIdDirector = guardarIdDirector();
-
-		registrarListaGeneralDirector(nuevoIdDirector, nom, apellidos, edad, goyas);
+		registrarListaGeneralDirector(nom, apellidos, edad, goyas);
 
 		System.out.println("Se ha guardado correctamente " + "\u2714");
 	}
 
 	// GUARDAR DATOS LISTA DIRECTOR GENERAL //
-	public static void registrarListaGeneralDirector(int nuevoIdDirector, String nom, String apellidos, int edad,
-			String goyas) {
-		Director directoresCreados = new Director(nuevoIdDirector, nom, apellidos, edad, goyas);
+	public static void registrarListaGeneralDirector(String nom, String apellidos, int edad, int goyas) {
+		Director directoresCreados = new Director(nom, apellidos, edad, goyas);
 		DirectorGeneral.add(directoresCreados);
 
 		// serialització
@@ -497,7 +367,7 @@ public class Funciones {
 			fout = new FileOutputStream("src/com/proyecto/listasPeliculas/directores.llista", false);
 			oos = new ObjectOutputStream(fout);
 			// escrivim ArrayList sencer en el fitxer (1 sol objecte)
-			oos.writeObject(DirectorGeneral+"");
+			oos.writeObject(DirectorGeneral);
 			oos.flush();
 			oos.close();
 
@@ -522,8 +392,7 @@ public class Funciones {
 	// MOSTRAR LISTA GENERAL PELICULA //
 	public static void mostrarListaGeneralPelicula() {
 		File vacio = new File("src/com/proyecto/listasPeliculas/peliculas.llista");
-		System.out.println("tamaño: "+vacio.length());
-		if ( vacio.length() == 0) {
+		if (vacio.length() == 0) {
 			System.out.println("No hay nada que mostrar");
 		} else {
 			try {
@@ -533,10 +402,11 @@ public class Funciones {
 				try {
 					// llegim l'objecte que hi ha al fitxer (1 sol array List)
 					ArrayList<Pelicula> PelisLeidas = (ArrayList<Pelicula>) reader.readObject();
-					
+
 					System.out.println("La lista general de Peliculas es:\n");
 					for (Pelicula pelicula : PelisLeidas) {
 						System.out.println(pelicula.toString());
+						System.out.println();
 					}
 				} catch (Exception ex) {
 					System.err.println("Error en llegir pelicula.llista1" + ex);
@@ -553,7 +423,7 @@ public class Funciones {
 	// MOSTRAR LISTA GENERAL ACTOR //
 	public static void mostrarListaGeneralActor() {
 		File vacio = new File("src/com/proyecto/listasPeliculas/actores.llista");
-		if (vacio.length() < 0 || vacio.length() == 0) {
+		if (vacio.length() == 0) {
 			System.out.println("No hay nada que mostrar");
 		} else {
 			try {
@@ -584,7 +454,7 @@ public class Funciones {
 	// MOSTRAR LISTA GENERAL DIRECTOR //
 	public static void mostrarListaGeneralDirector() {
 		File vacio = new File("src/com/proyecto/listasPeliculas/directores.llista");
-		if (vacio.length() < 0 || vacio.length() == 0) {
+		if (vacio.length() == 0) {
 			System.out.println("No hay nada que mostrar");
 		} else {
 			try {
@@ -600,13 +470,13 @@ public class Funciones {
 						System.out.println();
 					}
 				} catch (Exception ex) {
-					System.err.println("Error en llegir directores.llista " + ex);
+					System.err.println("Error en llegir directores.llista2 " + ex);
 				}
 
 				reader.close();
 				file.close();
 			} catch (Exception ex) {
-				System.err.println("Error en llegir directores.llista " + ex);
+				System.err.println("Error en llegir directores.llista1 " + ex);
 			}
 		}
 	}
@@ -787,8 +657,8 @@ public class Funciones {
 					// llegim l'objecte que hi ha al fitxer (1 sol array List)
 					PelisPersonal = (ArrayList<Pelicula>) reader.readObject();
 					System.out.println("La lista personal de Peliculas es:\n");
-					for (Pelicula direc : PelisPersonal) {
-						System.out.println(direc.toString());
+					for (Pelicula pel : PelisPersonal) {
+						System.out.println(pel.toString());
 						System.out.println();
 					}
 				} catch (Exception ex) {
@@ -907,7 +777,6 @@ public class Funciones {
 				try {
 					// llegim l'objecte que hi ha al fitxer (1 sol array List)
 					ActorGeneral = (ArrayList<Actor>) reader.readObject();
-
 				} catch (Exception ex) {
 				}
 
@@ -926,7 +795,7 @@ public class Funciones {
 				FileInputStream file = new FileInputStream("src/com/proyecto/listasPeliculas/directores.llista");
 				ObjectInputStream reader = new ObjectInputStream(file);
 				try {
-
+					DirectorGeneral = (ArrayList<Director>) reader.readObject();
 				} catch (Exception ex) {
 				}
 
