@@ -41,15 +41,15 @@ public class Main {
 								switch (menuTerciario) {
 								case 1:
 									System.out.println("-----Ver Peliculas (Lista GENERAL)-----");
-									Funciones.mostrarListaGeneralPelicula();
+									Funciones.mostrarListasGenerales(1);
 									break;
 								case 2:
 									System.out.println("-----Ver Actores (Lista GENERAL)-----");
-									Funciones.mostrarListaGeneralActor();
+									Funciones.mostrarListasGenerales(2);
 									break;
 								case 3:
 									System.out.println("-----Ver Directores (Lista GENERAL)-----");
-									Funciones.mostrarListaGeneralDirector();
+									Funciones.mostrarListasGenerales(3);
 									break;
 								default:
 									System.out.println("Salir");
@@ -69,15 +69,15 @@ public class Main {
 								switch (menuTerciario) {
 								case 1:
 									System.out.println("-----Ver Peliculas (Lista PERSONAL)-----");
-									Funciones.mostrarListaPelicuPersonal();
+									Funciones.mostrarListasPersonales(1);
 									break;
 								case 2:
 									System.out.println("-----Ver Actores (Lista PERSONAL)-----");
-									Funciones.mostrarListaActorPersonal();
+									Funciones.mostrarListasPersonales(2);
 									break;
 								case 3:
 									System.out.println("-----Ver Directores (Lista PERSONAL)-----");
-									Funciones.mostrarListaDirectorPersonal();
+									Funciones.mostrarListasPersonales(3);
 									break;
 								default:
 									System.out.println("Salir");
