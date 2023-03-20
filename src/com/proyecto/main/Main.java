@@ -11,14 +11,16 @@ public class Main {
 		// MENU PRINCIPAL //
 
 		do {
-			Funciones.mostrarColaboradores();
-			System.out.println("Escoja una opcion: \n-> 1. Registrar Usuario \n-> 2. Login \n-> 3. Salir");
+//			Funciones.mostrarColaboradores();
+			System.out.println("Escoja una opcion: \n-> 1. PRUEBAS \n-> 2. Login \n-> 3. Salir");
 			menuPrincipal = ControlErrores.validarMenuPrincipal();
 			switch (menuPrincipal) {
 			case 1:
+				Funciones.cargarArrayslist();
+				Funciones.borrarListaGeneral(2);
 				///// AQUI IRA LA FUNCION DE registrarUser() ///////////
-				System.out.println("-----Registrar Usuario-----");
-				Funciones.registrarUsuario();
+//				System.out.println("-----Registrar Usuario-----");
+//				Funciones.registrarUsuario();
 				break;
 			case 2:
 				///// AQUI IRA LA FUNCION DE loginUser() ///////////
