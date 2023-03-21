@@ -17,7 +17,7 @@ public class Main {
 			switch (menuPrincipal) {
 			case 1:
 				Funciones.cargarArrayslist();
-				Funciones.borrarListaGeneral(2);
+				Funciones.borrarListaGeneral(3);
 				///// AQUI IRA LA FUNCION DE registrarUser() ///////////
 //				System.out.println("-----Registrar Usuario-----");
 //				Funciones.registrarUsuario();
