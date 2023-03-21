@@ -1,39 +1,48 @@
 package com.proyecto.users;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+
 import com.proyecto.clases.Director;
 import com.proyecto.clases.Pelicula;
 
 public class User {
 
 	// ATRIBUTOS //
-//	protected static int countId = 0;
-	protected int id;
+	protected static int countId = 0;
+	protected static int id;
 	protected String nombre;
 	protected String apellidos;
 	protected String contrasenia;
 	protected String email;
 	protected String poblacion;
 	protected String fechaNacimiento;
-	 
+
 	Rol roles;
 
-	public enum Rol{
+	public enum Rol {
 		USUARIO, ADMIN
 	}
-	
+
 	/// CONTRUCTOR ///
 	public User(int id, String nombre, String apellidos, String contrasenia, String email, String poblacion, Rol roles,
 			String fechaNacimiento) {
 
 		super();
-		// Cada vez que el programa es cerrado pierde el contador countId
-		// por lo tanto agregamos el parametro this.id=id, para pasarle la variable ID
-		// almacenada en un archivo de texto al constructor de la clase "User" desde el
-		// constructor de la clase "Cliente" :)
-//		countId++; // CONTADOR DEL ID PARA QUE SE AUTOINCREMENTE
-//		this.id = countId;
+		// La ruta para obtener el id
+		String ruta = "src/com/proyecto/utils/usersGuardados.txt";
 
-		this.id = id;
+		// Para contador cero obtener el ultimo numero
+		if (countId == 0) {
+			countId = obtenerId(ruta);
+		}
+		// Cada vez ira autoincrementando el contador
+		countId++;
+
+		// El contador es igual al id
+		User.id = countId;
 		this.nombre = nombre;
 		this.apellidos = apellidos;
 		this.contrasenia = contrasenia;
@@ -43,15 +52,55 @@ public class User {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
+	// Omitimos el encabezado y obtenemos la posicion 1 respecto al id
+	// Despues de sacar el ultimo numero en la lectura, comparamos con contador
+	public int obtenerId(String ruta) {
+		int idActual = 0;
+		int idContador = 0;
+		File fitxer = new File(ruta);
+
+		try {
+			BufferedReader llegir = new BufferedReader(new FileReader(fitxer));
+			String line;
+			try {
+				while ((line = llegir.readLine()) != null) {
+
+					if (!line.contains("#")) {
+						String[] array = line.split("\\|");
+
+						idActual = Integer.parseInt(array[1]);
+
+						if (idActual > idContador) {
+							idContador = idActual;
+						}
+					}
+				}
+				llegir.close();
+			} catch (IOException e) {
+				System.out.println("Error: " + e);
+			}
+		} catch (IOException e) {
+			System.out.println("Error: " + e);
+		}
+		return idContador;
+	}
+
 	/// GETTERS Y SETTERS
-	public int getId() {
+	public static int getId() {
 		return id;
 	}
 
-	// NO NECESITAMOS EL setId porque se autoincrementa solo
-//	public void setId(int id) {
-//		this.id = id;
-//	}
+	public void setId(int id) {
+		User.id = id;
+	}
+
+	public static int getCountId() {
+		return countId;
+	}
+
+	public static void setCountId(int countId) {
+		User.countId = countId;
+	}
 
 	public String getNombre() {
 		return nombre;
@@ -166,5 +215,4 @@ public class User {
 				+ "\nEmail: " + email + "\nPoblacion: " + poblacion + "\nRol: " + roles + "\nFecha Nacimiento: "
 				+ fechaNacimiento;
 	}
-
 }
