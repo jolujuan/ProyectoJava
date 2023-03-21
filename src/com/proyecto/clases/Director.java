@@ -73,7 +73,6 @@ public class Director implements  Serializable {
 	}
 
 	/// GETTERS Y SETTERS ///
-	// Sobreescribimos desde la interficie
 	
 	public int getId() {
 		return idDirector;

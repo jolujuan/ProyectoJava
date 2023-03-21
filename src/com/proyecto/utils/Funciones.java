@@ -29,8 +29,6 @@ import com.proyecto.users.User.Rol;
 
 public class Funciones {
 
-	private static final Class<?> Actor = null;
-
 	// MOSTRAR CREADORES DEL CODIGO //
 	public static void mostrarColaboradores() {
 		MostrarNombreEdu colaborador1 = new MostrarNombreEdu();
@@ -263,6 +261,7 @@ public class Funciones {
 			oos.writeObject(PelisGeneral);
 			oos.flush();
 			oos.close();
+			System.out.println("La pelicula se ha registrado correctamente");
 
 		} catch (Exception ex) {
 			System.err.println("Error en registrar general.pelicula.llista " + ex);
@@ -322,6 +321,8 @@ public class Funciones {
 			oos.writeObject(ActorGeneral);
 			oos.flush();
 			oos.close();
+			System.out.println("El actor/a se ha registrado correctamente");
+
 		} catch (Exception ex) {
 			System.err.println("Error en registrar general.actor.llista " + ex);
 		} finally {
@@ -373,6 +374,7 @@ public class Funciones {
 			oos.writeObject(DirectorGeneral);
 			oos.flush();
 			oos.close();
+			System.out.println("El director/a se ha registrado correctamente");
 
 		} catch (Exception ex) {
 			System.err.println("Error: " + ex);
@@ -411,13 +413,11 @@ public class Funciones {
 			break;
 		}
 	}
-	// BORRAR DATOS LISTAS GENERALES- pelicula
-	// ---------------------------------------------------------------------------------------------------------------
 
+	// BORRAR DATOS LISTAS GENERALES- pelicula
 	private static <objeto> void borrarListaGeneralPelicula(String archivo, String mensaje,
 			ArrayList<objeto> listaArray) {
 		File fitxer = new File(archivo);
-		System.out.println("tamaño   " + fitxer.length() + " tamaño arraylist: " + listaArray.size());
 		if (fitxer.length() < 0 || fitxer.length() == 0 || listaArray.size() <= 0) {
 			System.out.println("No hay nada que mostrar");
 		} else {
@@ -493,8 +493,6 @@ public class Funciones {
 		}
 	}
 	// BORRAR DATOS LISTAS GENERALES- director
-	// ---------------------------------------------------------------------------------------------------------------
-
 	private static <objeto> void borrarListaGeneralDirector(String archivo, String mensaje,
 			ArrayList<objeto> listaArray) {
 		File fitxer = new File(archivo);
@@ -574,9 +572,9 @@ public class Funciones {
 		}
 	}
 
+	// BORRAR DATOS LISTAS GENERALES- actor
 	private static <objeto> void borrarListaGeneralActor(String archivo, String mensaje, ArrayList<objeto> listaArray) {
 		File fitxer = new File(archivo);
-//		System.out.println("tamaño"+fitxer);s
 		if (fitxer.length() < 0 || fitxer.length() == 0 || listaArray.size() <= 0) {
 			System.out.println("No hay nada que mostrar");
 		} else {
@@ -688,7 +686,7 @@ public class Funciones {
 					// Llegim l'objecte que hi ha al fitxer (1 sol array List)
 					listaArray = (ArrayList<objeto>) reader.readObject();
 					System.out.println(mensaje);
-
+					
 					for (objeto item : listaArray) {
 						System.out.println(item.toString());
 						System.out.println();
@@ -713,7 +711,7 @@ public class Funciones {
 		if (vacio.length() < 0 || vacio.length() == 0) {
 			System.out.println("No puedes añadir nada ya que la lista general esta vacia");
 		} else {
-			System.out.println("Introduce el numero de la pelicula que quieres coger:");
+			System.out.println("Introduce el numero de la pelicula que quieres:");
 			for (Pelicula i : PelisGeneral) {
 				System.out.println(i.toString());
 			}
@@ -745,6 +743,8 @@ public class Funciones {
 			oos.writeObject(PelisPersonal);
 			oos.flush();
 			oos.close();
+			System.out.println("La pelicula se ha registrado correctamente");
+			
 		} catch (Exception ex) {
 			System.err.println("Error en registrar personal.pelicula.llista " + ex);
 		} finally {
@@ -765,7 +765,7 @@ public class Funciones {
 		if (vacio.length() < 0 || vacio.length() == 0) {
 			System.out.println("No puedes añadir nada ya que la lista general esta vacia");
 		} else {
-			System.out.println("Introduce el numero del Actor/a que quieres coger:");
+			System.out.println("Introduce el numero del Actor/a que quieres:");
 			for (Actor i : ActorGeneral) {
 				System.out.println(i.toString());
 			}
@@ -796,6 +796,8 @@ public class Funciones {
 			oos.writeObject(ActorPersonal);
 			oos.flush();
 			oos.close();
+			System.out.println("El actor/a se ha registrado correctamente");
+			
 		} catch (Exception ex) {
 			System.err.println("Error en registrar personal.actor.llista " + ex);
 		} finally {
@@ -815,7 +817,7 @@ public class Funciones {
 		if (vacio.length() < 0 || vacio.length() == 0) {
 			System.out.println("No puedes añadir nada ya que la lista general esta vacia");
 		} else {
-			System.out.println("Introduce el numero del Director/a que quieres coger:");
+			System.out.println("Introduce el numero del Director/a que quieres:");
 			for (Director i : DirectorGeneral) {
 				System.out.println(i.toString());
 			}
@@ -847,6 +849,8 @@ public class Funciones {
 			oos.writeObject(DirectorPersonal);
 			oos.flush();
 			oos.close();
+			System.out.println("El director/a se ha registrado correctamente");
+			
 		} catch (Exception ex) {
 			System.err.println("Error en registrar personal.director.llista " + ex);
 		} finally {
@@ -990,7 +994,7 @@ public class Funciones {
 						"src/com/proyecto/usuariosCarpetas/" + nomUserFinal + "/director.llista");
 				ObjectInputStream reader = new ObjectInputStream(file);
 				try {
-
+					DirectorPersonal=(ArrayList<Director>)reader.readObject();
 				} catch (Exception ex) {
 //				System.err.println("Error: " + ex);
 				}
@@ -1012,7 +1016,7 @@ public class Funciones {
 						"src/com/proyecto/usuariosCarpetas/" + nomUserFinal + "/pelicula.llista");
 				ObjectInputStream reader = new ObjectInputStream(file);
 				try {
-
+					PelisPersonal=(ArrayList<Pelicula>)reader.readObject();
 				} catch (Exception ex) {
 				}
 
@@ -1033,7 +1037,7 @@ public class Funciones {
 						"src/com/proyecto/usuariosCarpetas/" + nomUserFinal + "/actor.llista");
 				ObjectInputStream reader = new ObjectInputStream(file);
 				try {
-
+					ActorPersonal=(ArrayList<Actor>)reader.readObject();
 				} catch (Exception ex) {
 				}
 
