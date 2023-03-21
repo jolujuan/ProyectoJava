@@ -73,9 +73,7 @@ public class Actor implements  Serializable {
 	}
 
 	/// GETTERS Y SETTERS ///
-	
-	//Sobreescribimos desde la interficie
-	
+
 	public int getId() {
 		return idActor;
 	}
