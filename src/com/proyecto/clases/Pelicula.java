@@ -7,7 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Pelicula  implements BorradoGeneral, Serializable  {
+public class Pelicula  implements Serializable  {
 
 	/// ATRIBUTOS PELICULAS ///
 	private static int countIdPelicula = 0;
@@ -75,7 +75,6 @@ public class Pelicula  implements BorradoGeneral, Serializable  {
 	/// GETTERS Y SETTERS ///
 	
 	//Sobreescribimos desde la interficie
-	@Override
 	public int getId() {
 		return idPelicula;
 	}

@@ -7,7 +7,7 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		int menuPrincipal = 0, menuSecundario = 0, menuTerciario = 0;
+		int menuPrincipal = 0, menuSecundario = 0, menuTerciario = 0,menuBorrarGeneral=0;;
 		// MENU PRINCIPAL //
 
 		do {
@@ -17,7 +17,30 @@ public class Main {
 			switch (menuPrincipal) {
 			case 1:
 				Funciones.cargarArrayslist();
-				Funciones.borrarListaGeneral(3);
+				do {
+					System.out.println(
+							"\n-> 1. Borrar pelicula \n-> 2. Borrar Actor \n-> 3. Borrar Director \n-> 4. Salir");
+					menuBorrarGeneral = ControlErrores.validarTerciario();
+				switch (menuBorrarGeneral) {
+				case 1: {
+					Funciones.borrarListaGeneral(1);
+					break;
+				}
+				case 2:{
+					Funciones.borrarListaGeneral(2);
+					break;
+				}
+				case 3:{
+					Funciones.borrarListaGeneral(3);
+					break;
+				}
+				
+				default:
+					System.out.println("Salir");
+				}}while (menuBorrarGeneral!=4) ;
+				
+				
+				
 				///// AQUI IRA LA FUNCION DE registrarUser() ///////////
 //				System.out.println("-----Registrar Usuario-----");
 //				Funciones.registrarUsuario();
@@ -26,6 +49,36 @@ public class Main {
 				///// AQUI IRA LA FUNCION DE loginUser() ///////////
 				System.out.println("-----Iniciar Sesion-----");
 				if(Funciones.validaUsuario()) {
+					String admin = "admin";
+					//dependiendo de si es admin o no Se dirigira a los menus de admin o de users
+					if (Funciones.nomUserFinal.equals(admin)) {
+						System.out.println("Bienvenido estas en el modo administrador ");
+						do {
+							System.out.println(
+									"\n-> 1. Borrar pelicula \n-> 2. Borrar Actor \n-> 3. Borrar Director \n-> 4. Salir");
+							menuBorrarGeneral = ControlErrores.validarTerciario();
+						switch (menuBorrarGeneral) {
+						case 1: {
+							Funciones.borrarListaGeneral(1);
+							break;
+						}
+						case 2:{
+							Funciones.borrarListaGeneral(2);
+							break;
+						}
+						case 3:{
+							Funciones.borrarListaGeneral(3);
+							break;
+						}
+						
+						default:
+							System.out.println("Salir");
+						}}while (menuBorrarGeneral!=4) ;
+						
+					}else {
+						
+					
+					
 					do {
 
 						System.out.println(
@@ -145,6 +198,7 @@ public class Main {
 							System.out.println("Salir");
 						}
 					} while (menuSecundario != 5);
+					}
 				}
 				
 

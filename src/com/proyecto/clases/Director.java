@@ -7,7 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Director implements BorradoGeneral, Serializable {
+public class Director implements  Serializable {
 
 	/// ATRIBUTOS DIRECTOR ///
 	private static int countIdDirector = 0;
@@ -74,7 +74,7 @@ public class Director implements BorradoGeneral, Serializable {
 
 	/// GETTERS Y SETTERS ///
 	// Sobreescribimos desde la interficie
-	@Override
+	
 	public int getId() {
 		return idDirector;
 	}

@@ -1,6 +1,7 @@
 package com.proyecto.utils;
 
 import java.io.BufferedReader;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -16,7 +17,7 @@ import java.util.Scanner;
 
 import com.proyecto.Ismael.MostrarNombreIsma;
 import com.proyecto.clases.Actor;
-import com.proyecto.clases.BorradoGeneral;
+
 import com.proyecto.clases.Director;
 import com.proyecto.clases.Pelicula;
 import com.proyecto.edu.MostrarNombreEdu;
@@ -27,6 +28,8 @@ import com.proyecto.users.User;
 import com.proyecto.users.User.Rol;
 
 public class Funciones {
+
+	private static final Class<?> Actor = null;
 
 	// MOSTRAR CREADORES DEL CODIGO //
 	public static void mostrarColaboradores() {
@@ -396,11 +399,11 @@ public class Funciones {
 					"La lista general de Peliculas es:\n", PelisGeneral);
 			break;
 		case 2:
-			borrarListaGeneralPelicula("src/com/proyecto/listasPeliculas/actores.llista",
+			borrarListaGeneralActor("src/com/proyecto/listasPeliculas/actores.llista",
 					"La lista general de Actores es:\n", ActorGeneral);
 			break;
 		case 3:
-			borrarListaGeneralPelicula("src/com/proyecto/listasPeliculas/directores.llista",
+			borrarListaGeneralDirector("src/com/proyecto/listasPeliculas/directores.llista",
 					"La lista general de Directores es:\n", DirectorGeneral);
 			break;
 		default:
@@ -408,11 +411,14 @@ public class Funciones {
 			break;
 		}
 	}
+	// BORRAR DATOS LISTAS GENERALES- pelicula
+	// ---------------------------------------------------------------------------------------------------------------
 
-	private static void borrarListaGeneralPelicula(String archivo, String mensaje, ArrayList<?> listaArray) {
+	private static <objeto> void borrarListaGeneralPelicula(String archivo, String mensaje,
+			ArrayList<objeto> listaArray) {
 		File fitxer = new File(archivo);
-		System.out.println("tamaño"+fitxer);
-		if (fitxer.length() == 0) {
+		System.out.println("tamaño   " + fitxer.length() + " tamaño arraylist: " + listaArray.size());
+		if (fitxer.length() < 0 || fitxer.length() == 0 || listaArray.size() <= 0) {
 			System.out.println("No hay nada que mostrar");
 		} else {
 			try {
@@ -421,19 +427,20 @@ public class Funciones {
 				ObjectInputStream reader = new ObjectInputStream(file);
 				try {
 					// Llegim l'objecte que hi ha al fitxer (1 sol array List)
-					listaArray = (ArrayList<?>) reader.readObject();
+					listaArray = (ArrayList<objeto>) reader.readObject();
 					System.out.println(mensaje);
 
 					for (Object item : listaArray) {
 						System.out.println(item.toString());
 						System.out.println();
 					}
+
 					// Calcular correctamente el rango de los ids
 					int min = Integer.MAX_VALUE;
 					int max = Integer.MIN_VALUE;
 
-					for (Object item : listaArray) {
-						int id = ((BorradoGeneral) item).getId();
+					for (objeto item : listaArray) {
+						int id = ((Pelicula) item).getId();
 						if (id > max) {
 							max = id;
 						}
@@ -445,13 +452,176 @@ public class Funciones {
 					boolean encertat = false;
 					int idUser = 0;
 					do {
-						System.out.println("Seleccione id del elemento a borrar");
+						System.out.println("Seleccione id del elemento a borrar( pulse -1 para salir)");
 						idUser = ControlErrores.validarInt();
-						if (idUser > max || idUser < min) {
+						if (idUser == -1) {
+							System.out.println("Has cancelado el borrado de la lista");
+							encertat = true;
+
+						} else if (idUser > max || idUser < min) {
 							System.out.println("El numero que has puesto no esta en la lista");
 						} else {
 							for (Object item : listaArray) {
-								if (((BorradoGeneral) item).getId() == idUser) {
+								if (((Pelicula) item).getId() == idUser) {
+									listaArray.remove(item);
+									System.out.println("Se ha borrado correctamente");
+									encertat = true;
+									break;
+								}
+							}
+						}
+					} while (!encertat);
+
+					ObjectOutputStream oos = null;
+					FileOutputStream fout = null;
+
+					fout = new FileOutputStream(archivo, false);
+					oos = new ObjectOutputStream(fout);
+					// escrivim ArrayList sencer en el fitxer (1 sol objecte)
+					oos.writeObject(listaArray);
+					oos.flush();
+					oos.close();
+
+				} catch (Exception ex) {
+					System.err.println("Error en llegir " + archivo + ": " + ex);
+				}
+				reader.close();
+				file.close();
+			} catch (Exception ex) {
+				System.err.println("Error en llegir " + archivo + ": " + ex);
+			}
+		}
+	}
+	// BORRAR DATOS LISTAS GENERALES- director
+	// ---------------------------------------------------------------------------------------------------------------
+
+	private static <objeto> void borrarListaGeneralDirector(String archivo, String mensaje,
+			ArrayList<objeto> listaArray) {
+		File fitxer = new File(archivo);
+//		System.out.println("tamaño"+fitxer);s
+		if (fitxer.length() < 0 || fitxer.length() == 0 || listaArray.size() <= 0) {
+			System.out.println("No hay nada que mostrar");
+		} else {
+			try {
+				// Obrim fitxer per a lectura
+				FileInputStream file = new FileInputStream(archivo);
+				ObjectInputStream reader = new ObjectInputStream(file);
+				try {
+					// Llegim l'objecte que hi ha al fitxer (1 sol array List)
+					listaArray = (ArrayList<objeto>) reader.readObject();
+					System.out.println(mensaje);
+
+					for (Object item : listaArray) {
+						System.out.println(item.toString());
+						System.out.println();
+					}
+
+					// Calcular correctamente el rango de los ids
+					int min = Integer.MAX_VALUE;
+					int max = Integer.MIN_VALUE;
+
+					for (objeto item : listaArray) {
+						int id = ((Pelicula) item).getId();
+						if (id > max) {
+							max = id;
+						}
+						if (id < min) {
+							min = id;
+						}
+					}
+
+					boolean encertat = false;
+					int idUser = 0;
+					do {
+						System.out.println("Seleccione id del elemento a borrar( pulse -1 para salir)");
+						idUser = ControlErrores.validarInt();
+						if (idUser == -1) {
+							System.out.println("Has cancelado el borrado de la lista");
+							encertat = true;
+
+						} else if (idUser > max || idUser < min) {
+							System.out.println("El numero que has puesto no esta en la lista");
+						} else {
+							for (Object item : listaArray) {
+								if (((Director) item).getId() == idUser) {
+									listaArray.remove(item);
+									System.out.println("Se ha borrado correctamente");
+									encertat = true;
+									break;
+								}
+							}
+						}
+					} while (!encertat);
+
+					ObjectOutputStream oos = null;
+					FileOutputStream fout = null;
+
+					fout = new FileOutputStream(archivo, false);
+					oos = new ObjectOutputStream(fout);
+					// escrivim ArrayList sencer en el fitxer (1 sol objecte)
+					oos.writeObject(listaArray);
+					oos.flush();
+					oos.close();
+
+				} catch (Exception ex) {
+					System.err.println("Error en llegir " + archivo + ": " + ex);
+				}
+				reader.close();
+				file.close();
+			} catch (Exception ex) {
+				System.err.println("Error en llegir " + archivo + ": " + ex);
+			}
+		}
+	}
+
+	private static <objeto> void borrarListaGeneralActor(String archivo, String mensaje, ArrayList<objeto> listaArray) {
+		File fitxer = new File(archivo);
+//		System.out.println("tamaño"+fitxer);s
+		if (fitxer.length() < 0 || fitxer.length() == 0 || listaArray.size() <= 0) {
+			System.out.println("No hay nada que mostrar");
+		} else {
+			try {
+				// Obrim fitxer per a lectura
+				FileInputStream file = new FileInputStream(archivo);
+				ObjectInputStream reader = new ObjectInputStream(file);
+				try {
+					// Llegim l'objecte que hi ha al fitxer (1 sol array List)
+					listaArray = (ArrayList<objeto>) reader.readObject();
+					System.out.println(mensaje);
+
+					for (Object item : listaArray) {
+						System.out.println(item.toString());
+						System.out.println();
+					}
+
+					// Calcular correctamente el rango de los ids
+					int min = Integer.MAX_VALUE;
+					int max = Integer.MIN_VALUE;
+
+					for (objeto item : listaArray) {
+						int id = ((Actor) item).getId();
+						if (id > max) {
+							max = id;
+						}
+						if (id < min) {
+							min = id;
+						}
+					}
+
+					boolean encertat = false;
+					int idUser = 0;
+					do {
+						System.out.println("Seleccione id del elemento a borrar( pulse -1 para salir)");
+						idUser = ControlErrores.validarInt();
+						if (idUser == -1) {
+							System.out.println("Has cancelado el borrado de la lista");
+							encertat = true;
+
+						} else if (idUser > max || idUser < min) {
+							System.out.println("El numero que has puesto no esta en la lista");
+						} else {
+							for (Object item : listaArray) {
+								if (((Pelicula) item).getId() == idUser) {
 									listaArray.remove(item);
 									System.out.println("Se ha borrado correctamente");
 									encertat = true;
@@ -507,7 +677,7 @@ public class Funciones {
 
 	private static <objeto> void mostrarListaGeneral(String archivo, String mensaje, ArrayList<objeto> listaArray) {
 		File fitxer = new File(archivo);
-		if (fitxer.length() == 0) {
+		if (fitxer.length() < 0 || fitxer.length() == 0) {
 			System.out.println("No hay nada que mostrar");
 		} else {
 			try {
