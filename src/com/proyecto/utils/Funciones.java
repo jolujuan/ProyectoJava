@@ -16,6 +16,7 @@ import java.util.Scanner;
 
 import com.proyecto.Ismael.MostrarNombreIsma;
 import com.proyecto.clases.Actor;
+import com.proyecto.clases.BorradoGeneral;
 import com.proyecto.clases.Director;
 import com.proyecto.clases.Pelicula;
 import com.proyecto.edu.MostrarNombreEdu;
@@ -409,86 +410,56 @@ public class Funciones {
 	}
 
 	private static void borrarListaGeneralPelicula(String archivo, String mensaje, ArrayList<?> listaArray) {
-	    File fitxer = new File(archivo);
-	    if (fitxer.length() == 0) {
-	        System.out.println("No hay nada que mostrar");
-	    } else {
-	        try {
-	            // Obrim fitxer per a lectura
-	            FileInputStream file = new FileInputStream(archivo);
-	            ObjectInputStream reader = new ObjectInputStream(file);
-	            try {
-	                // Llegim l'objecte que hi ha al fitxer (1 sol array List)
-	                listaArray = (ArrayList<?>) reader.readObject();
-	                System.out.println(mensaje);
+		File fitxer = new File(archivo);
+		System.out.println("tamaño"+fitxer);
+		if (fitxer.length() == 0) {
+			System.out.println("No hay nada que mostrar");
+		} else {
+			try {
+				// Obrim fitxer per a lectura
+				FileInputStream file = new FileInputStream(archivo);
+				ObjectInputStream reader = new ObjectInputStream(file);
+				try {
+					// Llegim l'objecte que hi ha al fitxer (1 sol array List)
+					listaArray = (ArrayList<?>) reader.readObject();
+					System.out.println(mensaje);
 
-	                for (Object item : listaArray) {
-	                    System.out.println(item.toString());
-	                    System.out.println();
-	                }
-	                //Calcular correctamente el rango de los ids
-	                int min = Integer.MAX_VALUE;
-	                int max = Integer.MIN_VALUE;
+					for (Object item : listaArray) {
+						System.out.println(item.toString());
+						System.out.println();
+					}
+					// Calcular correctamente el rango de los ids
+					int min = Integer.MAX_VALUE;
+					int max = Integer.MIN_VALUE;
 
-	                for (Object item : listaArray) {
-	                    if (item instanceof Pelicula) {
-	                        int idPelicula = ((Pelicula) item).getIdPelicula();
-	                        if (idPelicula > max) {
-	                            max = idPelicula;
-	                        }
-	                        if (idPelicula < min) {
-	                            min = idPelicula;
-	                        }
-	                    } else if (item instanceof Actor) {
-	                        int idActor = ((Actor) item).getIdActor();
-	                        if (idActor > max) {
-	                            max = idActor;
-	                        }
-	                        if (idActor < min) {
-	                            min = idActor;
-	                        }
-	                    } else if (item instanceof Director) {
-	                        int idDirector = ((Director) item).getIdDirector();
-	                        if (idDirector > max) {
-	                            max = idDirector;
-	                        }
-	                        if (idDirector < min) {
-	                            min = idDirector;
-	                        }
-	                    }
-	                }
+					for (Object item : listaArray) {
+						int id = ((BorradoGeneral) item).getId();
+						if (id > max) {
+							max = id;
+						}
+						if (id < min) {
+							min = id;
+						}
+					}
 
-	                boolean encertat = false;
-	                int idUser = 0;
-	                do {
-	                    System.out.println("Seleccione id del elemento a borrar");
-	                    
+					boolean encertat = false;
+					int idUser = 0;
+					do {
+						System.out.println("Seleccione id del elemento a borrar");
 						idUser = ControlErrores.validarInt();
-
 						if (idUser > max || idUser < min) {
 							System.out.println("El numero que has puesto no esta en la lista");
 						} else {
-							//Obtenemos posicion linea perteneciente al id en concreto
 							for (Object item : listaArray) {
-							    if (item instanceof Pelicula && ((Pelicula) item).getIdPelicula() == idUser) {
-							        listaArray.remove(item);
-							        encertat = true;
-							        break; // Salir del bucle al encontrar la coincidencia
-							    } else if (item instanceof Actor && ((Actor) item).getIdActor() == idUser) {
-							        listaArray.remove(item);
-							        encertat = true;
-							        break;
-							    } else if (item instanceof Director && ((Director) item).getIdDirector() == idUser) {
-							        listaArray.remove(item);
-							        encertat = true;
-							        break; 
-							    }
+								if (((BorradoGeneral) item).getId() == idUser) {
+									listaArray.remove(item);
+									System.out.println("Se ha borrado correctamente");
+									encertat = true;
+									break;
+								}
 							}
-							System.out.println("Se ha borrado correctamente");
-							encertat = true;
 						}
 					} while (!encertat);
-
 
 					ObjectOutputStream oos = null;
 					FileOutputStream fout = null;
@@ -522,11 +493,11 @@ public class Funciones {
 			break;
 		case 2:
 			mostrarListaGeneral("src/com/proyecto/listasPeliculas/actores.llista", "La lista general de Actores es:\n",
-					new ArrayList<Actor>(ActorGeneral));
+					new ArrayList<Actor>());
 			break;
 		case 3:
 			mostrarListaGeneral("src/com/proyecto/listasPeliculas/directores.llista",
-					"La lista general de Directores es:\n", new ArrayList<Director>(DirectorGeneral));
+					"La lista general de Directores es:\n", new ArrayList<Director>());
 			break;
 		default:
 			System.out.println("Opcion no valida");

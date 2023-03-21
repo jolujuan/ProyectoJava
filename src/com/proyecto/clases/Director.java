@@ -7,7 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Director implements Serializable {
+public class Director implements BorradoGeneral, Serializable {
 
 	/// ATRIBUTOS DIRECTOR ///
 	private static int countIdDirector = 0;
@@ -18,7 +18,7 @@ public class Director implements Serializable {
 	private int goyas;
 
 	/// CONSTRUCTOR ///
-	public Director( String nombreDirector, String apellidoDirector, int edadDirector, int goyas) {
+	public Director(String nombreDirector, String apellidoDirector, int edadDirector, int goyas) {
 		super();
 
 		// La ruta para obtener el id
@@ -39,41 +39,46 @@ public class Director implements Serializable {
 	}
 
 	// Haremos una comparacion hacia el ultimo id de la clase y lo asignaremos
-		// dentro del contructor, incrementandolo
-		public int obtenerId(String ruta) {
-			int contador = 0;
-			File fitxer = new File(ruta);
-			if (fitxer.length() == 0) {
-			} else {
+	// dentro del contructor, incrementandolo
+	public int obtenerId(String ruta) {
+		int contador = 0;
+		File fitxer = new File(ruta);
+		if (fitxer.length() == 0) {
+		} else {
+			try {
+
+				FileInputStream file = new FileInputStream(fitxer);
+				ObjectInputStream reader = new ObjectInputStream(file);
+
 				try {
+					ArrayList<Director> DirectorGeneral = (ArrayList<Director>) reader.readObject();
 
-					FileInputStream file = new FileInputStream(fitxer);
-					ObjectInputStream reader = new ObjectInputStream(file);
-
-					try {
-						ArrayList<Director> DirectorGeneral = (ArrayList<Director>) reader.readObject();
-
-						for (Director directores : DirectorGeneral) {
-							if (directores.getIdDirector() > contador) {
-								contador = directores.getIdDirector();
-							}
+					for (Director directores : DirectorGeneral) {
+						if (directores.getIdDirector() > contador) {
+							contador = directores.getIdDirector();
 						}
-
-					} catch (IOException e) {
-						System.out.println("Error: " + e);
-					} catch (ClassNotFoundException e) {
-						e.printStackTrace();
 					}
-					reader.close();
+
 				} catch (IOException e) {
 					System.out.println("Error: " + e);
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
 				}
+				reader.close();
+			} catch (IOException e) {
+				System.out.println("Error: " + e);
 			}
-			return contador;
 		}
+		return contador;
+	}
 
-	
 	/// GETTERS Y SETTERS ///
+	// Sobreescribimos desde la interficie
+	@Override
+	public int getId() {
+		return idDirector;
+	}
+
 	public int getIdDirector() {
 		return idDirector;
 	}
@@ -81,7 +86,6 @@ public class Director implements Serializable {
 	public void setIdDirector(int idDirector) {
 		this.idDirector = idDirector;
 	}
-	
 
 	public static int getCountIdDirector() {
 		return countIdDirector;
@@ -114,7 +118,6 @@ public class Director implements Serializable {
 	public void setEdadDirector(int edadDirector) {
 		this.edadDirector = edadDirector;
 	}
-
 
 	public int getGoyas() {
 		return goyas;
