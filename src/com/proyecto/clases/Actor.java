@@ -7,7 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Actor implements BorradoGeneral, Serializable {
+public class Actor implements  Serializable {
 
 	/// ATRIBUTOS ACTORES ///
 	private static int countIdActor = 0;
@@ -75,7 +75,7 @@ public class Actor implements BorradoGeneral, Serializable {
 	/// GETTERS Y SETTERS ///
 	
 	//Sobreescribimos desde la interficie
-	@Override
+	
 	public int getId() {
 		return idActor;
 	}
