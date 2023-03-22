@@ -225,8 +225,12 @@ public class Funciones {
 
 	// PEDIR DATOS LISTA PELICULA GENERAL
 	public static void pedirListaGeneralPelicula() {
-		System.out.println("Introduce el nombre de la pelicula:");
-		String pelicula = ControlErrores.validarString();
+		String pelicula;
+		do {
+			System.out.println("Introduce el nombre de la pelicula:");
+			pelicula = ControlErrores.validarString();
+		}while(ControlErrores.validaPeliGeneral(pelicula, PelisGeneral));
+		
 
 		System.out.println("Introduce la duración:");
 		int duracio = ControlErrores.validarInt();
@@ -286,12 +290,16 @@ public class Funciones {
 	// PEDIR DATOS LISTA ACTOR GENERAL //
 	// ---------------------------------------------------------------------------------------------------------------
 	public static void pedirListaGeneralActor() {
-		System.out.println("Introduce el nombre del actor:");
-		String nom = ControlErrores.validarString();
+		String nom;
+		String apellidos;
+		do {
+			System.out.println("Introduce el nombre del actor:");
+			nom = ControlErrores.validarString();
 
-		System.out.println("Introduce los apellidos del actor:");
-		String apellidos = ControlErrores.validarString();
-
+			System.out.println("Introduce los apellidos del actor:");
+			apellidos = ControlErrores.validarString();	
+		}while(ControlErrores.validaActorGeneral(nom + " " + apellidos, ActorGeneral));
+		
 		System.out.println("Introduce la edad del actor:");
 		int edad = ControlErrores.validarInt();
 
@@ -339,11 +347,17 @@ public class Funciones {
 	// PEDIR DATOS LISTA DIRECTOR GENERAL //
 	// ---------------------------------------------------------------------------------------------------------------
 	public static void pedirListaGeneralDirector() {
-		System.out.println("Introduce el nombre del director:");
-		String nom = ControlErrores.validarString();
+		String nom;
+		String apellidos;
+		
+		do {
+			System.out.println("Introduce el nombre del director:");
+			nom = ControlErrores.validarString();
 
-		System.out.println("Introduce los apellidos del director:");
-		String apellidos = ControlErrores.validarString();
+			System.out.println("Introduce los apellidos del director:");
+			apellidos = ControlErrores.validarString();
+		}while(ControlErrores.validaDirectorGeneral(nom+" "+apellidos, DirectorGeneral));
+		
 
 		System.out.println("Introduce la edad del director:");
 		int edad = ControlErrores.validarInt();
