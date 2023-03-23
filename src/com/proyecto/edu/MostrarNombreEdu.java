@@ -6,6 +6,6 @@ public class MostrarNombreEdu {
 
 	@Override
 	public String toString() {
-		return "Nom: " + this.nombre;
+		return this.nombre;
 	}
 }

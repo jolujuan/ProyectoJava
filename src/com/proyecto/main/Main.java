@@ -8,42 +8,24 @@ public class Main {
 	public static void main(String[] args) {
 
 		int menuPrincipal = 0, menuUsuario = 0, menuUsuarioSecundario = 0, menuAdmin = 0, menuAdminSecundariol = 0;
-		;
 		// MENU PRINCIPAL //
 
 		do {
-//			Funciones.mostrarColaboradores();
-			System.out.println("Escoja una opcion: \n-> 1. PRUEBAS \n-> 2. Login \n-> 3. Salir");
+			Funciones.mostrarColaboradores();
+			System.out.println("Escoja una opcion: \n-> 1. REGISTRAR \n-> 2. LOGIN \n-> 3. SALIR");
 			menuPrincipal = ControlErrores.validarMenuPrincipal();
 			switch (menuPrincipal) {
 			case 1:
 				Funciones.cargarArrayslist();
-				do {
-					System.out.println(
-							"\n-> 1. Borrar pelicula \n-> 2. Borrar Actor \n-> 3. Borrar Director \n-> 4. Salir");
-					menuAdminSecundariol = ControlErrores.validarTerciario();
-					switch (menuAdminSecundariol) {
-					case 1: {
-						Funciones.borrarListaGeneral(1);
-						break;
-					}
-					case 2: {
-						Funciones.borrarListaGeneral(2);
-						break;
-					}
-					case 3: {
-						Funciones.borrarListaGeneral(3);
-						break;
-					}
-
-					default:
-						System.out.println("Salir");
-					}
-				} while (menuAdminSecundariol != 4);
-
-				///// AQUI IRA LA FUNCION DE registrarUser() ///////////
-//				System.out.println("-----Registrar Usuario-----");
-//				Funciones.registrarUsuario();
+					///// AQUI IRA LA FUNCION DE registrarUser() ///////////
+					System.out.println("-----Registrar Usuario----- (pulse -1 para salir)");
+					Funciones.registrarUsuario();
+					
+					    if (Funciones.registrarUsuario()) {
+					    	System.out.println("La operación ha sido cancelada, salir del registro...\n");
+					        break;
+					    }
+					
 				break;
 			case 2:
 				///// AQUI IRA LA FUNCION DE loginUser() ///////////
