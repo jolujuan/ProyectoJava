@@ -1,11 +1,19 @@
 package com.proyecto.utils;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import com.proyecto.clases.Actor;
+import com.proyecto.clases.Director;
+import com.proyecto.clases.Pelicula;
 
 public class ControlErrores {
 
@@ -17,14 +25,14 @@ public class ControlErrores {
 
 		do {
 			if (!entrada.hasNextInt()) {
-				System.out.println("Error: No has introducido un numero.");
+				System.err.println("Error: No has introducido un numero.");
 				entrada.nextLine();
 			} else {
 				n = entrada.nextInt();
 				if (n == 3 || n == 1 || n == 2) {
 					correcto = true;
 				} else {
-					System.out.println("Error: El numero introducido debe 1, 2  o 3.");
+					System.err.println("Error: El numero introducido debe 1, 2  o 3.");
 					entrada.nextLine();
 				}
 			}
@@ -41,14 +49,14 @@ public class ControlErrores {
 
 		do {
 			if (!entrada.hasNextInt()) {
-				System.out.println("Error: No has introducido un numero.");
+				System.err.println("Error: No has introducido un numero.");
 				entrada.nextLine();
 			} else {
 				n = entrada.nextInt();
 				if (n == 1 || n == 2 || n == 3 || n == 4 || n == 5) {
 					correcto = true;
 				} else {
-					System.out.println("Error: El numero introducido debe ser 1, 2, 3, 4 o 5.");
+					System.err.println("Error: El numero introducido debe ser 1, 2, 3, 4 o 5.");
 					entrada.nextLine();
 				}
 			}
@@ -65,14 +73,14 @@ public class ControlErrores {
 
 		do {
 			if (!entrada.hasNextInt()) {
-				System.out.println("Error: No has introducido un numero.");
+				System.err.println("Error: No has introducido un numero.");
 				entrada.nextLine();
 			} else {
 				n = entrada.nextInt();
 				if (n == 1 || n == 2 || n == 3 || n == 4) {
 					correcto = true;
 				} else {
-					System.out.println("Error: El numero introducido debe ser 1, 2, 3 o 4.");
+					System.err.println("Error: El numero introducido debe ser 1, 2, 3 o 4.");
 					entrada.nextLine();
 				}
 			}
@@ -89,7 +97,7 @@ public class ControlErrores {
 
 		do {
 			if (!entrada.hasNextInt()) {
-				System.out.println("Error: No has introducido un numero.");
+				System.err.println("Error: No has introducido un numero.");
 				entrada.nextLine();
 			} else {
 				n = entrada.nextInt();
@@ -110,9 +118,32 @@ public class ControlErrores {
 			cadena = entrada.nextLine().trim().replaceAll("\\s+", " ").replaceAll("\\t+", " ");
 
 			if (cadena.equals("")) {
-				System.out.println("Error: El campo no puede estar vacio.");
+				System.err.println("Error: El campo no puede estar vacio.");
 			} else if (cadena.length() > 20) {
-				System.out.println("Error: El dato introducido no puede tener mas de 20 caracteres.");
+				System.err.println("Error: El dato introducido no puede tener mas de 20 caracteres.");
+			} else {
+				verdad = true;
+			}
+		} while (!verdad);
+
+		return cadena;
+	}
+
+	public static String validarStringSinNumeros() {
+		Scanner entrada = new Scanner(System.in);
+		String cadena = "";
+		boolean verdad = false;
+
+		do {
+			cadena = entrada.nextLine().trim().replaceAll("\\s+", " ").replaceAll("\\t+", " ");
+
+			if (cadena.equals("")) {
+				System.err.println("Error: El campo no puede estar vacio.");
+			} else if (cadena.length() > 20) {
+				System.err.println("Error: El dato introducido no puede tener mas de 20 caracteres.");
+			}
+			if (!cadena.matches("^[^\\d]+$")) {
+				System.err.println("Error: El dato introducido no puede contener numeros.");
 			} else {
 				verdad = true;
 			}
@@ -132,17 +163,17 @@ public class ControlErrores {
 			password = entrada.nextLine().trim().replace("\t", " ").replace(" ", "");
 
 			if (password.equals("")) {
-				System.out.println("Error: La contraseña no puede estar vacia.");
+				System.err.println("Error: La contraseña no puede estar vacia.");
 
 			} else if (password.length() < 5 || password.length() > 8) {
-				System.out.println("Error: La contraseña debe ser minimo de 5 caracteres y maximo de 8.");
+				System.err.println("Error: La contraseña debe ser minimo de 5 caracteres y maximo de 8.");
 			} else {
 				System.out.println("Repite la contraseña: ");
 				passwordRep = entrada.nextLine().trim().replace("\t", " ").replace(" ", "");
 				if (password.equals(passwordRep)) {
 					verdad = true;
 				} else {
-					System.out.println("Error: No ha introducido la misma contraseña. Vuelva a introducirla.");
+					System.err.println("Error: No ha introducido la misma contraseña. Vuelva a introducirla.");
 				}
 			}
 		} while (!verdad);
@@ -159,7 +190,7 @@ public class ControlErrores {
 
 			email = entrada.nextLine();
 			if (!Pattern.compile("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$").matcher(email).find()) {
-				System.out.println("Error: Email no valido vuelve a introducirlo.");
+				System.err.println("Error: Email no valido vuelve a introducirlo.");
 			} else {
 				correcto = true;
 			}
@@ -178,23 +209,22 @@ public class ControlErrores {
 			fecha = entrada.nextLine();
 			if (!Pattern.compile("^(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)$").matcher(fecha)
 					.find()) {
-				System.out.println("Error: Fecha no valida.");
+				System.err.println("Error: Fecha no valida.");
 			} else {
 				// ESTO ES PARA COMPROBAR QUE CUANDO INTRODUCIMOS LA FECHA, EL AÑO INTRODUCIDO
 				// NO SEA MAYOR QUE EL ACTUAL
 				try {
 					LocalDate date = LocalDate.parse(fecha, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 					if (date.getYear() > LocalDate.now().getYear()) {
-						System.out.println("Error: El año no puede ser mayor que el actual.");
+						System.err.println("Error: El año no puede ser mayor que el actual.");
 					} else {
 						correcto = true;
 					}
 				} catch (DateTimeParseException e) {
-					System.out.println("Error: " + e);
+					System.err.println("Error: " + e);
 				}
 			}
 		} while (!correcto);
-
 		return fecha;
 
 	}
@@ -202,5 +232,102 @@ public class ControlErrores {
 	// VALIDAR UN FILE //
 
 	// VALIDAR UN USUARI //
+	// ---------------------------------------------------------------------------------------------------------------
+	public static boolean validaUsuario() {
+		try {
+			File f = new File("src/com/proyecto/utils/usersGuardados.txt");
+			FileReader fr = new FileReader(f);
+			BufferedReader br = new BufferedReader(fr);
 
+			System.out.println("Introduce el nombre de usuario: ");
+			String usr = ControlErrores.validarString();
+			Funciones.devolverNombreUser(usr);
+
+			System.out.println("Introduce la contraseña: ");
+			String pwd = ControlErrores.validarString();
+
+			String linia = br.readLine();
+			linia = br.readLine();
+			boolean trobat = false;
+			boolean login = false;
+			while ((linia = br.readLine()) != null && !trobat) {
+				String[] dades = linia.split("[|]");
+
+				if (dades.length >= 6) { // asegurarse de que hay suficientes columnas
+					dades[0] = dades[0].trim();
+					dades[5] = dades[5].trim();
+
+					if (dades[0].equals(usr)) {
+						trobat = true;
+						if (dades[5].equals(pwd)) {
+							System.out.println("\nHola " + usr + ", has iniciado sesion " + "\u2714");
+							// missatge benvinguda, nom apellido
+							login = true;
+						} else {
+							trobat = true;
+							System.err.println("ERROR. Contraseña errónea para el usuario " + usr);
+						}
+					}
+				}
+			}
+			if (!trobat) {
+				System.err.println("ERROR. No se encontró un usuario con el nombre: " + usr);
+			}
+			br.close();
+			return login;
+		} catch (IOException e) {
+			System.err.println("Error: " + e);
+			return false;
+		}
+	}
+	// VALIDAR LLISTES GENERALS //
+	// ---------------------------------------------------------------------------------------------------------------
+
+	// VALIDAR PELICULA //
+	public static boolean validaPeliGeneral(String nom, ArrayList<Pelicula> pelis) {
+		boolean trobat = false;
+		int i = 0;
+		while (i < pelis.size() && !trobat) {
+			Pelicula peli = pelis.get(i);
+			if (peli.getNombrePelicula().toLowerCase().equals(nom.toLowerCase())) {
+				System.err.println("ERROR: Esta película ya esta en la lista general.");
+				System.out.println("Película: " + peli.toString() + "\n");
+				trobat = true;
+			}
+			i++;
+		}
+		return trobat;
+	}
+
+	// VALIDAR ACTOR //
+	public static boolean validaActorGeneral(String nomicognoms, ArrayList<Actor> actors) {
+		boolean trobat = false;
+		int i = 0;
+		while (i < actors.size() && !trobat) {
+			Actor actor = actors.get(i);
+			if (actor.getNombYApellActor().toLowerCase().equals(nomicognoms.toLowerCase())) {
+				System.err.println("ERROR: Este actor ya esta en la lista general.");
+				System.out.println("Actor: " + actor.toString() + "\n");
+				trobat = true;
+			}
+			i++;
+		}
+		return trobat;
+	}
+
+	// VALIDAR DIRECTOR //
+	public static boolean validaDirectorGeneral(String nomicognoms, ArrayList<Director> directors) {
+		boolean trobat = false;
+		int i = 0;
+		while (i < directors.size() && !trobat) {
+			Director director = directors.get(i);
+			if (director.getNombYApellDirector().toLowerCase().equals(nomicognoms.toLowerCase())) {
+				System.err.println("ERROR: Este director ya esta en la lista general.");
+				System.out.println("Director: " + director.toString() + "\n");
+				trobat = true;
+			}
+			i++;
+		}
+		return trobat;
+	}
 }

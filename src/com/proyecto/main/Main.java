@@ -48,7 +48,7 @@ public class Main {
 			case 2:
 				///// AQUI IRA LA FUNCION DE loginUser() ///////////
 				System.out.println("-----Iniciar Sesion-----");
-				if (Funciones.validaUsuario()) {
+				if (ControlErrores.validaUsuario()) {
 					String admin = "admin";
 					// dependiendo de si es admin o no Se dirigira a los menus de admin o de users
 					if (Funciones.nomUserFinal.equals(admin)) {
@@ -150,8 +150,8 @@ public class Main {
 
 						do {
 							System.out.println(
-									"\n-> 1. Ver lista general \n-> 2. Ver lista personal \n-> 3. Añadir nuevo elemento a lista personal \n-> 4. Salir");
-							menuUsuario = ControlErrores.validarTerciario();
+									"\n-> 1. Ver lista general \n-> 2. Ver lista personal \n-> 3. Añadir nuevo elemento a lista personal \n-> 4. Borrar elemento lista personal \n-> 5. Salir");
+							menuUsuario = ControlErrores.validarSecundario();
 							switch (menuUsuario) {
 							case 1:
 								Funciones.cargarArrayslist();
@@ -160,7 +160,6 @@ public class Main {
 									System.out.println(
 											"\n-> 1. Ver Peliculas \n-> 2. Ver Actores \n-> 3. Ver Directores \n-> 4. Salir");
 									menuUsuarioSecundario = ControlErrores.validarTerciario();
-//									Funciones.cargarArrayslist();
 									switch (menuUsuarioSecundario) {
 									case 1:
 										System.out.println("-----Ver Peliculas (Lista GENERAL)-----");
@@ -187,7 +186,6 @@ public class Main {
 									System.out.println(
 											"\n-> 1. Ver Peliculas \n-> 2. Ver Actores \n-> 3. Ver Directores \n-> 4. Salir");
 									menuUsuarioSecundario = ControlErrores.validarTerciario();
-//									Funciones.cargarArrayslist();
 									switch (menuUsuarioSecundario) {
 									case 1:
 										System.out.println("-----Ver Peliculas (Lista PERSONAL)-----");
@@ -215,7 +213,6 @@ public class Main {
 									System.out.println(
 											"\n-> 1. Añadir Peliculas \n-> 2. Añadir Actores \n-> 3. Añadir Directores \n-> 4. Salir");
 									menuUsuarioSecundario = ControlErrores.validarTerciario();
-//									Funciones.cargarArrayslist();
 									switch (menuUsuarioSecundario) {
 									case 1:
 										System.out.println("-----Añádir Peliculas (Lista PERSONAL)-----");
@@ -235,10 +232,35 @@ public class Main {
 								} while (menuUsuarioSecundario != 4);
 								break;
 
+							case 4:
+								System.out.println("-----Borrar elemento lista PERSONAL-----");
+								do {
+									System.out.println(
+											"\n-> 1. Borrar pelicula \n-> 2. Borrar Actor \n-> 3. Borrar Director \n-> 4. Salir");
+									menuAdminSecundariol = ControlErrores.validarTerciario();
+									Funciones.cargarArrayslist();
+									switch (menuAdminSecundariol) {
+									case 1: {
+										Funciones.borrarListaPersonal(1);
+										break;
+									}
+									case 2: {
+										Funciones.borrarListaPersonal(2);
+										break;
+									}
+									case 3: {
+										Funciones.borrarListaPersonal(3);
+										break;
+									}
+									default:
+										System.out.println("Salir");
+									}
+								} while (menuAdminSecundariol != 4);
+								break;
 							default:
 								System.out.println("Salir");
 							}
-						} while (menuUsuario != 4);
+						} while (menuUsuario != 5);
 					}
 				}
 				break;

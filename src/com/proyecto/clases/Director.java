@@ -109,6 +109,10 @@ public class Director implements  Serializable {
 	public void setApellidoDirector(String apellidoDirector) {
 		this.apellidoDirector = apellidoDirector;
 	}
+	
+	public String getNombYApellDirector() {
+		return nombreDirector+" "+apellidoDirector;
+	}
 
 	public int getEdadDirector() {
 		return edadDirector;
