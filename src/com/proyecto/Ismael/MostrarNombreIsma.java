@@ -6,6 +6,6 @@ public class MostrarNombreIsma {
 
 	@Override
 	public String toString() {
-		return "Nom: " + this.nombre;
+		return this.nombre;
 	}
 }

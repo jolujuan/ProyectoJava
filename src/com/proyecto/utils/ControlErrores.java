@@ -190,7 +190,7 @@ public class ControlErrores {
 
 			email = entrada.nextLine();
 			if (!Pattern.compile("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$").matcher(email).find()) {
-				System.err.println("Error: Email no valido vuelve a introducirlo.");
+				System.err.println("Error: Email no valido vuelve a introducirlo:");
 			} else {
 				correcto = true;
 			}

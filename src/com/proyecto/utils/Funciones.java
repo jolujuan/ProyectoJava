@@ -30,8 +30,9 @@ public class Funciones {
 		MostrarNombreIsma colaborador2 = new MostrarNombreIsma();
 		MostrarNombreJavier colaborador3 = new MostrarNombreJavier();
 		MostrarNombreJoselu colaborador4 = new MostrarNombreJoselu();
-		MostrarNombreMaikol colaborador5 =new MostrarNombreMaikol();
-		System.out.println(colaborador1 + "\n" + colaborador2 + "\n" + colaborador3 + "\n" + colaborador4 + "\n" + colaborador5 +"\n");
+		MostrarNombreMaikol colaborador5 = new MostrarNombreMaikol();
+		System.out.println("-------Creado por------- \n- " + colaborador1 + "\n- " + colaborador2 + "\n- "
+				+ colaborador3 + "\n- " + colaborador4 + "\n- " + colaborador5 + "\n");
 	}
 
 	static Scanner leer = new Scanner(System.in);
@@ -55,47 +56,64 @@ public class Funciones {
 	public static ArrayList<Actor> ActorPersonal = new ArrayList<Actor>();
 
 	// REGISTRO USUARIO //
-	public static void registrarUsuario() {
-		System.out.println("Introduce tu nombre:");
-		String usuario = ControlErrores.validarString();
+	public static boolean registrarUsuario() {
+	    final String cancelar = "-1";
 
-		System.out.println("Introduce los apellidos:");
-		String apellidos = ControlErrores.validarString();
+	    System.out.println("Introduce tu nombre:");
+	    String usuario = ControlErrores.validarString();
+	    if (usuario.equals(cancelar)) {
+	        return true; // Se ha cancelado la operación
+	    }
 
-		System.out.println("Introduce tu email:");
-		String email = ControlErrores.validarEmail();
+	    System.out.println("Introduce los apellidos:");
+	    String apellidos = ControlErrores.validarString();
+	    if (apellidos.equals(cancelar)) {
+	        return true; // Se ha cancelado la operación
+	    }
 
-		System.out.println("Introduce tu poblacion:");
-		String poblacion = ControlErrores.validarString();
+	    System.out.println("Introduce tu email:");
+	    String email = ControlErrores.validarEmail();
+	    if (email.equals(cancelar)) {
+	        return true; // Se ha cancelado la operación
+	    }
 
-		System.out.println("Introduce tu fecha de nacimiento (dd/mm/aaaa):");
-		String fecha = ControlErrores.validarFecha();
+	    System.out.println("Introduce tu poblacion:");
+	    String poblacion = ControlErrores.validarString();
+	    if (poblacion.equals(cancelar)) {
+	        return true; // Se ha cancelado la operación
+	    }
 
-		// pedir contraseña
-		String contraseña = ControlErrores.pedirContraseña();
+	    System.out.println("Introduce tu fecha de nacimiento (dd/mm/aaaa):");
+	    String fecha = ControlErrores.validarFecha();
+	    if (fecha.equals(cancelar)) {
+	        return true; // Se ha cancelado la operación
+	    }
 
-		// registro finish
-		System.out.println("Registro completado");
+	    // pedir contraseña
+	    String contraseña = ControlErrores.pedirContraseña();
+	    if (contraseña.equals(cancelar)) {
+	        return true; // Se ha cancelado la operación
+	    }
 
-		// Array List como null, para guardar solo información de los usuarios
-		// Obtenemos el ID de usuario con una funcion en la clase
-		Cliente N1 = new Cliente(User.getId(), usuario, apellidos, contraseña, email, poblacion, User.Rol.USUARIO,
-				fecha, null, null, null);
+	    // registro finish
+	    System.out.println("Registro completado");
 
-		// Creamos el usuario con la funcion
-		nomUser = obtenerNomUser(User.getId(), email);
+	    // Array List como null, para guardar solo información de los usuarios
+	    // Obtenemos el ID de usuario con una funcion en la clase
+	    Cliente N1 = new Cliente(User.getId(), usuario, apellidos, contraseña, email, poblacion, User.Rol.USUARIO, fecha, null, null, null);
 
-		// Mostramos los datos del cliente y su numro de usuario
-		System.out.println("\n" + N1.toString());
-		System.out.println("Tu nombre de usuario es: " + nomUser);
+	    // Creamos el usuario con la funcion
+	    nomUser = obtenerNomUser(User.getId(), email);
 
-		// Pasamos los parametros del objeto a la funcíon guardar usuarios
-		guardarUsuario(nomUser, User.getId(), usuario, apellidos, email, contraseña, poblacion, User.Rol.USUARIO,
-				fecha);
-		// Pasamos el parametro usuario para crear carpeta
-		crearCarpeta(nomUser);
+	    // Pasamos los parametros del objeto a la funcíon guardar usuarios
+	    guardarUsuario(nomUser, User.getId(), usuario, apellidos, email, contraseña, poblacion, User.Rol.USUARIO, fecha);
 
+	    // Pasamos el parametro usuario para crear carpeta
+	    crearCarpeta(nomUser);
+
+	    return false;
 	}
+
 
 	// OBTENER NOMBRE USUARIO //
 	public static String obtenerNomUser(int id, String email) {
@@ -155,7 +173,10 @@ public class Funciones {
 			escriureUser.println(datos);
 			escriureUser.close();
 
-			System.out.println("\nUsuario guardado correctamente" + " \u2714" + "\n");
+			System.out.println("\nUsuario guardado correctamente" + " \u2714");
+			System.out.println(
+					"\u001B[1mTu nombre de usuario es: " + "\u001B[0m" + "\u001B[1m" + nomUser + "\u001B[0m\n");
+
 		} catch (Exception e) {
 			System.err.println("Error: " + e);
 		}
@@ -661,7 +682,7 @@ public class Funciones {
 
 	// PEDIR Y GUARDAR DATOS LISTAS PERSONALES //
 	// ---------------------------------------------------------------------------------------------------------------
-	
+
 	// PEDIR DATOS LISTA PERSONAL PELICULA //
 	public static void pedirListaPersonalPelicula() {
 		File vacio = new File("src/com/proyecto/listasPeliculas/peliculas.llista");
@@ -675,7 +696,7 @@ public class Funciones {
 
 			boolean encertat = false;
 			int idUser = 0;
-			
+
 			do {
 				idUser = ControlErrores.validarInt();
 
@@ -711,7 +732,7 @@ public class Funciones {
 			} while (!encertat);
 		}
 	}
-	
+
 	// GUARDAR DATOS LISTA PERSONAL PELICULA //
 	public static void registrarListaPersonalPelicula() {
 		// serialització
@@ -744,54 +765,54 @@ public class Funciones {
 	}
 
 	// PEDIR DATO LISTA PERSONAL ACTOR //
-		public static void pedirListaPersonalActor() {
-			File vacio = new File("src/com/proyecto/listasPeliculas/actores.llista");
-			if (vacio.length() < 0 || vacio.length() == 0) {
-				System.err.println("No puedes añadir nada ya que la lista general esta vacia");
-			} else {
-				System.out.println("Introduce el  id del Actor/a que quieres ( pulse -1 para salir)");
-				for (Actor i : ActorGeneral) {
-					System.out.println(i.toString());
-				}
+	public static void pedirListaPersonalActor() {
+		File vacio = new File("src/com/proyecto/listasPeliculas/actores.llista");
+		if (vacio.length() < 0 || vacio.length() == 0) {
+			System.err.println("No puedes añadir nada ya que la lista general esta vacia");
+		} else {
+			System.out.println("Introduce el  id del Actor/a que quieres (pulse -1 para salir)");
+			for (Actor i : ActorGeneral) {
+				System.out.println(i.toString());
+			}
 
-				boolean encertat = false;
-				int idUser = 0;
-				
-				do {
-					idUser = ControlErrores.validarInt();
+			boolean encertat = false;
+			int idUser = 0;
 
-					if (idUser == -1) {
-						System.out.println("Has cancelado la selección de la lista");
-						encertat = true;
+			do {
+				idUser = ControlErrores.validarInt();
+
+				if (idUser == -1) {
+					System.out.println("Has cancelado la selección de la lista");
+					encertat = true;
+				} else {
+					Actor ActorSeleccionado = null;
+					for (Actor item : ActorGeneral) {
+						if (item.getId() == idUser) {
+							ActorSeleccionado = item;
+							break;
+						}
+					}
+					if (ActorSeleccionado == null) {
+						System.err.println("El actor/a seleccionado no se ha encontrado en la lista general.");
 					} else {
-						Actor ActorSeleccionado = null;
-						for (Actor item : ActorGeneral) {
-							if (item.getId() == idUser) {
-								ActorSeleccionado = item;
+						boolean repetida = false;
+						for (Actor item : ActorPersonal) {
+							if (item.getId() == ActorSeleccionado.getId()) {
+								System.err.println("El actor/a seleccionado ya existe en tu lista personal.");
+								repetida = true;
 								break;
 							}
 						}
-						if (ActorSeleccionado == null) {
-							System.err.println("El actor/a seleccionado no se ha encontrado en la lista general.");
-						} else {
-							boolean repetida = false;
-							for (Actor item : ActorPersonal) {
-								if (item.getId() == ActorSeleccionado.getId()) {
-									System.err.println("El actor/a seleccionado ya existe en tu lista personal.");
-									repetida = true;
-									break;
-								}
-							}
-							if (!repetida) {
-								ActorPersonal.add(ActorSeleccionado);
-								registrarListaPersonalActor();
-								encertat = true;
-							}
+						if (!repetida) {
+							ActorPersonal.add(ActorSeleccionado);
+							registrarListaPersonalActor();
+							encertat = true;
 						}
 					}
-				} while (!encertat);
-			}
+				}
+			} while (!encertat);
 		}
+	}
 
 	// GUARDAR DATOS LISTA PERSONAL ACTOR //
 	public static void registrarListaPersonalActor() {
@@ -824,54 +845,54 @@ public class Funciones {
 	}
 
 	// PEDIR LISTA PERSONAL DIRECTOR //
-		public static void pedirListaPersonalDirector() {
-			File vacio = new File("src/com/proyecto/listasPeliculas/directores.llista");
-			if (vacio.length() < 0 || vacio.length() == 0) {
-				System.err.println("No puedes añadir nada ya que la lista general esta vacia");
-			} else {
-				System.out.println("Introduce el  id de la Pelicula que quieres ( pulse -1 para salir)");
-				for (Director i : DirectorGeneral) {
-					System.out.println(i.toString());
-				}
+	public static void pedirListaPersonalDirector() {
+		File vacio = new File("src/com/proyecto/listasPeliculas/directores.llista");
+		if (vacio.length() < 0 || vacio.length() == 0) {
+			System.err.println("No puedes añadir nada ya que la lista general esta vacia");
+		} else {
+			System.out.println("Introduce el  id de la Pelicula que quieres ( pulse -1 para salir)");
+			for (Director i : DirectorGeneral) {
+				System.out.println(i.toString());
+			}
 
-				boolean encertat = false;
-				int idUser = 0;
-				
-				do {
-					idUser = ControlErrores.validarInt();
+			boolean encertat = false;
+			int idUser = 0;
 
-					if (idUser == -1) {
-						System.out.println("Has cancelado la selección de la lista");
-						encertat = true;
+			do {
+				idUser = ControlErrores.validarInt();
+
+				if (idUser == -1) {
+					System.out.println("Has cancelado la selección de la lista");
+					encertat = true;
+				} else {
+					Director directorSeleccionado = null;
+					for (Director item : DirectorGeneral) {
+						if (item.getId() == idUser) {
+							directorSeleccionado = item;
+							break;
+						}
+					}
+					if (directorSeleccionado == null) {
+						System.err.println("El director/a seleccionado no se ha encontrado en la lista general.");
 					} else {
-						Director directorSeleccionado = null;
-						for (Director item : DirectorGeneral) {
-							if (item.getId() == idUser) {
-								directorSeleccionado = item;
+						boolean repetida = false;
+						for (Director item : DirectorPersonal) {
+							if (item.getId() == directorSeleccionado.getId()) {
+								System.err.println("El director/a seleccionado ya existe en tu lista personal.");
+								repetida = true;
 								break;
 							}
 						}
-						if (directorSeleccionado == null) {
-							System.err.println("El director/a seleccionado no se ha encontrado en la lista general.");
-						} else {
-							boolean repetida = false;
-							for (Director item : DirectorPersonal) {
-								if (item.getId() == directorSeleccionado.getId()) {
-									System.err.println("El director/a seleccionado ya existe en tu lista personal.");
-									repetida = true;
-									break;
-								}
-							}
-							if (!repetida) {
-								DirectorPersonal.add(directorSeleccionado);
-								registrarListaPersonalDirector();
-								encertat = true;
-							}
+						if (!repetida) {
+							DirectorPersonal.add(directorSeleccionado);
+							registrarListaPersonalDirector();
+							encertat = true;
 						}
 					}
-				} while (!encertat);
-			}
+				}
+			} while (!encertat);
 		}
+	}
 
 	// GUARDAR DATOS LISTA PERSONAL DIRECTOR //
 	public static void registrarListaPersonalDirector() {
