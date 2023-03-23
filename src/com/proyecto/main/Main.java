@@ -48,7 +48,7 @@ public class Main {
 			case 2:
 				///// AQUI IRA LA FUNCION DE loginUser() ///////////
 				System.out.println("-----Iniciar Sesion-----");
-				if (Funciones.validaUsuario()) {
+				if (ControlErrores.validaUsuario()) {
 					String admin = "admin";
 					// dependiendo de si es admin o no Se dirigira a los menus de admin o de users
 					if (Funciones.nomUserFinal.equals(admin)) {

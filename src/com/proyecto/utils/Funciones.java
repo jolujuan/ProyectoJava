@@ -1,12 +1,9 @@
 package com.proyecto.utils;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
@@ -123,7 +120,7 @@ public class Funciones {
 
 				// System.out.println("El usuario se ha creado correctamente");
 			} else {
-				System.out.println("No se ha podido crear el usuario (quizas el usuario ya existe)");
+				System.err.println("No se ha podido crear el usuario (quizas el usuario ya existe)");
 				System.out.println("Vuelve a registrar tu usuario: ");
 				Funciones.registrarUsuario();
 			}
@@ -160,55 +157,6 @@ public class Funciones {
 			System.out.println("\nUsuario guardado correctamente" + " \u2714" + "\n");
 		} catch (Exception e) {
 			System.err.println("Error: " + e);
-		}
-	}// ---------------------------------------------------------------------------------------------------------------
-
-	// LOGIN USUARIO //
-	public static boolean validaUsuario() {
-		try {
-			File f = new File("src/com/proyecto/utils/usersGuardados.txt");
-			FileReader fr = new FileReader(f);
-			BufferedReader br = new BufferedReader(fr);
-
-			System.out.println("Introduce el nombre de usuario: ");
-			String usr = ControlErrores.validarString();
-			devolverNombreUser(usr);
-
-			System.out.println("Introduce la contraseña: ");
-			String pwd = ControlErrores.validarString();
-
-			String linia = br.readLine();
-			linia = br.readLine();
-			boolean trobat = false;
-			boolean login = false;
-			while ((linia = br.readLine()) != null && !trobat) {
-				String[] dades = linia.split("[|]");
-
-				if (dades.length >= 6) { // asegurarse de que hay suficientes columnas
-					dades[0] = dades[0].trim();
-					dades[5] = dades[5].trim();
-
-					if (dades[0].equals(usr)) {
-						trobat = true;
-						if (dades[5].equals(pwd)) {
-							System.out.println("\nHola " + usr + ", has iniciado sesion " + "\u2714");
-							// missatge benvinguda, nom apellido
-							login = true;
-						} else {
-							trobat = true;
-							System.out.println("ERROR. Contraseña errónea para el usuario " + usr);
-						}
-					}
-				}
-			}
-			if (!trobat) {
-				System.out.println("ERROR. No se encontró un usuario con el nombre: " + usr);
-			}
-			br.close();
-			return login;
-		} catch (IOException e) {
-			System.err.println("Error: " + e);
-			return false;
 		}
 	}
 
@@ -300,7 +248,7 @@ public class Funciones {
 		int edad = ControlErrores.validarInt();
 
 		System.out.println("Introduce la nacionalidad del actor:");
-		String nacionalidad = ControlErrores.validarString();
+		String nacionalidad = ControlErrores.validarStringSinNumeros();
 
 		registrarListaGeneralActor(nom, apellidos, edad, nacionalidad);
 		System.out.println("Se ha guardado correctamente " + "\u2714");
@@ -427,7 +375,7 @@ public class Funciones {
 	private static void borrarListaGeneralPelicula(String archivo, String mensaje, ArrayList<Pelicula> listaArray) {
 		File fitxer = new File(archivo);
 		if (fitxer.length() < 0 || fitxer.length() == 0 || listaArray.size() <= 0) {
-			System.out.println("No hay nada que mostrar");
+			System.err.println("No hay nada que mostrar");
 		} else {
 			try {
 				// Obrim fitxer per a lectura
@@ -467,7 +415,7 @@ public class Funciones {
 							encertat = true;
 
 						} else if (idUser > max || idUser < min) {
-							System.out.println("El numero que has puesto no esta en la lista");
+							System.err.println("El numero que has puesto no esta en la lista");
 						} else {
 							for (Pelicula item : listaArray) {
 								if (((Pelicula) item).getId() == idUser) {
@@ -506,7 +454,7 @@ public class Funciones {
 		File fitxer = new File(archivo);
 //		System.out.println("tamaño"+fitxer);s
 		if (fitxer.length() < 0 || fitxer.length() == 0 || listaArray.size() <= 0) {
-			System.out.println("No hay nada que mostrar");
+			System.err.println("No hay nada que mostrar");
 		} else {
 			try {
 				// Obrim fitxer per a lectura
@@ -546,7 +494,7 @@ public class Funciones {
 							encertat = true;
 
 						} else if (idUser > max || idUser < min) {
-							System.out.println("El numero que has puesto no esta en la lista");
+							System.err.println("El numero que has puesto no esta en la lista");
 						} else {
 							for (Director item : listaArray) {
 								if (((Director) item).getId() == idUser) {
@@ -584,7 +532,7 @@ public class Funciones {
 	private static void borrarListaGeneralActor(String archivo, String mensaje, ArrayList<Actor> listaArray) {
 		File fitxer = new File(archivo);
 		if (fitxer.length() < 0 || fitxer.length() == 0 || listaArray.size() <= 0) {
-			System.out.println("No hay nada que mostrar");
+			System.err.println("No hay nada que mostrar");
 		} else {
 			try {
 				// Obrim fitxer per a lectura
@@ -624,7 +572,7 @@ public class Funciones {
 							encertat = true;
 
 						} else if (idUser > max || idUser < min) {
-							System.out.println("El numero que has puesto no esta en la lista");
+							System.err.println("El numero que has puesto no esta en la lista");
 						} else {
 							for (Actor item : listaArray) {
 								if (((Actor) item).getId() == idUser) {
@@ -684,7 +632,7 @@ public class Funciones {
 	private static <objeto> void mostrarListaGeneral(String archivo, String mensaje, ArrayList<objeto> listaArray) {
 		File fitxer = new File(archivo);
 		if (fitxer.length() < 0 || fitxer.length() == 0) {
-			System.out.println("No hay nada que mostrar");
+			System.err.println("No hay nada que mostrar");
 		} else {
 			try {
 				// Obrim fitxer per a lectura
@@ -712,43 +660,57 @@ public class Funciones {
 
 	// PEDIR Y GUARDAR DATOS LISTAS PERSONALES //
 	// ---------------------------------------------------------------------------------------------------------------
-
+	
 	// PEDIR DATOS LISTA PERSONAL PELICULA //
 	public static void pedirListaPersonalPelicula() {
-		boolean peliculaRepetida = false;
 		File vacio = new File("src/com/proyecto/listasPeliculas/peliculas.llista");
 		if (vacio.length() < 0 || vacio.length() == 0) {
-			System.out.println("No puedes añadir nada ya que la lista general esta vacia");
+			System.err.println("No puedes añadir nada ya que la lista general esta vacia");
 		} else {
-			System.out.println("Introduce el numero de la pelicula que quieres:");
+			System.out.println("Introduce el  id de la Pelicula que quieres ( pulse -1 para salir)");
 			for (Pelicula i : PelisGeneral) {
 				System.out.println(i.toString());
 			}
-			int numPeliACopiar = ControlErrores.validarInt();
 
-			if (numPeliACopiar > PelisGeneral.size()) {
-				System.out.println("El numero que has puesto no esta en la lista");
-			} else {
-				Pelicula personal = PelisGeneral.get(numPeliACopiar - 1);
+			boolean encertat = false;
+			int idUser = 0;
+			
+			do {
+				idUser = ControlErrores.validarInt();
 
-				/// CONTROLAR QUE NO ESTE REPETIDA LA PELICULA ///
-				for (Pelicula idPelicula : PelisPersonal) {
-					if (numPeliACopiar == idPelicula.getId()) {
-						System.out.println("Esta pelicula ya existe");
-						peliculaRepetida = true;
-						break;
+				if (idUser == -1) {
+					System.out.println("Has cancelado la selección de la lista");
+					encertat = true;
+				} else {
+					Pelicula peliculaSeleccionada = null;
+					for (Pelicula item : PelisGeneral) {
+						if (item.getId() == idUser) {
+							peliculaSeleccionada = item;
+							break;
+						}
+					}
+					if (peliculaSeleccionada == null) {
+						System.err.println("La película seleccionada no se ha encontrado en la lista general.");
+					} else {
+						boolean repetida = false;
+						for (Pelicula item : PelisPersonal) {
+							if (item.getId() == peliculaSeleccionada.getId()) {
+								System.err.println("La película seleccionada ya existe en tu lista personal.");
+								repetida = true;
+								break;
+							}
+						}
+						if (!repetida) {
+							PelisPersonal.add(peliculaSeleccionada);
+							registrarListaPersonalPelicula();
+							encertat = true;
+						}
 					}
 				}
-				if (!peliculaRepetida) {
-					PelisPersonal.add(personal);
-					registrarListaPersonalPelicula();
-				}
-//				PelisPersonal.add(personal);
-//				registrarListaPersonalPelicula();
-			}
+			} while (!encertat);
 		}
 	}
-
+	
 	// GUARDAR DATOS LISTA PERSONAL PELICULA //
 	public static void registrarListaPersonalPelicula() {
 		// serialització
@@ -765,7 +727,7 @@ public class Funciones {
 			oos.writeObject(PelisPersonal);
 			oos.flush();
 			oos.close();
-			System.out.println("La pelicula se ha registrado correctamente");
+			System.out.println("La película ha sido registrado correctamente a tu lista personal.");
 
 		} catch (Exception ex) {
 			System.err.println("Error en registrar personal.pelicula.llista " + ex);
@@ -781,40 +743,54 @@ public class Funciones {
 	}
 
 	// PEDIR DATO LISTA PERSONAL ACTOR //
-	public static void pedirListaPersonalActor() {
-		boolean actorDuplicado = false;
-		File vacio = new File("src/com/proyecto/listasPeliculas/actores.llista");
-		if (vacio.length() < 0 || vacio.length() == 0) {
-			System.out.println("No puedes añadir nada ya que la lista general esta vacia");
-		} else {
-			System.out.println("Introduce el numero del Actor/a que quieres:");
-			for (Actor i : ActorGeneral) {
-				System.out.println(i.toString());
-			}
-			int numActorACopiar = ControlErrores.validarInt();
-
-			if (numActorACopiar > ActorGeneral.size()) {
-				System.out.println("El numero que has puesto no esta en la lista");
+		public static void pedirListaPersonalActor() {
+			File vacio = new File("src/com/proyecto/listasPeliculas/actores.llista");
+			if (vacio.length() < 0 || vacio.length() == 0) {
+				System.err.println("No puedes añadir nada ya que la lista general esta vacia");
 			} else {
-				Actor personal = ActorGeneral.get(numActorACopiar - 1);
+				System.out.println("Introduce el  id del Actor/a que quieres ( pulse -1 para salir)");
+				for (Actor i : ActorGeneral) {
+					System.out.println(i.toString());
+				}
 
-				/// CONTROLAR QUE NO ESTE REPETIDA EL ACTOR ///
-				for (Actor idPelicula : ActorPersonal) {
-					if (numActorACopiar == idPelicula.getId()) {
-						System.out.println("Este actor ya existe");
-						actorDuplicado = true;
-						break;
+				boolean encertat = false;
+				int idUser = 0;
+				
+				do {
+					idUser = ControlErrores.validarInt();
+
+					if (idUser == -1) {
+						System.out.println("Has cancelado la selección de la lista");
+						encertat = true;
+					} else {
+						Actor ActorSeleccionado = null;
+						for (Actor item : ActorGeneral) {
+							if (item.getId() == idUser) {
+								ActorSeleccionado = item;
+								break;
+							}
+						}
+						if (ActorSeleccionado == null) {
+							System.err.println("El actor/a seleccionado no se ha encontrado en la lista general.");
+						} else {
+							boolean repetida = false;
+							for (Actor item : ActorPersonal) {
+								if (item.getId() == ActorSeleccionado.getId()) {
+									System.err.println("El actor/a seleccionado ya existe en tu lista personal.");
+									repetida = true;
+									break;
+								}
+							}
+							if (!repetida) {
+								ActorPersonal.add(ActorSeleccionado);
+								registrarListaPersonalActor();
+								encertat = true;
+							}
+						}
 					}
-				}
-				if (!actorDuplicado) {
-					ActorPersonal.add(personal);
-					registrarListaPersonalActor();
-				}
-//				ActorPersonal.add(personal);
-//				registrarListaPersonalActor();
+				} while (!encertat);
 			}
 		}
-	}
 
 	// GUARDAR DATOS LISTA PERSONAL ACTOR //
 	public static void registrarListaPersonalActor() {
@@ -831,7 +807,7 @@ public class Funciones {
 			oos.writeObject(ActorPersonal);
 			oos.flush();
 			oos.close();
-			System.out.println("El actor/a se ha registrado correctamente");
+			System.out.println("El actor/a se ha registrado correctamente a tu lista personal");
 
 		} catch (Exception ex) {
 			System.err.println("Error en registrar personal.actor.llista " + ex);
@@ -847,40 +823,54 @@ public class Funciones {
 	}
 
 	// PEDIR LISTA PERSONAL DIRECTOR //
-	public static void pedirListaPersonalDirector() {
-		boolean directorDuplicado = false;
-		File vacio = new File("src/com/proyecto/listasPeliculas/directores.llista");
-		if (vacio.length() < 0 || vacio.length() == 0) {
-			System.out.println("No puedes añadir nada ya que la lista general esta vacia");
-		} else {
-			System.out.println("Introduce el numero del Director/a que quieres:");
-			for (Director i : DirectorGeneral) {
-				System.out.println(i.toString());
-			}
-			int numDirectorACopiar = ControlErrores.validarInt();
-
-			if (numDirectorACopiar > DirectorGeneral.size()) {
-				System.out.println("El numero que has puesto no esta en la lista");
+		public static void pedirListaPersonalDirector() {
+			File vacio = new File("src/com/proyecto/listasPeliculas/directores.llista");
+			if (vacio.length() < 0 || vacio.length() == 0) {
+				System.err.println("No puedes añadir nada ya que la lista general esta vacia");
 			} else {
-				Director personal = DirectorGeneral.get(numDirectorACopiar - 1);
+				System.out.println("Introduce el  id de la Pelicula que quieres ( pulse -1 para salir)");
+				for (Director i : DirectorGeneral) {
+					System.out.println(i.toString());
+				}
 
-				/// CONTROLAR QUE NO ESTE REPETIDA EL DIRECTOR ///
-				for (Director idPelicula : DirectorPersonal) {
-					if (numDirectorACopiar == idPelicula.getId()) {
-						System.out.println("Este director ya existe");
-						directorDuplicado = true;
-						break;
+				boolean encertat = false;
+				int idUser = 0;
+				
+				do {
+					idUser = ControlErrores.validarInt();
+
+					if (idUser == -1) {
+						System.out.println("Has cancelado la selección de la lista");
+						encertat = true;
+					} else {
+						Director directorSeleccionado = null;
+						for (Director item : DirectorGeneral) {
+							if (item.getId() == idUser) {
+								directorSeleccionado = item;
+								break;
+							}
+						}
+						if (directorSeleccionado == null) {
+							System.err.println("El director/a seleccionado no se ha encontrado en la lista general.");
+						} else {
+							boolean repetida = false;
+							for (Director item : DirectorPersonal) {
+								if (item.getId() == directorSeleccionado.getId()) {
+									System.err.println("El director/a seleccionado ya existe en tu lista personal.");
+									repetida = true;
+									break;
+								}
+							}
+							if (!repetida) {
+								DirectorPersonal.add(directorSeleccionado);
+								registrarListaPersonalDirector();
+								encertat = true;
+							}
+						}
 					}
-				}
-				if (!directorDuplicado) {
-					DirectorPersonal.add(personal);
-					registrarListaPersonalDirector();
-				}
-//				DirectorPersonal.add(personal);
-//				registrarListaPersonalDirector();
+				} while (!encertat);
 			}
 		}
-	}
 
 	// GUARDAR DATOS LISTA PERSONAL DIRECTOR //
 	public static void registrarListaPersonalDirector() {
@@ -898,7 +888,7 @@ public class Funciones {
 			oos.writeObject(DirectorPersonal);
 			oos.flush();
 			oos.close();
-			System.out.println("El director/a se ha registrado correctamente");
+			System.out.println("El director/a se ha registrado correctamente a tu lista personal");
 
 		} catch (Exception ex) {
 			System.err.println("Error en registrar personal.director.llista " + ex);
@@ -940,7 +930,7 @@ public class Funciones {
 	private static void borrarListaPersonalPelicula(String archivo, String mensaje, ArrayList<Pelicula> listaArray) {
 		File fitxer = new File(archivo);
 		if (fitxer.length() < 0 || fitxer.length() == 0 || listaArray.size() <= 0) {
-			System.out.println("No hay nada que mostrar");
+			System.err.println("No hay nada que mostrar");
 		} else {
 			try {
 				// Obrim fitxer per a lectura
@@ -980,7 +970,7 @@ public class Funciones {
 							encertat = true;
 
 						} else if (idUser > max || idUser < min) {
-							System.out.println("El numero que has puesto no esta en la lista");
+							System.err.println("El numero que has puesto no esta en la lista");
 						} else {
 							for (Pelicula item : listaArray) {
 								if (((Pelicula) item).getId() == idUser) {
@@ -1019,7 +1009,7 @@ public class Funciones {
 		File fitxer = new File(archivo);
 //		System.out.println("tamaño"+fitxer);s
 		if (fitxer.length() < 0 || fitxer.length() == 0 || listaArray.size() <= 0) {
-			System.out.println("No hay nada que mostrar");
+			System.err.println("No hay nada que mostrar");
 		} else {
 			try {
 				// Obrim fitxer per a lectura
@@ -1059,7 +1049,7 @@ public class Funciones {
 							encertat = true;
 
 						} else if (idUser > max || idUser < min) {
-							System.out.println("El numero que has puesto no esta en la lista");
+							System.err.println("El numero que has puesto no esta en la lista");
 						} else {
 							for (Object item : listaArray) {
 								if (((Director) item).getId() == idUser) {
@@ -1097,7 +1087,7 @@ public class Funciones {
 	private static void borrarListaPersonalActor(String archivo, String mensaje, ArrayList<Actor> listaArray) {
 		File fitxer = new File(archivo);
 		if (fitxer.length() < 0 || fitxer.length() == 0 || listaArray.size() <= 0) {
-			System.out.println("No hay nada que mostrar");
+			System.err.println("No hay nada que mostrar");
 		} else {
 			try {
 				// Obrim fitxer per a lectura
@@ -1137,7 +1127,7 @@ public class Funciones {
 							encertat = true;
 
 						} else if (idUser > max || idUser < min) {
-							System.out.println("El numero que has puesto no esta en la lista");
+							System.err.println("El numero que has puesto no esta en la lista");
 						} else {
 							for (Actor item : listaArray) {
 								if (((Actor) item).getId() == idUser) {
@@ -1196,8 +1186,8 @@ public class Funciones {
 
 	private static <objeto> void mostrarListaPersonal(String archivo, String mensaje, ArrayList<objeto> listaArray) {
 		File fitxer = new File(archivo);
-		if (fitxer.length() == 0) {
-			System.out.println("No hay nada que mostrar");
+		if (fitxer.length() < 0 || fitxer.length() == 0 || listaArray.size() <= 0) {
+			System.err.println("No hay nada que mostrar");
 		} else {
 			try {
 				// Obrim fitxer per a lectura
