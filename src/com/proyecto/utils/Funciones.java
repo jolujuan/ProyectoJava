@@ -17,6 +17,7 @@ import com.proyecto.clases.Pelicula;
 import com.proyecto.edu.MostrarNombreEdu;
 import com.proyecto.javier.MostrarNombreJavier;
 import com.proyecto.joseluis.MostrarNombreJoselu;
+import com.proyecto.maikol.MostrarNombreMaikol;
 import com.proyecto.users.Cliente;
 import com.proyecto.users.User;
 import com.proyecto.users.User.Rol;
@@ -29,8 +30,8 @@ public class Funciones {
 		MostrarNombreIsma colaborador2 = new MostrarNombreIsma();
 		MostrarNombreJavier colaborador3 = new MostrarNombreJavier();
 		MostrarNombreJoselu colaborador4 = new MostrarNombreJoselu();
-
-		System.out.println(colaborador1 + "\n" + colaborador2 + "\n" + colaborador3 + "\n" + colaborador4 + "\n");
+		MostrarNombreMaikol colaborador5 =new MostrarNombreMaikol();
+		System.out.println(colaborador1 + "\n" + colaborador2 + "\n" + colaborador3 + "\n" + colaborador4 + "\n" + colaborador5 +"\n");
 	}
 
 	static Scanner leer = new Scanner(System.in);
