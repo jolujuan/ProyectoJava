@@ -17,15 +17,15 @@ public class Main {
 			switch (menuPrincipal) {
 			case 1:
 				Funciones.cargarArrayslist();
-					///// AQUI IRA LA FUNCION DE registrarUser() ///////////
-					System.out.println("-----Registrar Usuario----- (pulse -1 para salir)");
-					Funciones.registrarUsuario();
-					
-					    if (Funciones.registrarUsuario()) {
-					    	System.out.println("La operación ha sido cancelada, salir del registro...\n");
-					        break;
-					    }
-					
+				///// AQUI IRA LA FUNCION DE registrarUser() ///////////
+				System.out.println("-----Registrar Usuario----- (pulse -1 para salir)");
+				Funciones.registrarUsuario();
+
+				if (Funciones.registrarUsuario()) {
+					System.out.println("La operación ha sido cancelada, salir del registro...\n");
+					break;
+				}
+
 				break;
 			case 2:
 				///// AQUI IRA LA FUNCION DE loginUser() ///////////
@@ -132,7 +132,7 @@ public class Main {
 
 						do {
 							System.out.println(
-									"\n-> 1. Ver lista general \n-> 2. Ver lista personal \n-> 3. Añadir nuevo elemento a lista personal \n-> 4. Borrar elemento lista personal \n-> 5. Salir");
+									"\n-> 1. Ver lista general \n-> 2. Ver lista personal \n-> 3. Añadir nuevo elemento a lista personal \n-> 4. Añadir nuevo elemento a lista general \n-> 5. Borrar elemento lista personal \n-> 6. Salir");
 							menuUsuario = ControlErrores.validarSecundario();
 							switch (menuUsuario) {
 							case 1:
@@ -213,8 +213,35 @@ public class Main {
 									}
 								} while (menuUsuarioSecundario != 4);
 								break;
-
+								
 							case 4:
+								Funciones.cargarArrayslist();
+								System.out.println("-----Añadir elemento a lista GENERAL-----");
+								
+								do {
+									System.out.println(
+											"\n-> 1. Añadir Peliculas \n-> 2. Añadir Actores \n-> 3. Añadir Directores \n-> 4. Salir");
+									menuUsuarioSecundario = ControlErrores.validarTerciario();
+									switch (menuUsuarioSecundario) {
+									case 1:
+										System.out.println("-----Añadir Peliculas (Lista GENERAL)-----");
+										Funciones.pedirListaGeneralPelicula();
+										break;
+									case 2:
+										System.out.println("-----Añadir Actores (Lista GENERAL)-----");
+										Funciones.pedirListaGeneralActor();
+										break;
+									case 3:
+										System.out.println("-----Añadir Directores (Lista GENERALl)-----");
+										Funciones.pedirListaGeneralDirector();
+										break;
+									default:
+										System.out.println("Salir");
+									}
+								} while (menuUsuarioSecundario != 4);
+								break;
+								
+							case 5:
 								System.out.println("-----Borrar elemento lista PERSONAL-----");
 								do {
 									System.out.println(
@@ -242,7 +269,7 @@ public class Main {
 							default:
 								System.out.println("Salir");
 							}
-						} while (menuUsuario != 5);
+						} while (menuUsuario != 6);
 					}
 				}
 				break;

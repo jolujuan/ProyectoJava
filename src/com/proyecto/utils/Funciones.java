@@ -1190,15 +1190,15 @@ public class Funciones {
 		switch (opcion) {
 		case 1:
 			mostrarListaPersonal("src/com/proyecto/usuariosCarpetas/" + nomUserFinal + "/pelicula.llista",
-					"La lista personal de Peliculas es:\n", new ArrayList<Pelicula>());
+					"La lista personal de Peliculas es:\n", PelisPersonal);
 			break;
 		case 2:
 			mostrarListaPersonal("src/com/proyecto/usuariosCarpetas/" + nomUserFinal + "/actor.llista",
-					"La lista personal de Actores es:\n", new ArrayList<Actor>());
+					"La lista personal de Actores es:\n", ActorPersonal);
 			break;
 		case 3:
 			mostrarListaPersonal("src/com/proyecto/usuariosCarpetas/" + nomUserFinal + "/director.llista",
-					"La lista personal de Directores es:\n", new ArrayList<Director>());
+					"La lista personal de Directores es:\n", DirectorPersonal);
 			break;
 		default:
 			System.out.println("Opcion no valida");
