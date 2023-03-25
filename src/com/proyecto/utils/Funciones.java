@@ -9,7 +9,9 @@ import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+
 import com.proyecto.Ismael.MostrarNombreIsma;
 import com.proyecto.clases.Actor;
 import com.proyecto.clases.Director;
@@ -654,7 +656,7 @@ public class Funciones {
 
 	private static <objeto> void mostrarListaGeneral(String archivo, String mensaje, ArrayList<objeto> listaArray) {
 		File fitxer = new File(archivo);
-		if (fitxer.length() < 0 || fitxer.length() == 0) {
+		if (fitxer.length() < 0 || fitxer.length() == 0 || listaArray.size() <= 0) {
 			System.err.println("No hay nada que mostrar");
 		} else {
 			try {
@@ -725,7 +727,7 @@ public class Funciones {
 						}
 						if (!repetida) {
 							PelisPersonal.add(peliculaSeleccionada);
-							registrarListaPersonalPelicula(PelisPersonal);
+							registrarListaPersonalPelicula(PelisPersonal, "agregar");
 							encertat = true;
 						}
 					}
@@ -735,7 +737,7 @@ public class Funciones {
 	}
 
 	// GUARDAR DATOS LISTA PERSONAL PELICULA //
-	public static void registrarListaPersonalPelicula(ArrayList<Pelicula> llistaArray) {
+	public static void registrarListaPersonalPelicula(ArrayList<Pelicula> llistaArray, String nombreMetodo) {
 		// serialització
 		ObjectOutputStream oos = null;
 		FileOutputStream fout = null;
@@ -750,7 +752,14 @@ public class Funciones {
 			oos.writeObject(llistaArray);
 			oos.flush();
 			oos.close();
-			System.out.println("La película ha sido registrado correctamente a tu lista personal.");
+			
+			if (nombreMetodo.equals("agregar")) {
+				System.out.println("La película ha sido registrada correctamente a tu lista personal.");
+
+			} else if(nombreMetodo.equals("actualizar")) {
+				System.out.println("Se procedera a borrar los elementos que no existen...");
+
+			}
 
 		} catch (Exception ex) {
 			System.err.println("Error en registrar personal.pelicula.llista " + ex);
@@ -1239,7 +1248,7 @@ public class Funciones {
 	// COMPROBAR SI HA HABIDO MODIFICACION //
 	// ---------------------------------------------------------------------------------------------------------------
 
-	public static void comprobarModificacionUsuario() {
+	public static void comprobarModificacionUsuarioPelicula() {
 
 		// CARGAR LISTA GENERAL PELICULA //
 		File peligeneral = new File("src/com/proyecto/listasPeliculas/peliculas.llista");
@@ -1251,7 +1260,7 @@ public class Funciones {
 				FileInputStream file = new FileInputStream("src/com/proyecto/listasPeliculas/peliculas.llista");
 				ObjectInputStream reader = new ObjectInputStream(file);
 
-				FileInputStream filePersonal = new FileInputStream("src/com/proyecto/listasPeliculas/peliculas.llista");
+				FileInputStream filePersonal = new FileInputStream("src/com/proyecto/usuariosCarpetas/" + nomUserFinal + "/pelicula.llista");
 				ObjectInputStream readerPersonal = new ObjectInputStream(filePersonal);
 
 				try {
@@ -1260,29 +1269,24 @@ public class Funciones {
 					PelisPersonal = (ArrayList<Pelicula>) readerPersonal.readObject();
 
 					boolean elementosBorrados = false;
-//					List<Pelicula> pelisBorrar = new ArrayList<>();
-
+					List<Pelicula> pelisBorrar = new ArrayList<>();
+					
 					for (int i = 0; i < PelisPersonal.size(); i++) {
 						Pelicula peliculaPersonal = PelisPersonal.get(i);
 						int idPersonal = peliculaPersonal.getId();
-						boolean trobat = true;
+						boolean trobat = false;
+
 						for (int j = 0; j < PelisGeneral.size(); j++) {
 							Pelicula peliculaGeneral = PelisGeneral.get(j);
 							if ((peliculaGeneral.getId() == idPersonal)) {
 								trobat = true;
 								break;
-							}else {
-					            trobat = false; // Establecemos en false si no hay coincidencia
 							}
 						}
-						System.out.println(trobat);
 						if (!trobat) {
-							System.out.println("Elementos borrados encontrados en la lista personal.");
 
 							elementosBorrados = true;
-//					        pelisBorrar.add(peliculaPersonal);
-//							  PelisPersonal.remove(i);
-//							i--;
+					        pelisBorrar.add(peliculaPersonal);
 							
 						}
 					}
@@ -1295,8 +1299,8 @@ public class Funciones {
 						if (borrado == -1) {
 							System.out.println("Se ha cancelado la operación");
 						} else if (borrado == 1) {
-							System.out.println("Se procedera a borrar los elementos que no existen...");
-//							PelisPersonal.removeAll(pelisBorrar);						}
+							PelisPersonal.removeAll(pelisBorrar);	
+							registrarListaPersonalPelicula(PelisPersonal, "actualizar");
 						}
 					}
 				} catch (Exception ex) {
