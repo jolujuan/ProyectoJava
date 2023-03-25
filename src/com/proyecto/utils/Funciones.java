@@ -57,63 +57,64 @@ public class Funciones {
 
 	// REGISTRO USUARIO //
 	public static boolean registrarUsuario() {
-	    final String cancelar = "-1";
+		final String cancelar = "-1";
 
-	    System.out.println("Introduce tu nombre:");
-	    String usuario = ControlErrores.validarString();
-	    if (usuario.equals(cancelar)) {
-	        return true; // Se ha cancelado la operación
-	    }
+		System.out.println("Introduce tu nombre:");
+		String usuario = ControlErrores.validarString();
+		if (usuario.equals(cancelar)) {
+			return true; // Se ha cancelado la operación
+		}
 
-	    System.out.println("Introduce los apellidos:");
-	    String apellidos = ControlErrores.validarString();
-	    if (apellidos.equals(cancelar)) {
-	        return true; // Se ha cancelado la operación
-	    }
+		System.out.println("Introduce los apellidos:");
+		String apellidos = ControlErrores.validarString();
+		if (apellidos.equals(cancelar)) {
+			return true; // Se ha cancelado la operación
+		}
 
-	    System.out.println("Introduce tu email:");
-	    String email = ControlErrores.validarEmail();
-	    if (email.equals(cancelar)) {
-	        return true; // Se ha cancelado la operación
-	    }
+		System.out.println("Introduce tu email:");
+		String email = ControlErrores.validarEmail();
+		if (email.equals(cancelar)) {
+			return true; // Se ha cancelado la operación
+		}
 
-	    System.out.println("Introduce tu poblacion:");
-	    String poblacion = ControlErrores.validarString();
-	    if (poblacion.equals(cancelar)) {
-	        return true; // Se ha cancelado la operación
-	    }
+		System.out.println("Introduce tu poblacion:");
+		String poblacion = ControlErrores.validarString();
+		if (poblacion.equals(cancelar)) {
+			return true; // Se ha cancelado la operación
+		}
 
-	    System.out.println("Introduce tu fecha de nacimiento (dd/mm/aaaa):");
-	    String fecha = ControlErrores.validarFecha();
-	    if (fecha.equals(cancelar)) {
-	        return true; // Se ha cancelado la operación
-	    }
+		System.out.println("Introduce tu fecha de nacimiento (dd/mm/aaaa):");
+		String fecha = ControlErrores.validarFecha();
+		if (fecha.equals(cancelar)) {
+			return true; // Se ha cancelado la operación
+		}
 
-	    // pedir contraseña
-	    String contraseña = ControlErrores.pedirContraseña();
-	    if (contraseña.equals(cancelar)) {
-	        return true; // Se ha cancelado la operación
-	    }
+		// pedir contraseña
+		String contraseña = ControlErrores.pedirContraseña();
+		if (contraseña.equals(cancelar)) {
+			return true; // Se ha cancelado la operación
+		}
 
-	    // registro finish
-	    System.out.println("Registro completado");
+		// registro finish
+		System.out.println("Registro completado");
 
-	    // Array List como null, para guardar solo información de los usuarios
-	    // Obtenemos el ID de usuario con una funcion en la clase
-	    Cliente N1 = new Cliente(User.getId(), usuario, apellidos, contraseña, email, poblacion, User.Rol.USUARIO, fecha, null, null, null);
+		// Array List como null, para guardar solo información de los usuarios
+		// Obtenemos el ID de usuario con una funcion en la clase
+		Cliente N1 = new Cliente(User.getId(), usuario, apellidos, contraseña, email, poblacion, User.Rol.USUARIO,
+				fecha, null, null, null);
 
-	    // Creamos el usuario con la funcion
-	    nomUser = obtenerNomUser(User.getId(), email);
+		// Creamos el usuario con la funcion
+		nomUser = obtenerNomUser(User.getId(), email);
 
-	    // Pasamos los parametros del objeto a la funcíon guardar usuarios
-	    guardarUsuario(nomUser, User.getId(), usuario, apellidos, email, contraseña, poblacion, User.Rol.USUARIO, fecha);
+		// Pasamos los parametros del objeto a la funcíon guardar usuarios
+		guardarUsuario(nomUser, User.getId(), usuario, apellidos, email, contraseña, poblacion, User.Rol.USUARIO,
+				fecha);
 
-	    // Pasamos el parametro usuario para crear carpeta
-	    crearCarpeta(nomUser);
+		// Pasamos el parametro usuario para crear carpeta
+		crearCarpeta(nomUser);
 
-	    return false;
+		return false;
 	}
-
 
 	// OBTENER NOMBRE USUARIO //
 	public static String obtenerNomUser(int id, String email) {
@@ -724,7 +725,7 @@ public class Funciones {
 						}
 						if (!repetida) {
 							PelisPersonal.add(peliculaSeleccionada);
-							registrarListaPersonalPelicula();
+							registrarListaPersonalPelicula(PelisPersonal);
 							encertat = true;
 						}
 					}
@@ -734,7 +735,7 @@ public class Funciones {
 	}
 
 	// GUARDAR DATOS LISTA PERSONAL PELICULA //
-	public static void registrarListaPersonalPelicula() {
+	public static void registrarListaPersonalPelicula(ArrayList<Pelicula> llistaArray) {
 		// serialització
 		ObjectOutputStream oos = null;
 		FileOutputStream fout = null;
@@ -746,7 +747,7 @@ public class Funciones {
 					false);
 			oos = new ObjectOutputStream(fout);
 			// escrivim ArrayList sencer en el fitxer (1 sol objecte)
-			oos.writeObject(PelisPersonal);
+			oos.writeObject(llistaArray);
 			oos.flush();
 			oos.close();
 			System.out.println("La película ha sido registrado correctamente a tu lista personal.");
@@ -1235,21 +1236,98 @@ public class Funciones {
 		}
 	}
 
-	// CARGAR LOS ARRAYS GENERALES AL PRINCIPIO DEL PROGRAMA //
+	// COMPROBAR SI HA HABIDO MODIFICACION //
 	// ---------------------------------------------------------------------------------------------------------------
-	public static void cargarArrayslist() {
+
+	public static void comprobarModificacionUsuario() {
+
 		// CARGAR LISTA GENERAL PELICULA //
-		File peligenral = new File("src/com/proyecto/listasPeliculas/peliculas.llista");
-		if (peligenral.length() == 0 || peligenral.length() < 0) {
+		File peligeneral = new File("src/com/proyecto/listasPeliculas/peliculas.llista");
+		if (peligeneral.length() == 0 || peligeneral.length() < 0) {
 
 		} else {
 			try {
 				// obrim fitxer per a lectura
 				FileInputStream file = new FileInputStream("src/com/proyecto/listasPeliculas/peliculas.llista");
 				ObjectInputStream reader = new ObjectInputStream(file);
+
+				FileInputStream filePersonal = new FileInputStream("src/com/proyecto/listasPeliculas/peliculas.llista");
+				ObjectInputStream readerPersonal = new ObjectInputStream(filePersonal);
+
 				try {
 					// llegim l'objecte que hi ha al fitxer (1 sol array List)
 					PelisGeneral = (ArrayList<Pelicula>) reader.readObject();
+					PelisPersonal = (ArrayList<Pelicula>) readerPersonal.readObject();
+
+					boolean elementosBorrados = false;
+//					List<Pelicula> pelisBorrar = new ArrayList<>();
+
+					for (int i = 0; i < PelisPersonal.size(); i++) {
+						Pelicula peliculaPersonal = PelisPersonal.get(i);
+						int idPersonal = peliculaPersonal.getId();
+						boolean trobat = true;
+						for (int j = 0; j < PelisGeneral.size(); j++) {
+							Pelicula peliculaGeneral = PelisGeneral.get(j);
+							if ((peliculaGeneral.getId() == idPersonal)) {
+								trobat = true;
+								break;
+							}else {
+					            trobat = false; // Establecemos en false si no hay coincidencia
+							}
+						}
+						System.out.println(trobat);
+						if (!trobat) {
+							System.out.println("Elementos borrados encontrados en la lista personal.");
+
+							elementosBorrados = true;
+//					        pelisBorrar.add(peliculaPersonal);
+//							  PelisPersonal.remove(i);
+//							i--;
+							
+						}
+					}
+					if (elementosBorrados) {
+						System.out.println(
+								"\nExistem elementos en tu lista personal que han sido borrados de la general");
+						System.out.println(
+								"¿Desea borrarlos de la personal? (pulse 1 para borrarlos o -1 para cancelar)");
+						int borrado = ControlErrores.validarInt();
+						if (borrado == -1) {
+							System.out.println("Se ha cancelado la operación");
+						} else if (borrado == 1) {
+							System.out.println("Se procedera a borrar los elementos que no existen...");
+//							PelisPersonal.removeAll(pelisBorrar);						}
+						}
+					}
+				} catch (Exception ex) {
+				}
+
+				reader.close();
+				file.close();
+				filePersonal.close();
+				readerPersonal.close();
+			} catch (Exception ex) {
+			}
+		}
+	}
+
+	// CARGAR LOS ARRAYS GENERALES AL PRINCIPIO DEL PROGRAMA //
+	// ---------------------------------------------------------------------------------------------------------------
+	public static void cargarArrayslist() {
+		// CARGAR LISTA GENERAL PELICULA //
+		File peligeneral = new File("src/com/proyecto/listasPeliculas/peliculas.llista");
+		if (peligeneral.length() == 0 || peligeneral.length() < 0) {
+
+		} else {
+			try {
+				// obrim fitxer per a lectura
+				FileInputStream file = new FileInputStream("src/com/proyecto/listasPeliculas/peliculas.llista");
+				ObjectInputStream reader = new ObjectInputStream(file);
+
+				try {
+					// llegim l'objecte que hi ha al fitxer (1 sol array List)
+					PelisGeneral = (ArrayList<Pelicula>) reader.readObject();
+
 				} catch (Exception ex) {
 				}
 
