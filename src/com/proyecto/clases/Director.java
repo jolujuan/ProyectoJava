@@ -7,6 +7,8 @@ import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import com.proyecto.utils.Funciones;
+
 public class Director implements  Serializable {
 
 	/// ATRIBUTOS DIRECTOR ///
@@ -16,6 +18,7 @@ public class Director implements  Serializable {
 	private String apellidoDirector;
 	private int edadDirector;
 	private int goyas;
+	private String nomUser;
 
 	/// CONSTRUCTOR ///
 	public Director(String nombreDirector, String apellidoDirector, int edadDirector, int goyas) {
@@ -36,6 +39,7 @@ public class Director implements  Serializable {
 		this.apellidoDirector = apellidoDirector;
 		this.edadDirector = edadDirector;
 		this.goyas = goyas;
+		this.nomUser=Funciones.nomUserFinal;
 	}
 
 	// Haremos una comparacion hacia el ultimo id de la clase y lo asignaremos
@@ -132,7 +136,7 @@ public class Director implements  Serializable {
 
 	@Override
 	public String toString() {
-		return idDirector + "-. " + nombreDirector + " " + apellidoDirector;
+		return idDirector + "-. " + nombreDirector + " " + apellidoDirector+" -> "+nomUser;
 	}
 
 }
