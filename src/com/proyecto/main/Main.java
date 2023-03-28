@@ -2,6 +2,7 @@ package com.proyecto.main;
 
 import com.proyecto.utils.ControlErrores;
 import com.proyecto.utils.Funciones;
+import com.proyecto.utils.Interficie;
 
 public class Main {
 
@@ -276,7 +277,7 @@ public class Main {
 				}
 				break;
 			default:
-				System.out.println("Has cerrado el programa maquina");
+				Interficie.interficieFinalitzat();
 			}
 		} while (menuPrincipal != 3);
 	}
