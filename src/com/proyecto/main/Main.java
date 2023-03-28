@@ -130,6 +130,8 @@ public class Main {
 
 					} else {
 						Funciones.comprobarModificacionUsuarioPelicula();
+						Funciones.comprobarModificacionUsuarioActor();
+						Funciones.comprobarModificacionUsuarioDirector();
 						do {
 							System.out.println(
 									"\n-> 1. Ver lista general \n-> 2. Ver lista personal \n-> 3. Añadir nuevo elemento a lista personal \n-> 4. Añadir nuevo elemento a lista general \n-> 5. Borrar elemento lista personal \n-> 6. Salir");
