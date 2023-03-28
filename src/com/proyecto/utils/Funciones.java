@@ -9,7 +9,9 @@ import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+
 import com.proyecto.Ismael.MostrarNombreIsma;
 import com.proyecto.clases.Actor;
 import com.proyecto.clases.Director;
@@ -17,6 +19,7 @@ import com.proyecto.clases.Pelicula;
 import com.proyecto.edu.MostrarNombreEdu;
 import com.proyecto.javier.MostrarNombreJavier;
 import com.proyecto.joseluis.MostrarNombreJoselu;
+import com.proyecto.maikol.MostrarNombreMaikol;
 import com.proyecto.users.Cliente;
 import com.proyecto.users.User;
 import com.proyecto.users.User.Rol;
@@ -29,8 +32,9 @@ public class Funciones {
 		MostrarNombreIsma colaborador2 = new MostrarNombreIsma();
 		MostrarNombreJavier colaborador3 = new MostrarNombreJavier();
 		MostrarNombreJoselu colaborador4 = new MostrarNombreJoselu();
-
-		System.out.println(colaborador1 + "\n" + colaborador2 + "\n" + colaborador3 + "\n" + colaborador4 + "\n");
+		MostrarNombreMaikol colaborador5 = new MostrarNombreMaikol();
+		System.out.println("-------Creado por------- \n- " + colaborador1 + "\n- " + colaborador2 + "\n- "
+				+ colaborador3 + "\n- " + colaborador4 + "\n- " + colaborador5 + "\n");
 	}
 
 	static Scanner leer = new Scanner(System.in);
@@ -54,24 +58,44 @@ public class Funciones {
 	public static ArrayList<Actor> ActorPersonal = new ArrayList<Actor>();
 
 	// REGISTRO USUARIO //
-	public static void registrarUsuario() {
+	public static boolean registrarUsuario() {
+		final String cancelar = "-1";
+
 		System.out.println("Introduce tu nombre:");
 		String usuario = ControlErrores.validarString();
+		if (usuario.equals(cancelar)) {
+			return true; // Se ha cancelado la operación
+		}
 
 		System.out.println("Introduce los apellidos:");
 		String apellidos = ControlErrores.validarString();
+		if (apellidos.equals(cancelar)) {
+			return true; // Se ha cancelado la operación
+		}
 
 		System.out.println("Introduce tu email:");
 		String email = ControlErrores.validarEmail();
+		if (email.equals(cancelar)) {
+			return true; // Se ha cancelado la operación
+		}
 
 		System.out.println("Introduce tu poblacion:");
 		String poblacion = ControlErrores.validarString();
+		if (poblacion.equals(cancelar)) {
+			return true; // Se ha cancelado la operación
+		}
 
 		System.out.println("Introduce tu fecha de nacimiento (dd/mm/aaaa):");
 		String fecha = ControlErrores.validarFecha();
+		if (fecha.equals(cancelar)) {
+			return true; // Se ha cancelado la operación
+		}
 
 		// pedir contraseña
 		String contraseña = ControlErrores.pedirContraseña();
+		if (contraseña.equals(cancelar)) {
+			return true; // Se ha cancelado la operación
+		}
 
 		// registro finish
 		System.out.println("Registro completado");
@@ -84,16 +108,14 @@ public class Funciones {
 		// Creamos el usuario con la funcion
 		nomUser = obtenerNomUser(User.getId(), email);
 
-		// Mostramos los datos del cliente y su numro de usuario
-		System.out.println("\n" + N1.toString());
-		System.out.println("Tu nombre de usuario es: " + nomUser);
-
 		// Pasamos los parametros del objeto a la funcíon guardar usuarios
 		guardarUsuario(nomUser, User.getId(), usuario, apellidos, email, contraseña, poblacion, User.Rol.USUARIO,
 				fecha);
+
 		// Pasamos el parametro usuario para crear carpeta
 		crearCarpeta(nomUser);
 
+		return false;
 	}
 
 	// OBTENER NOMBRE USUARIO //
@@ -154,7 +176,10 @@ public class Funciones {
 			escriureUser.println(datos);
 			escriureUser.close();
 
-			System.out.println("\nUsuario guardado correctamente" + " \u2714" + "\n");
+			System.out.println("\nUsuario guardado correctamente" + " \u2714");
+			System.out.println(
+					"\u001B[1mTu nombre de usuario es: " + "\u001B[0m" + "\u001B[1m" + nomUser + "\u001B[0m\n");
+
 		} catch (Exception e) {
 			System.err.println("Error: " + e);
 		}
@@ -660,7 +685,7 @@ public class Funciones {
 
 	// PEDIR Y GUARDAR DATOS LISTAS PERSONALES //
 	// ---------------------------------------------------------------------------------------------------------------
-	
+
 	// PEDIR DATOS LISTA PERSONAL PELICULA //
 	public static void pedirListaPersonalPelicula() {
 		File vacio = new File("src/com/proyecto/listasPeliculas/peliculas.llista");
@@ -674,7 +699,7 @@ public class Funciones {
 
 			boolean encertat = false;
 			int idUser = 0;
-			
+
 			do {
 				idUser = ControlErrores.validarInt();
 
@@ -702,7 +727,7 @@ public class Funciones {
 						}
 						if (!repetida) {
 							PelisPersonal.add(peliculaSeleccionada);
-							registrarListaPersonalPelicula();
+							registrarListaPersonalPelicula(PelisPersonal, "agregar");
 							encertat = true;
 						}
 					}
@@ -710,9 +735,9 @@ public class Funciones {
 			} while (!encertat);
 		}
 	}
-	
+
 	// GUARDAR DATOS LISTA PERSONAL PELICULA //
-	public static void registrarListaPersonalPelicula() {
+	public static void registrarListaPersonalPelicula(ArrayList<Pelicula> llistaArray, String nombreMetodo) {
 		// serialització
 		ObjectOutputStream oos = null;
 		FileOutputStream fout = null;
@@ -724,10 +749,17 @@ public class Funciones {
 					false);
 			oos = new ObjectOutputStream(fout);
 			// escrivim ArrayList sencer en el fitxer (1 sol objecte)
-			oos.writeObject(PelisPersonal);
+			oos.writeObject(llistaArray);
 			oos.flush();
 			oos.close();
-			System.out.println("La película ha sido registrado correctamente a tu lista personal.");
+
+			if (nombreMetodo.equals("agregar")) {
+				System.out.println("La película ha sido registrada correctamente a tu lista personal.");
+
+			} else if (nombreMetodo.equals("actualizar")) {
+				System.out.println("Se procedera a borrar los elementos que no existen...");
+
+			}
 
 		} catch (Exception ex) {
 			System.err.println("Error en registrar personal.pelicula.llista " + ex);
@@ -743,57 +775,57 @@ public class Funciones {
 	}
 
 	// PEDIR DATO LISTA PERSONAL ACTOR //
-		public static void pedirListaPersonalActor() {
-			File vacio = new File("src/com/proyecto/listasPeliculas/actores.llista");
-			if (vacio.length() < 0 || vacio.length() == 0) {
-				System.err.println("No puedes añadir nada ya que la lista general esta vacia");
-			} else {
-				System.out.println("Introduce el  id del Actor/a que quieres ( pulse -1 para salir)");
-				for (Actor i : ActorGeneral) {
-					System.out.println(i.toString());
-				}
+	public static void pedirListaPersonalActor() {
+		File vacio = new File("src/com/proyecto/listasPeliculas/actores.llista");
+		if (vacio.length() < 0 || vacio.length() == 0) {
+			System.err.println("No puedes añadir nada ya que la lista general esta vacia");
+		} else {
+			System.out.println("Introduce el  id del Actor/a que quieres (pulse -1 para salir)");
+			for (Actor i : ActorGeneral) {
+				System.out.println(i.toString());
+			}
 
-				boolean encertat = false;
-				int idUser = 0;
-				
-				do {
-					idUser = ControlErrores.validarInt();
+			boolean encertat = false;
+			int idUser = 0;
 
-					if (idUser == -1) {
-						System.out.println("Has cancelado la selección de la lista");
-						encertat = true;
+			do {
+				idUser = ControlErrores.validarInt();
+
+				if (idUser == -1) {
+					System.out.println("Has cancelado la selección de la lista");
+					encertat = true;
+				} else {
+					Actor ActorSeleccionado = null;
+					for (Actor item : ActorGeneral) { // -interestellar
+						if (item.getId() == idUser) { // -saturno
+							ActorSeleccionado = item; // 6-jupiter
+							break;
+						}
+					}
+					if (ActorSeleccionado == null) {
+						System.err.println("El actor/a seleccionado no se ha encontrado en la lista general.");
 					} else {
-						Actor ActorSeleccionado = null;
-						for (Actor item : ActorGeneral) {
-							if (item.getId() == idUser) {
-								ActorSeleccionado = item;
+						boolean repetida = false;
+						for (Actor item : ActorPersonal) {
+							if (item.getId() == ActorSeleccionado.getId()) {
+								System.err.println("El actor/a seleccionado ya existe en tu lista personal.");
+								repetida = true;
 								break;
 							}
 						}
-						if (ActorSeleccionado == null) {
-							System.err.println("El actor/a seleccionado no se ha encontrado en la lista general.");
-						} else {
-							boolean repetida = false;
-							for (Actor item : ActorPersonal) {
-								if (item.getId() == ActorSeleccionado.getId()) {
-									System.err.println("El actor/a seleccionado ya existe en tu lista personal.");
-									repetida = true;
-									break;
-								}
-							}
-							if (!repetida) {
-								ActorPersonal.add(ActorSeleccionado);
-								registrarListaPersonalActor();
-								encertat = true;
-							}
+						if (!repetida) {
+							ActorPersonal.add(ActorSeleccionado);
+							registrarListaPersonalActor(ActorPersonal, "agregar");
+							encertat = true;
 						}
 					}
-				} while (!encertat);
-			}
+				}
+			} while (!encertat);
 		}
+	}
 
 	// GUARDAR DATOS LISTA PERSONAL ACTOR //
-	public static void registrarListaPersonalActor() {
+	public static void registrarListaPersonalActor(ArrayList<Actor> llistaArray ,String nombreMetodo) {
 		// serialització
 		ObjectOutputStream oos = null;
 		FileOutputStream fout = null;
@@ -804,11 +836,17 @@ public class Funciones {
 			fout = new FileOutputStream("src/com/proyecto/usuariosCarpetas/" + nomUserFinal + "/actor.llista", false);
 			oos = new ObjectOutputStream(fout);
 			// escrivim ArrayList sencer en el fitxer (1 sol objecte)
-			oos.writeObject(ActorPersonal);
+			oos.writeObject(llistaArray);
 			oos.flush();
 			oos.close();
-			System.out.println("El actor/a se ha registrado correctamente a tu lista personal");
+			
+			if (nombreMetodo.equals("agregar")) {
+				System.out.println("El actor/a ha sido registrado correctamente a tu lista personal.");
 
+			} else if (nombreMetodo.equals("actualizar")) {
+				System.out.println("Se procedera a borrar los elementos que no existen...");
+
+			}
 		} catch (Exception ex) {
 			System.err.println("Error en registrar personal.actor.llista " + ex);
 		} finally {
@@ -823,57 +861,57 @@ public class Funciones {
 	}
 
 	// PEDIR LISTA PERSONAL DIRECTOR //
-		public static void pedirListaPersonalDirector() {
-			File vacio = new File("src/com/proyecto/listasPeliculas/directores.llista");
-			if (vacio.length() < 0 || vacio.length() == 0) {
-				System.err.println("No puedes añadir nada ya que la lista general esta vacia");
-			} else {
-				System.out.println("Introduce el  id de la Pelicula que quieres ( pulse -1 para salir)");
-				for (Director i : DirectorGeneral) {
-					System.out.println(i.toString());
-				}
+	public static void pedirListaPersonalDirector() {
+		File vacio = new File("src/com/proyecto/listasPeliculas/directores.llista");
+		if (vacio.length() < 0 || vacio.length() == 0) {
+			System.err.println("No puedes añadir nada ya que la lista general esta vacia");
+		} else {
+			System.out.println("Introduce el  id de la Pelicula que quieres ( pulse -1 para salir)");
+			for (Director i : DirectorGeneral) {
+				System.out.println(i.toString());
+			}
 
-				boolean encertat = false;
-				int idUser = 0;
-				
-				do {
-					idUser = ControlErrores.validarInt();
+			boolean encertat = false;
+			int idUser = 0;
 
-					if (idUser == -1) {
-						System.out.println("Has cancelado la selección de la lista");
-						encertat = true;
+			do {
+				idUser = ControlErrores.validarInt();
+
+				if (idUser == -1) {
+					System.out.println("Has cancelado la selección de la lista");
+					encertat = true;
+				} else {
+					Director directorSeleccionado = null;
+					for (Director item : DirectorGeneral) {
+						if (item.getId() == idUser) {
+							directorSeleccionado = item;
+							break;
+						}
+					}
+					if (directorSeleccionado == null) {
+						System.err.println("El director/a seleccionado no se ha encontrado en la lista general.");
 					} else {
-						Director directorSeleccionado = null;
-						for (Director item : DirectorGeneral) {
-							if (item.getId() == idUser) {
-								directorSeleccionado = item;
+						boolean repetida = false;
+						for (Director item : DirectorPersonal) {
+							if (item.getId() == directorSeleccionado.getId()) {
+								System.err.println("El director/a seleccionado ya existe en tu lista personal.");
+								repetida = true;
 								break;
 							}
 						}
-						if (directorSeleccionado == null) {
-							System.err.println("El director/a seleccionado no se ha encontrado en la lista general.");
-						} else {
-							boolean repetida = false;
-							for (Director item : DirectorPersonal) {
-								if (item.getId() == directorSeleccionado.getId()) {
-									System.err.println("El director/a seleccionado ya existe en tu lista personal.");
-									repetida = true;
-									break;
-								}
-							}
-							if (!repetida) {
-								DirectorPersonal.add(directorSeleccionado);
-								registrarListaPersonalDirector();
-								encertat = true;
-							}
+						if (!repetida) {
+							DirectorPersonal.add(directorSeleccionado);
+							registrarListaPersonalDirector(DirectorPersonal, "agregar");
+							encertat = true;
 						}
 					}
-				} while (!encertat);
-			}
+				}
+			} while (!encertat);
 		}
+	}
 
 	// GUARDAR DATOS LISTA PERSONAL DIRECTOR //
-	public static void registrarListaPersonalDirector() {
+	public static void registrarListaPersonalDirector(ArrayList<Director> llistaArray, String nombreMetodo) {
 		// serialització
 		ObjectOutputStream oos = null;
 		FileOutputStream fout = null;
@@ -885,10 +923,17 @@ public class Funciones {
 					false);
 			oos = new ObjectOutputStream(fout);
 			// escrivim ArrayList sencer en el fitxer (1 sol objecte)
-			oos.writeObject(DirectorPersonal);
+			oos.writeObject(llistaArray);
 			oos.flush();
 			oos.close();
-			System.out.println("El director/a se ha registrado correctamente a tu lista personal");
+
+			if (nombreMetodo.equals("agregar")) {
+				System.out.println("El director/a ha sido registrado correctamente a tu lista personal.");
+
+			} else if (nombreMetodo.equals("actualizar")) {
+				System.out.println("Se procedera a borrar los elementos que no existen...");
+
+			}
 
 		} catch (Exception ex) {
 			System.err.println("Error en registrar personal.director.llista " + ex);
@@ -1168,15 +1213,15 @@ public class Funciones {
 		switch (opcion) {
 		case 1:
 			mostrarListaPersonal("src/com/proyecto/usuariosCarpetas/" + nomUserFinal + "/pelicula.llista",
-					"La lista personal de Peliculas es:\n", new ArrayList<Pelicula>());
+					"La lista personal de Peliculas es:\n", PelisPersonal);
 			break;
 		case 2:
 			mostrarListaPersonal("src/com/proyecto/usuariosCarpetas/" + nomUserFinal + "/actor.llista",
-					"La lista personal de Actores es:\n", new ArrayList<Actor>());
+					"La lista personal de Actores es:\n", ActorPersonal);
 			break;
 		case 3:
 			mostrarListaPersonal("src/com/proyecto/usuariosCarpetas/" + nomUserFinal + "/director.llista",
-					"La lista personal de Directores es:\n", new ArrayList<Director>());
+					"La lista personal de Directores es:\n", DirectorPersonal);
 			break;
 		default:
 			System.out.println("Opcion no valida");
@@ -1213,21 +1258,226 @@ public class Funciones {
 		}
 	}
 
+	// COMPROBAR SI HA HABIDO MODIFICACION //
+	// ---------------------------------------------------------------------------------------------------------------
+
+	// COMPROBAR PELICULAS //
+	public static void comprobarModificacionUsuarioPelicula() {
+		File peligeneral = new File("src/com/proyecto/listasPeliculas/peliculas.llista");
+		if (peligeneral.length() == 0 || peligeneral.length() < 0) {
+		} else {
+			try {
+				// obrim fitxer per a lectura
+				FileInputStream file = new FileInputStream("src/com/proyecto/listasPeliculas/peliculas.llista");
+				ObjectInputStream reader = new ObjectInputStream(file);
+
+				FileInputStream filePersonal = new FileInputStream(
+						"src/com/proyecto/usuariosCarpetas/" + nomUserFinal + "/pelicula.llista");
+				ObjectInputStream readerPersonal = new ObjectInputStream(filePersonal);
+
+				try {
+					// llegim l'objecte que hi ha al fitxer (1 sol array List)
+					PelisGeneral = (ArrayList<Pelicula>) reader.readObject();
+					PelisPersonal = (ArrayList<Pelicula>) readerPersonal.readObject();
+
+					boolean elementosBorrados = false;
+					List<Pelicula> pelisBorrar = new ArrayList<>();
+
+					for (int i = 0; i < PelisPersonal.size(); i++) {
+						Pelicula peliculaPersonal = PelisPersonal.get(i);
+						int idPersonal = peliculaPersonal.getId();
+						boolean trobat = false;
+
+						// Si el id no coincide significara que la pelicula en la lista personal no
+						// existe en la general, por lo tanto trobat se evalua como false
+						for (int j = 0; j < PelisGeneral.size(); j++) {
+							Pelicula peliculaGeneral = PelisGeneral.get(j);
+							if ((peliculaGeneral.getId() == idPersonal)) {
+								trobat = true;
+								break;
+							}
+						}
+						if (!trobat) {
+							elementosBorrados = true;
+							pelisBorrar.add(peliculaPersonal);
+						}
+					}
+					if (elementosBorrados) {
+						System.out.println(
+								"\nExistem peliculas en tu lista personal que han sido borrados de la general");
+						System.out.println(
+								"¿Desea borrarlos de la personal? (pulse 1 para borrarlos o -1 para cancelar)");
+						int borrado = ControlErrores.validarInt();
+						if (borrado == -1) {
+							System.out.println("Se ha cancelado la operación");
+						} else if (borrado == 1) {
+							PelisPersonal.removeAll(pelisBorrar);
+							registrarListaPersonalPelicula(PelisPersonal, "actualizar");
+						}
+					}
+				} catch (Exception ex) {
+				}
+
+				reader.close();
+				file.close();
+				filePersonal.close();
+				readerPersonal.close();
+			} catch (Exception ex) {
+			}
+		}
+	}
+
+	
+	// COMPROBAR ACTORES //
+		public static void comprobarModificacionUsuarioActor() {
+			File peligeneral = new File("src/com/proyecto/listasPeliculas/actores.llista");
+			if (peligeneral.length() == 0 || peligeneral.length() < 0) {
+			} else {
+				try {
+					// obrim fitxer per a lectura
+					FileInputStream file = new FileInputStream("src/com/proyecto/listasPeliculas/actores.llista");
+					ObjectInputStream reader = new ObjectInputStream(file);
+
+					FileInputStream filePersonal = new FileInputStream(
+							"src/com/proyecto/usuariosCarpetas/" + nomUserFinal + "/actor.llista");
+					ObjectInputStream readerPersonal = new ObjectInputStream(filePersonal);
+
+					try {
+						// llegim l'objecte que hi ha al fitxer (1 sol array List)
+						ActorGeneral = (ArrayList<Actor>) reader.readObject();
+						ActorPersonal = (ArrayList<Actor>) readerPersonal.readObject();
+
+						boolean elementosBorrados = false;
+						List<Actor> actoresBorrar = new ArrayList<>();
+
+						for (int i = 0; i < ActorPersonal.size(); i++) {
+							Actor actorPersonal = ActorPersonal.get(i);
+							int idPersonal = actorPersonal.getId();
+							boolean trobat = false;
+
+							// Si el id no coincide significara que la pelicula en la lista personal no
+							// existe en la general, por lo tanto trobat se evalua como false
+							for (int j = 0; j < ActorGeneral.size(); j++) {
+								Actor actorGeneral = ActorGeneral.get(j);
+								if ((actorGeneral.getId() == idPersonal)) {
+									trobat = true;
+									break;
+								}
+							}
+							if (!trobat) {
+								elementosBorrados = true;
+								actoresBorrar.add(actorPersonal);
+							}
+						}
+						if (elementosBorrados) {
+							System.out.println(
+									"\nExistem Actores en tu lista personal que han sido borrados de la general");
+							System.out.println(
+									"¿Desea borrarlos de la personal? (pulse 1 para borrarlos o -1 para cancelar)");
+							int borrado = ControlErrores.validarInt();
+							if (borrado == -1) {
+								System.out.println("Se ha cancelado la operación");
+							} else if (borrado == 1) {
+								ActorPersonal.removeAll(actoresBorrar);
+								registrarListaPersonalActor(ActorPersonal, "actualizar");
+							}
+						}
+					} catch (Exception ex) {
+					}
+
+					reader.close();
+					file.close();
+					filePersonal.close();
+					readerPersonal.close();
+				} catch (Exception ex) {
+				}
+			}
+		}
+		
+		// COMPROBAR DIRECTORES //
+		public static void comprobarModificacionUsuarioDirector() {
+			File peligeneral = new File("src/com/proyecto/listasPeliculas/directores.llista");
+			if (peligeneral.length() == 0 || peligeneral.length() < 0) {
+			} else {
+				try {
+					// obrim fitxer per a lectura
+					FileInputStream file = new FileInputStream("src/com/proyecto/listasPeliculas/directores.llista");
+					ObjectInputStream reader = new ObjectInputStream(file);
+
+					FileInputStream filePersonal = new FileInputStream(
+							"src/com/proyecto/usuariosCarpetas/" + nomUserFinal + "/director.llista");
+					ObjectInputStream readerPersonal = new ObjectInputStream(filePersonal);
+
+					try {
+						// llegim l'objecte que hi ha al fitxer (1 sol array List)
+						DirectorGeneral = (ArrayList<Director>) reader.readObject();
+						DirectorPersonal = (ArrayList<Director>) readerPersonal.readObject();
+
+						boolean elementosBorrados = false;
+						List<Director> directorBorrar = new ArrayList<>();
+
+						for (int i = 0; i < DirectorPersonal.size(); i++) {
+							Director directorPersonal = DirectorPersonal.get(i);
+							int idPersonal = directorPersonal.getId();
+							boolean trobat = false;
+
+							// Si el id no coincide significara que la pelicula en la lista personal no
+							// existe en la general, por lo tanto trobat se evalua como false
+							for (int j = 0; j < DirectorGeneral.size(); j++) {
+								Director directorGeneral = DirectorGeneral.get(j);
+								if ((directorGeneral.getId() == idPersonal)) {
+									trobat = true;
+									break;
+								}
+							}
+							if (!trobat) {
+								elementosBorrados = true;
+								directorBorrar.add(directorPersonal);
+							}
+						}
+						if (elementosBorrados) {
+							System.out.println(
+									"\nExistem Directores en tu lista personal que han sido borrados de la general");
+							System.out.println(
+									"¿Desea borrarlos de la personal? (pulse 1 para borrarlos o -1 para cancelar)");
+							int borrado = ControlErrores.validarInt();
+							if (borrado == -1) {
+								System.out.println("Se ha cancelado la operación");
+							} else if (borrado == 1) {
+								DirectorPersonal.removeAll(directorBorrar);
+								registrarListaPersonalDirector(DirectorPersonal, "actualizar");
+							}
+						}
+					} catch (Exception ex) {
+					}
+
+					reader.close();
+					file.close();
+					filePersonal.close();
+					readerPersonal.close();
+				} catch (Exception ex) {
+				}
+			}
+		}
+		
+		
 	// CARGAR LOS ARRAYS GENERALES AL PRINCIPIO DEL PROGRAMA //
 	// ---------------------------------------------------------------------------------------------------------------
 	public static void cargarArrayslist() {
 		// CARGAR LISTA GENERAL PELICULA //
-		File peligenral = new File("src/com/proyecto/listasPeliculas/peliculas.llista");
-		if (peligenral.length() == 0 || peligenral.length() < 0) {
+		File peligeneral = new File("src/com/proyecto/listasPeliculas/peliculas.llista");
+		if (peligeneral.length() == 0 || peligeneral.length() < 0) {
 
 		} else {
 			try {
 				// obrim fitxer per a lectura
 				FileInputStream file = new FileInputStream("src/com/proyecto/listasPeliculas/peliculas.llista");
 				ObjectInputStream reader = new ObjectInputStream(file);
+
 				try {
 					// llegim l'objecte que hi ha al fitxer (1 sol array List)
 					PelisGeneral = (ArrayList<Pelicula>) reader.readObject();
+
 				} catch (Exception ex) {
 				}
 

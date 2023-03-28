@@ -8,42 +8,24 @@ public class Main {
 	public static void main(String[] args) {
 
 		int menuPrincipal = 0, menuUsuario = 0, menuUsuarioSecundario = 0, menuAdmin = 0, menuAdminSecundariol = 0;
-		;
 		// MENU PRINCIPAL //
 
 		do {
-//			Funciones.mostrarColaboradores();
-			System.out.println("Escoja una opcion: \n-> 1. PRUEBAS \n-> 2. Login \n-> 3. Salir");
+			Funciones.mostrarColaboradores();
+			System.out.println("Escoja una opcion: \n-> 1. REGISTRAR \n-> 2. LOGIN \n-> 3. SALIR");
 			menuPrincipal = ControlErrores.validarMenuPrincipal();
 			switch (menuPrincipal) {
 			case 1:
 				Funciones.cargarArrayslist();
-				do {
-					System.out.println(
-							"\n-> 1. Borrar pelicula \n-> 2. Borrar Actor \n-> 3. Borrar Director \n-> 4. Salir");
-					menuAdminSecundariol = ControlErrores.validarTerciario();
-					switch (menuAdminSecundariol) {
-					case 1: {
-						Funciones.borrarListaGeneral(1);
-						break;
-					}
-					case 2: {
-						Funciones.borrarListaGeneral(2);
-						break;
-					}
-					case 3: {
-						Funciones.borrarListaGeneral(3);
-						break;
-					}
-
-					default:
-						System.out.println("Salir");
-					}
-				} while (menuAdminSecundariol != 4);
-
 				///// AQUI IRA LA FUNCION DE registrarUser() ///////////
-//				System.out.println("-----Registrar Usuario-----");
-//				Funciones.registrarUsuario();
+				System.out.println("-----Registrar Usuario----- (pulse -1 para salir)");
+				Funciones.registrarUsuario();
+
+				if (Funciones.registrarUsuario()) {
+					System.out.println("La operación ha sido cancelada, salir del registro...\n");
+					break;
+				}
+
 				break;
 			case 2:
 				///// AQUI IRA LA FUNCION DE loginUser() ///////////
@@ -147,10 +129,12 @@ public class Main {
 						break;
 
 					} else {
-
+						Funciones.comprobarModificacionUsuarioPelicula();
+						Funciones.comprobarModificacionUsuarioActor();
+						Funciones.comprobarModificacionUsuarioDirector();
 						do {
 							System.out.println(
-									"\n-> 1. Ver lista general \n-> 2. Ver lista personal \n-> 3. Añadir nuevo elemento a lista personal \n-> 4. Borrar elemento lista personal \n-> 5. Salir");
+									"\n-> 1. Ver lista general \n-> 2. Ver lista personal \n-> 3. Añadir nuevo elemento a lista personal \n-> 4. Añadir nuevo elemento a lista general \n-> 5. Borrar elemento lista personal \n-> 6. Salir");
 							menuUsuario = ControlErrores.validarSecundario();
 							switch (menuUsuario) {
 							case 1:
@@ -231,8 +215,35 @@ public class Main {
 									}
 								} while (menuUsuarioSecundario != 4);
 								break;
-
+								
 							case 4:
+								Funciones.cargarArrayslist();
+								System.out.println("-----Añadir elemento a lista GENERAL-----");
+								
+								do {
+									System.out.println(
+											"\n-> 1. Añadir Peliculas \n-> 2. Añadir Actores \n-> 3. Añadir Directores \n-> 4. Salir");
+									menuUsuarioSecundario = ControlErrores.validarTerciario();
+									switch (menuUsuarioSecundario) {
+									case 1:
+										System.out.println("-----Añadir Peliculas (Lista GENERAL)-----");
+										Funciones.pedirListaGeneralPelicula();
+										break;
+									case 2:
+										System.out.println("-----Añadir Actores (Lista GENERAL)-----");
+										Funciones.pedirListaGeneralActor();
+										break;
+									case 3:
+										System.out.println("-----Añadir Directores (Lista GENERALl)-----");
+										Funciones.pedirListaGeneralDirector();
+										break;
+									default:
+										System.out.println("Salir");
+									}
+								} while (menuUsuarioSecundario != 4);
+								break;
+								
+							case 5:
 								System.out.println("-----Borrar elemento lista PERSONAL-----");
 								do {
 									System.out.println(
@@ -260,7 +271,7 @@ public class Main {
 							default:
 								System.out.println("Salir");
 							}
-						} while (menuUsuario != 5);
+						} while (menuUsuario != 6);
 					}
 				}
 				break;

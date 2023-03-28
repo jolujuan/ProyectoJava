@@ -55,6 +55,7 @@ _Menciona a todos aquellos que ayudaron a levantar el proyecto desde sus inicios
 * **Jose Luis** - *Trabajo Contenido* - [jolujuan](https://github.com/jolujuan)
 * **Ismael Bouassami** - *Trabajo Contenido* - [ismaelBouassami](https://github.com/ismaelBouassami)
 * **Javier** - *Trabajo Final* - [JavierAlmC](https://github.com/JavierAlmC)
+* **Maikol** - *Trabajo Final* - [giornotheBanana01](https://github.com/giornotheBanana01)
 
 También puedes mirar la lista de todos los [contribuyentes](https://github.com/jolujuan/ProyectoJava/graphs/contributors) quíenes han participado en este proyecto. 
 

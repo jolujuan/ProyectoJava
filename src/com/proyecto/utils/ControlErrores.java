@@ -53,10 +53,10 @@ public class ControlErrores {
 				entrada.nextLine();
 			} else {
 				n = entrada.nextInt();
-				if (n == 1 || n == 2 || n == 3 || n == 4 || n == 5) {
+				if (n == 1 || n == 2 || n == 3 || n == 4 || n == 5 || n == 6) {
 					correcto = true;
 				} else {
-					System.err.println("Error: El numero introducido debe ser 1, 2, 3, 4 o 5.");
+					System.err.println("Error: El numero introducido debe ser 1, 2, 3, 4, 5 o 6.");
 					entrada.nextLine();
 				}
 			}
@@ -190,7 +190,7 @@ public class ControlErrores {
 
 			email = entrada.nextLine();
 			if (!Pattern.compile("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$").matcher(email).find()) {
-				System.err.println("Error: Email no valido vuelve a introducirlo.");
+				System.err.println("Error: Email no valido vuelve a introducirlo:");
 			} else {
 				correcto = true;
 			}

@@ -1,9 +1,10 @@
 #USUARIO         |ID | Nombre           | Apellidos        | Email                        | Contraseña       | Población   | Rol        | Fecha        
 #----------------+---+------------------+------------------+------------------------------+------------------+-------------+------------+--------------
 admin            |000|admin             |admin             |admin@admin.com               |admin           	 |inexistente  |admin       |admin         
-1juanestevej     |001|joseluis          |juan              |juanestevej@gmail.com         |canals            |canals       |USUARIO     |30/04/2002    
+1joseluis        |001|joseluis          |juan              |juanestevej@gmail.com         |canals            |canals       |USUARIO     |30/04/2002    
 2edu             |002|edu               |valls             |edu@gmail.com                 |12345             |Agullent     |USUARIO     |08/10/1999    
 3crisi           |003|crisi             |crisicrisi        |crisi@gmail.com               |12345             |Rumania      |USUARIO     |10/10/2000    
 4juanma          |004|Juanma            |ReigBarbera       |juanma@gmail.com              |12345             |Ontinyent    |USUARIO     |31/12/1999    
 5david           |005|David             |MompoHermoso      |david@gmail.com               |12345             |Agullent     |USUARIO     |12/12/1999    
 6clareta         |006|clara             |escamilla         |clareta@gmail.com             |12345             |canals       |USUARIO     |10/01/2000    
+7jose            |007|jose              |jose              |jose@jose.com                 |12345             |jose         |USUARIO     |30/04/2002    
