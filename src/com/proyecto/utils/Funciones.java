@@ -33,7 +33,7 @@ public class Funciones {
 		MostrarNombreJavier colaborador3 = new MostrarNombreJavier();
 		MostrarNombreJoselu colaborador4 = new MostrarNombreJoselu();
 		MostrarNombreMaikol colaborador5 = new MostrarNombreMaikol();
-		return "<html><div style='text-align:center;'>-------Creado por-------<br><br>" + 
+		return "<html><div style='text-align:center;'>-------Creado por-------<br>" + 
 	       colaborador1 + "<br>" + colaborador2 + "<br>" + colaborador3 + "<br>" + 
 	       colaborador4 + "<br>" + colaborador5 + "</div></html>";
 
