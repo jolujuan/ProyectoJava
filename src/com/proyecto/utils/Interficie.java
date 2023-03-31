@@ -2,10 +2,9 @@ package com.proyecto.utils;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
-
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -23,8 +22,7 @@ public class Interficie {
 		ImageIcon icono = new ImageIcon("src/com/proyecto/utils/icono.png");
 		eixidaMenu.setIconImage(icono.getImage());
 
-		Container contenedor = eixidaMenu.getContentPane();
-
+	
 		JLabel mensaje = new JLabel("Adéu, fins aviat!");
 		mensaje.setHorizontalAlignment(SwingConstants.CENTER);
 		Font font = new Font(Font.DIALOG, Font.BOLD + Font.ITALIC, 22);
@@ -36,8 +34,8 @@ public class Interficie {
 		Border border = BorderFactory.createMatteBorder(7, 3, 7, 3, Color.BLUE);
 		mensaje.setBorder(BorderFactory.createCompoundBorder(null, border));
 
-		JLabel membres = new JLabel("Jose Luis\n Edu Valls\n Ismael\n Javier\n Maikol");
-		
+		JLabel membres = new JLabel("<html>Jose Luis<br> Edu <br> Ismael<br> Javier<br> Maikol</html>");
+		 membres.setPreferredSize(new Dimension(750, 750));
 		
 		JLabel institut = new JLabel("IES Lluís Simarro");
 
@@ -50,21 +48,20 @@ public class Interficie {
 		centrarLabels(membres, institut, curs, asignatura, any);
 
 		JPanel panell = new JPanel(new GridLayout(6, 1));
-
+	   
+		
 		panell.add(mensaje);
 		panell.add(membres);
 		panell.add(institut);
 		panell.add(curs);
 		panell.add(asignatura);
 		panell.add(any);
-		  
-		contenedor.add(panell, BorderLayout.CENTER);
-
+		
 		eixidaMenu.setExtendedState(JFrame.NORMAL);
-		eixidaMenu.setSize(400, 500);
+		eixidaMenu.setSize(400, 750);	
+		eixidaMenu.add(panell, BorderLayout.CENTER);
 		eixidaMenu.setVisible(true);
-		eixidaMenu.requestFocus();
-		eixidaMenu.toFront();
+		eixidaMenu.setAlwaysOnTop(true);
 	}
 
 	public static void centrarLabels(JLabel... labels) {
