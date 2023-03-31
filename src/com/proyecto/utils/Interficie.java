@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -34,8 +35,10 @@ public class Interficie {
 		Border border = BorderFactory.createMatteBorder(7, 3, 7, 3, Color.BLUE);
 		mensaje.setBorder(BorderFactory.createCompoundBorder(null, border));
 
+
 		JLabel membres = new JLabel("<html>Jose Luis<br> Edu <br> Ismael<br> Javier<br> Maikol</html>");
 		 membres.setPreferredSize(new Dimension(750, 750));
+
 		
 		JLabel institut = new JLabel("IES Lluís Simarro");
 
@@ -46,7 +49,7 @@ public class Interficie {
 		JLabel any = new JLabel("Curs 22/23");
 
 		centrarLabels(membres, institut, curs, asignatura, any);
-
+		
 		JPanel panell = new JPanel(new GridLayout(6, 1));
 	   
 		
@@ -61,6 +64,7 @@ public class Interficie {
 		eixidaMenu.setSize(400, 750);	
 		eixidaMenu.add(panell, BorderLayout.CENTER);
 		eixidaMenu.setVisible(true);
+
 		eixidaMenu.setAlwaysOnTop(true);
 	}
 

@@ -656,7 +656,7 @@ public class Funciones {
 
 	private static <objeto> void mostrarListaGeneral(String archivo, String mensaje, ArrayList<objeto> listaArray) {
 		File fitxer = new File(archivo);
-		if (fitxer.length() < 0 || fitxer.length() == 0) {
+		if (fitxer.length() < 0 || fitxer.length() == 0|| listaArray.size()<=0) {
 			System.err.println("No hay nada que mostrar");
 		} else {
 			try {
