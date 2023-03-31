@@ -215,4 +215,9 @@ public class User {
 				+ "\nEmail: " + email + "\nPoblacion: " + poblacion + "\nRol: " + roles + "\nFecha Nacimiento: "
 				+ fechaNacimiento;
 	}
+
+	public Object getUsername() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
