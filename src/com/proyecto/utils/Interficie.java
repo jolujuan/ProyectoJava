@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
+
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -35,9 +37,9 @@ public class Interficie {
 		mensaje.setBorder(BorderFactory.createCompoundBorder(null, border));
 
 
-		JLabel membres = new JLabel("<html>Jose Luis<br> Edu <br> Ismael<br> Javier<br> Maikol</html>");
-		 membres.setPreferredSize(new Dimension(750, 750));
-
+		JLabel membres = new JLabel(Funciones.mostrarColaboradores());
+		membres.setPreferredSize(new Dimension(750, 750));
+		
 		
 		JLabel institut = new JLabel("IES Lluís Simarro");
 
@@ -60,7 +62,14 @@ public class Interficie {
 		panell.add(any);
 		
 		eixidaMenu.setExtendedState(JFrame.NORMAL);
-		eixidaMenu.setSize(400, 750);	
+		
+		 // Obtener la dimensión de la pantalla
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        
+        // Establecer la altura de la ventana para que sea igual a la altura de la pantalla
+        int alturaCompleta = screenSize.height;
+        
+		eixidaMenu.setSize(400, alturaCompleta);	
 		eixidaMenu.add(panell, BorderLayout.CENTER);
 		eixidaMenu.setVisible(true);
 
