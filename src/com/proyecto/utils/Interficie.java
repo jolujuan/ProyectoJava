@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.io.File;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -37,8 +36,9 @@ public class Interficie {
 		Border border = BorderFactory.createMatteBorder(7, 3, 7, 3, Color.BLUE);
 		mensaje.setBorder(BorderFactory.createCompoundBorder(null, border));
 
-		JLabel membres = new JLabel("Jose Luis");
-
+		JLabel membres = new JLabel("Jose Luis\n Edu Valls\n Ismael\n Javier\n Maikol");
+		
+		
 		JLabel institut = new JLabel("IES Lluís Simarro");
 
 		JLabel curs = new JLabel("1r DAW");
@@ -57,7 +57,7 @@ public class Interficie {
 		panell.add(curs);
 		panell.add(asignatura);
 		panell.add(any);
-
+		  
 		contenedor.add(panell, BorderLayout.CENTER);
 
 		eixidaMenu.setExtendedState(JFrame.NORMAL);
@@ -78,4 +78,5 @@ public class Interficie {
 
 		}
 	}
+
 }
