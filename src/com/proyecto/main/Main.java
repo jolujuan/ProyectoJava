@@ -20,7 +20,7 @@ public class Main {
 				Funciones.cargarArrayslist();
 				///// AQUI IRA LA FUNCION DE registrarUser() ///////////
 				System.out.println("-----Registrar Usuario----- (pulse -1 para salir)");
-				Funciones.registrarUsuario();
+//				Funciones.registrarUsuario();
 
 				if (Funciones.registrarUsuario()) {
 					System.out.println("La operación ha sido cancelada, salir del registro...\n");
@@ -216,11 +216,11 @@ public class Main {
 									}
 								} while (menuUsuarioSecundario != 4);
 								break;
-								
+
 							case 4:
 								Funciones.cargarArrayslist();
 								System.out.println("-----Añadir elemento a lista GENERAL-----");
-								
+
 								do {
 									System.out.println(
 											"\n-> 1. Añadir Peliculas \n-> 2. Añadir Actores \n-> 3. Añadir Directores \n-> 4. Salir");
@@ -243,7 +243,7 @@ public class Main {
 									}
 								} while (menuUsuarioSecundario != 4);
 								break;
-								
+
 							case 5:
 								System.out.println("-----Borrar elemento lista PERSONAL-----");
 								do {
