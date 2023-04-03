@@ -1,5 +1,6 @@
 package com.proyecto.utils;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -1622,6 +1623,31 @@ public class Funciones {
 				file.close();
 			} catch (Exception ex) {
 			}
+		}
+	}
+
+	/// METODO PARA ABRIR LA IMAGEN /// AUN NO ESTA TERMINADO
+	public static void abrirImagenNavegador(String rutaImagen) {
+		// OBTENEMOS EL NOMBRE DEL SISTEMA OPERATIVO EN MINUSCULAS //
+		String sistemaOperativo = System.getProperty("os.name").toLowerCase();
+		
+		/// COMPROBAMOS SI ES MAC, WINDOWS O LINUX
+		if (sistemaOperativo.indexOf("win") >= 0) {
+			rutaImagen = "file:\\" + rutaImagen;
+		} else if (sistemaOperativo.indexOf("mac") >= 0) {
+			rutaImagen = "file://" + rutaImagen;
+		} else {
+			rutaImagen = "file;//" + rutaImagen;
+		}
+
+		// CREAMOS UN OBJETO FILE CON LA RUTA DE LA IMAGEN
+		File archivo = new File(rutaImagen);
+
+		try {
+			// ABRIMOS LA IMAGEN EN EL NAVEGADOR POR DEFECTO DEL SISTEMA //
+			Desktop.getDesktop().browse(archivo.toURI());
+		} catch (Exception e) {
+			System.out.println("Error: " + e);
 		}
 	}
 

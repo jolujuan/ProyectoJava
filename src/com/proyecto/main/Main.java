@@ -135,7 +135,7 @@ public class Main {
 						Funciones.comprobarModificacionUsuarioDirector();
 						do {
 							System.out.println(
-									"\n-> 1. Ver lista general \n-> 2. Ver lista personal \n-> 3. Añadir nuevo elemento a lista personal \n-> 4. Añadir nuevo elemento a lista general \n-> 5. Borrar elemento lista personal \n-> 6. Salir");
+									"\n-> 1. Ver lista general \n-> 2. Ver lista personal \n-> 3. Añadir nuevo elemento a lista personal \n-> 4. Añadir nuevo elemento a lista general \n-> 5. Ver imagen de perfil \n-> 6. Editar foto de perfil \n-> 7. Borrar elemento lista personal \n-> 8. Salir");
 							menuUsuario = ControlErrores.validarSecundario();
 							switch (menuUsuario) {
 							case 1:
@@ -243,8 +243,13 @@ public class Main {
 									}
 								} while (menuUsuarioSecundario != 4);
 								break;
-
 							case 5:
+								System.out.println("-----Ver imagen de perfil-----");
+								break;
+							case 6:
+								System.out.println("-----Editar foto de perfil-----");
+								break;
+							case 7:
 								System.out.println("-----Borrar elemento lista PERSONAL-----");
 								do {
 									System.out.println(
@@ -272,7 +277,7 @@ public class Main {
 							default:
 								System.out.println("Salir");
 							}
-						} while (menuUsuario != 6);
+						} while (menuUsuario != 8);
 					}
 				}
 				break;
