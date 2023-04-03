@@ -33,9 +33,9 @@ public class Funciones {
 		MostrarNombreJavier colaborador3 = new MostrarNombreJavier();
 		MostrarNombreJoselu colaborador4 = new MostrarNombreJoselu();
 		MostrarNombreMaikol colaborador5 = new MostrarNombreMaikol();
-		return "<html><div style='text-align:center;'>-------Creado por-------<br>" + 
-	       colaborador1 + "<br>" + colaborador2 + "<br>" + colaborador3 + "<br>" + 
-	       colaborador4 + "<br>" + colaborador5 + "</div></html>";
+		return "<html><div style='text-align:center;'>-------Creado por-------<br>" + colaborador1 + "<br>"
+				+ colaborador2 + "<br>" + colaborador3 + "<br>" + colaborador4 + "<br>" + colaborador5
+				+ "</div></html>";
 
 	}
 
@@ -138,6 +138,10 @@ public class Funciones {
 				File listDirector = new File("src/com/proyecto/usuariosCarpetas/" + nomUser + "/director.llista");
 				File listPelicula = new File("src/com/proyecto/usuariosCarpetas/" + nomUser + "/pelicula.llista");
 
+				// ESTA ES LA RUTA QUE LE PASAREMOS A LA FUNCION DE CREAR LA IMAGEN POR DEFECTO
+				File rutaCarpetaUsuario = new File("src/com/proyecto/usuariosCarpetas/" + nomUser);
+				crearImagenPorDefecto(rutaCarpetaUsuario);
+
 				listACtor.createNewFile();
 				listDirector.createNewFile();
 				listPelicula.createNewFile();
@@ -152,6 +156,32 @@ public class Funciones {
 			System.err.println("Error: " + e);
 		}
 		return nomUser;
+	}
+
+	/// CREAR IMAGEN POR DEFECTO AL REGISTRAR UN USUARIO ///
+	public static void crearImagenPorDefecto(File ruta) {
+		try {
+			// ABRIR EL ARCHIVO DONDE SE ENCUENTRA LA IMAGEN
+			FileInputStream rutaOrigen = new FileInputStream("src/com/proyecto/imagenes/porDefecto.png");
+			// ABRIR PARA ESCRIBIR EL ARCHIVO DE IMAGEN EN LA CARPETA DE USUARIO
+			FileOutputStream rutaDestino = new FileOutputStream(ruta + "/" + "porDefecto.png");
+
+			// CREAMOS UN BUFFER DE BYTES PARA ALMACENAR TEMPORALMENTE LOS DATOS LEIDOS
+			byte[] buffer = new byte[1024];
+
+			// LEER DATOS DEL FILEINPUTSTREAM Y ESCRIBIRLOS EN EL FILEOUTPUSTREAM HASTA QUE
+			// NO HAYA MAS DATOS QUE LEER
+			int lenght;
+			while ((lenght = rutaOrigen.read()) > 0) {
+				rutaDestino.write(buffer, 0, lenght);
+			}
+
+			// CERRAMOS
+			rutaOrigen.close();
+			rutaDestino.close();
+		} catch (Exception e) {
+			System.out.println("Error imagen: " + e);
+		}
 	}
 
 	// GUARDAR USUARIOS EN FICHERO TXT //

@@ -8,3 +8,6 @@ admin            |000|admin             |admin             |admin@admin.com     
 5david           |005|David             |MompoHermoso      |david@gmail.com               |12345             |Agullent     |USUARIO     |12/12/1999    
 6clareta         |006|clara             |escamilla         |clareta@gmail.com             |12345             |canals       |USUARIO     |10/01/2000    
 7jose            |007|jose              |jose              |jose@jose.com                 |12345             |jose         |USUARIO     |30/04/2002    
+8erpepe          |008|Erpepe            |colera            |erpepe@gmail.com              |12345             |Murcia       |USUARIO     |09/10/1999    
+9joseJuan        |009|JoseJuan          |Calatayud         |joseJuan@gmail.com            |12345             |Atzeneta     |USUARIO     |09/10/1999    
+10alvaro         |010|Alvaro            |Reina             |alvaro@gmail.com              |12345             |Ontinyent    |USUARIO     |09/10/1999    
