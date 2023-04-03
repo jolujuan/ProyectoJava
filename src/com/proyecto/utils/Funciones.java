@@ -1627,24 +1627,25 @@ public class Funciones {
 	}
 
 	/// METODO PARA ABRIR LA IMAGEN /// AUN NO ESTA TERMINADO
-	public static void abrirImagenNavegador(String rutaImagen) {
+	public static void abrirImagen(String nombreImagen) {
 		// OBTENEMOS EL NOMBRE DEL SISTEMA OPERATIVO EN MINUSCULAS //
 		String sistemaOperativo = System.getProperty("os.name").toLowerCase();
-		
+		String rutaImagen = "src/com/proyecto/usuariosCarpetas/" + nomUserFinal + "/" + nombreImagen;
+		String nuevaRuta = "";
 		/// COMPROBAMOS SI ES MAC, WINDOWS O LINUX
 		if (sistemaOperativo.indexOf("win") >= 0) {
-			rutaImagen = "file:\\" + rutaImagen;
+			nuevaRuta = "file:\\" + rutaImagen;
 		} else if (sistemaOperativo.indexOf("mac") >= 0) {
-			rutaImagen = "file://" + rutaImagen;
+			nuevaRuta = "file://" + rutaImagen;
 		} else {
-			rutaImagen = "file;//" + rutaImagen;
+			nuevaRuta = "file;//" + rutaImagen;
 		}
 
 		// CREAMOS UN OBJETO FILE CON LA RUTA DE LA IMAGEN
 		File archivo = new File(rutaImagen);
 
 		try {
-			// ABRIMOS LA IMAGEN EN EL NAVEGADOR POR DEFECTO DEL SISTEMA //
+			// ABRIMOS LA IMAGEN EN EL PROGRAMA POR DEFECTO DEL SISTEMA //
 			Desktop.getDesktop().browse(archivo.toURI());
 		} catch (Exception e) {
 			System.out.println("Error: " + e);
