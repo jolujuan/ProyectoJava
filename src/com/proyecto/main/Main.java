@@ -245,7 +245,7 @@ public class Main {
 								break;
 							case 5:
 								System.out.println("-----Ver imagen de perfil-----");
-								Funciones.abrirImagen("porDefecto.png");
+								Funciones.abrirImagenNavegador("porDefecto.png");
 								break;
 							case 6:
 								System.out.println("-----Editar foto de perfil-----");

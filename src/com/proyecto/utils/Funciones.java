@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
@@ -1627,31 +1628,30 @@ public class Funciones {
 	}
 
 	/// METODO PARA ABRIR LA IMAGEN /// AUN NO ESTA TERMINADO
-	public static void abrirImagen(String nombreImagen) {
-		// OBTENEMOS EL NOMBRE DEL SISTEMA OPERATIVO EN MINUSCULAS //
-		String sistemaOperativo = System.getProperty("os.name").toLowerCase();
-		String rutaImagen = "src/com/proyecto/usuariosCarpetas/" + nomUserFinal + "/" + nombreImagen;
-		String nuevaRuta = "";
-		/// COMPROBAMOS SI ES MAC, WINDOWS O LINUX
-		if (sistemaOperativo.indexOf("win") >= 0) {
-			nuevaRuta = "file:\\" + rutaImagen;
-		} else if (sistemaOperativo.indexOf("mac") >= 0) {
-			nuevaRuta = "file://" + rutaImagen;
-		} else {
-			nuevaRuta = "file;//" + rutaImagen;
-		}
+	public static void abrirImagenNavegador(String nombreImagen) {
+		
+		// OBTENEMOS EL NOMBRE DEL SISTEMA EN MINUSCULAS
+	    String rutaImagen = System.getProperty("user.dir") + "/src/com/proyecto/usuariosCarpetas/" + nomUserFinal +"/" + nombreImagen;
+	    String comando = "";
+	    
+	    // COMPROBAMOS SI ES MAC, WINDOWS O OTRO
+	    if (System.getProperty("os.name").startsWith("Windows")) {
+	        comando = "cmd /c start chrome file:///" + rutaImagen;
+	    } else if (System.getProperty("os.name").startsWith("Mac")) {
+	        comando = "open -a /Applications/Google\\ Chrome.app " + rutaImagen;
+	    } else {
+	        comando = "google-chrome " + rutaImagen;
+	    }
 
-		// CREAMOS UN OBJETO FILE CON LA RUTA DE LA IMAGEN
-		File archivo = new File(rutaImagen);
-
-		try {
-			// ABRIMOS LA IMAGEN EN EL PROGRAMA POR DEFECTO DEL SISTEMA //
-			Desktop.getDesktop().browse(archivo.toURI());
-		} catch (Exception e) {
-			System.out.println("Error: " + e);
-		}
+	    // EJECUTAMOS EL COMANDO DE ACUERDO AL SISMTE OPERATIVO PARA ABRIR LA IMAGEN EN EL NAVEGADOR
+	    try {
+	        Runtime.getRuntime().exec(comando);
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
 	}
 
+	
 	public void cambiarImagen(String nombreImagen) {
 		// OBTENEMOS EL NOMBRE DEL SISTEMA OPERATIVO EN MINUSCULAS //
 
@@ -1660,7 +1660,7 @@ public class Funciones {
 			File archivo = new File(rutaImagen);
 			try {
 				File[] archivos = archivo.listFiles();
-				
+
 				for (File file : archivos) {
 					System.out.println();
 				}
