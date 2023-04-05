@@ -1652,6 +1652,32 @@ public class Funciones {
 		}
 	}
 
+	public void cambiarImagen(String nombreImagen) {
+		// OBTENEMOS EL NOMBRE DEL SISTEMA OPERATIVO EN MINUSCULAS //
+
+		if (nombreImagen.equals(nombreImagen)) {
+			String rutaImagen = "src/com/proyecto/usuariosCarpetas/" + nomUserFinal + "/" + nombreImagen;
+			File archivo = new File(rutaImagen);
+			try {
+				File[] archivos = archivo.listFiles();
+				
+				for (File file : archivos) {
+					System.out.println();
+				}
+				// ABRIMOS LA IMAGEN EN EL PROGRAMA POR DEFECTO DEL SISTEMA //
+				Desktop.getDesktop().browse(archivo.toURI());
+			} catch (Exception e) {
+				System.out.println("Error: " + e);
+			}
+		} else {
+			String rutaImagen = "src/com/proyecto/usuariosCarpetas/" + nomUserFinal + "/" + nomUserFinal;
+
+		}
+
+		// CREAMOS UN OBJETO FILE CON LA RUTA DE LA IMAGEN
+
+	}
+
 	// ELIMINAR USUARIO //
 
 	// ETC ETC //

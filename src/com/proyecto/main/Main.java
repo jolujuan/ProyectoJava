@@ -249,6 +249,7 @@ public class Main {
 								break;
 							case 6:
 								System.out.println("-----Editar foto de perfil-----");
+
 								break;
 							case 7:
 								System.out.println("-----Borrar elemento lista PERSONAL-----");
