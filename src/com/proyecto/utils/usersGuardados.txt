@@ -1,5 +1,5 @@
-#USUARIO         |ID | Nombre           | Apellidos        | Email                        | Contraseña       | Población   | Rol        | Fecha        
-#----------------+---+------------------+------------------+------------------------------+------------------+-------------+------------+--------------
+#USUARIO         |ID | IMAGEN           | Nombre           | Apellidos        | Email                        | Contraseña       | Población   | Rol        | Fecha           
+#----------------+---+------------------+------------------+------------------+------------------------------+------------------+-------------+------------+--------------+
 admin            |000|admin             |admin             |admin@admin.com               |admin           	 |inexistente  |admin       |admin         
 1joseluis        |001|joseluis          |juan              |juanestevej@gmail.com         |canals            |canals       |USUARIO     |30/04/2002    
 2edu             |002|edu               |valls             |edu@gmail.com                 |12345             |Agullent     |USUARIO     |08/10/1999    
