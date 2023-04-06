@@ -255,11 +255,11 @@ public class ControlErrores {
 
 				if (dades.length >= 6) { // asegurarse de que hay suficientes columnas
 					dades[0] = dades[0].trim();
-					dades[5] = dades[5].trim();
+					dades[6] = dades[6].trim();
 
 					if (dades[0].equals(usr)) {
 						trobat = true;
-						if (dades[5].equals(pwd)) {
+						if (dades[6].equals(pwd)) {
 							System.out.println("\nHola " + usr + ", has iniciado sesion " + "\u2714");
 							// missatge benvinguda, nom apellido
 							login = true;
