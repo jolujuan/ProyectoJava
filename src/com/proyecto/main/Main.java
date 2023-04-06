@@ -246,12 +246,12 @@ public class Main {
 							case 5:
 								System.out.println("-----Ver imagen de perfil-----");
                                 String nombreImagen=Funciones.comprobarNombreImagen();
-                                System.out.println(nombreImagen+"Case 5 nombre imagen");
                                 Funciones.abrirImagenNavegador(nombreImagen);
                                 break;
 							case 6:
-								System.out.println("-----Editar foto de perfil-----");
-								Funciones.cambiarImagen();
+//								System.out.println("-----Editar foto de perfil-----");
+//								Funciones.cambiarImagen();
+								Funciones.cambiarImagenRegistro();
 								break;
 							case 7:
 								System.out.println("-----Borrar elemento lista PERSONAL-----");

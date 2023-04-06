@@ -12,4 +12,4 @@ admin            |000|inexistente       |admin             |admin             |a
 9joseJuan        |009|porDefecto.png    |JoseJuan          |Calatayud         |joseJuan@gmail.com            |12345             |Atzeneta     |USUARIO     |09/10/1999    
 10alvaro         |010|porDefecto.png    |Alvaro            |Reina             |alvaro@gmail.com              |12345             |Ontinyent    |USUARIO     |09/10/1999    
 11ezequiel       |011|porDefecto.png    |Ezequiel          |Ronaldo           |ezequiel@gmail.com            |12345             |Albaida      |USUARIO     |09/10/1999    
-12isma           |012|porDefecto.png    |isma              |bousami           |isma@isma.com                 |12345             |xativa       |USUARIO     |01/01/2022    
+12isma           |012|porDefecto.png    |isma              |isma              |isma@isma.com                 |12345             |isma         |USUARIO     |30/04/2002    
