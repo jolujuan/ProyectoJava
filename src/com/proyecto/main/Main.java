@@ -245,11 +245,13 @@ public class Main {
 								break;
 							case 5:
 								System.out.println("-----Ver imagen de perfil-----");
-								Funciones.abrirImagenNavegador("porDefecto.png");
-								break;
+                                String nombreImagen=Funciones.comprobarNombreImagen();
+                                System.out.println(nombreImagen+"Case 5 nombre imagen");
+                                Funciones.abrirImagenNavegador(nombreImagen);
+                                break;
 							case 6:
 								System.out.println("-----Editar foto de perfil-----");
-
+								Funciones.cambiarImagen();
 								break;
 							case 7:
 								System.out.println("-----Borrar elemento lista PERSONAL-----");

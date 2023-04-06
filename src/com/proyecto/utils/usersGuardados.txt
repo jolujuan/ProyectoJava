@@ -12,3 +12,4 @@ admin            |000|admin             |admin             |admin@admin.com     
 9joseJuan        |009|JoseJuan          |Calatayud         |joseJuan@gmail.com            |12345             |Atzeneta     |USUARIO     |09/10/1999    
 10alvaro         |010|Alvaro            |Reina             |alvaro@gmail.com              |12345             |Ontinyent    |USUARIO     |09/10/1999    
 11ezequiel       |011|Ezequiel          |Ronaldo           |ezequiel@gmail.com            |12345             |Albaida      |USUARIO     |09/10/1999    
+12isma           |012|ismael            |bouassami         |isma@gmail.com                |ismael            |xativa       |USUARIO     |22/12/2003    
