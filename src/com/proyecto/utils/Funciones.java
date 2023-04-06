@@ -194,9 +194,10 @@ public class Funciones {
 			File file = new File("src/com/proyecto/utils/usersGuardados.txt");
 			PrintWriter escriureUser = new PrintWriter(new FileWriter(file, true));
 
+			String nomImage=comprobarNombreImagen();
 			// Escribir los datos del usuario en un formato fijo
-			String datos = String.format("%-17s|%03d|%-18s|%-18s|%-18s|%-30s|%-18s|%-13s|%-12s|%-14s", nomUser, ID, nombre,
-					apellidos, email, contraseña, poblacion, rol, fecha);
+			String datos = String.format("%-17s|%03d|%-18s|%-18s|%-18s|%-30s|%-18s|%-13s|%-12s|%-14s", nomUser, ID, nomImage,
+					nombre, apellidos, email, contraseña, poblacion, rol, fecha);
 
 			// Comprobar si el archivo está vacío para escribir el encabezado
 			if (file.length() == 0) {
@@ -218,7 +219,6 @@ public class Funciones {
 			System.err.println("Error: " + e);
 		}
 	}
-
 
 	// GUARDAR EL USUARIO PARA LISTAS PERSONALES //
 	public static String devolverNombreUser(String usr) {
@@ -1630,96 +1630,103 @@ public class Funciones {
 
 	/// METODO PARA ABRIR LA IMAGEN /// AUN NO ESTA TERMINADO
 	public static void abrirImagenNavegador(String nombreImagen) {
-		
+
 		// OBTENEMOS EL NOMBRE DEL SISTEMA EN MINUSCULAS
-	    String rutaImagen = System.getProperty("user.dir") + "/src/com/proyecto/usuariosCarpetas/" + nomUserFinal +"/" + nombreImagen;
-	    String comando = "";
-	    
-	    // COMPROBAMOS SI ES MAC, WINDOWS O OTRO
-	    if (System.getProperty("os.name").startsWith("Windows")) {
-	        comando = "cmd /c start chrome file:///" + rutaImagen;
-	    } else if (System.getProperty("os.name").startsWith("Mac")) {
-	        comando = "open -a /Applications/Google\\ Chrome.app " + rutaImagen;
-	    } else {
-	        comando = "google-chrome " + rutaImagen;
-	    }
+		String rutaImagen = System.getProperty("user.dir") + "/src/com/proyecto/usuariosCarpetas/" + nomUserFinal + "/"
+				+ nombreImagen;
+		String comando = "";
 
-	    // EJECUTAMOS EL COMANDO DE ACUERDO AL SISMTE OPERATIVO PARA ABRIR LA IMAGEN EN EL NAVEGADOR
-	    try {
-	        Runtime.getRuntime().exec(comando);
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }
+		// COMPROBAMOS SI ES MAC, WINDOWS O OTRO
+		if (System.getProperty("os.name").startsWith("Windows")) {
+			comando = "cmd /c start chrome file:///" + rutaImagen;
+		} else if (System.getProperty("os.name").startsWith("Mac")) {
+			comando = "open -a /Applications/Google\\ Chrome.app " + rutaImagen;
+		} else {
+			comando = "google-chrome " + rutaImagen;
+		}
+
+		// EJECUTAMOS EL COMANDO DE ACUERDO AL SISMTE OPERATIVO PARA ABRIR LA IMAGEN EN
+		// EL NAVEGADOR
+		try {
+			Runtime.getRuntime().exec(comando);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
+
 	public static String comprobarNombreImagen() {
-        String imagenSinExtension="";
-        String imagenConExtension="";
-        String extension="";
-        String nombreFinal="";
+		String imagenSinExtension = "";
+		String imagenConExtension = "";
+		String extension = "";
+		String nombreFinal = "";
 
-        String rutaImagen="src/com/proyecto/usuariosCarpetas/" + nomUserFinal ;
-        File carpeta = new File(rutaImagen);
+		String rutaImagen = "src/com/proyecto/usuariosCarpetas/" + nomUserFinal;
+		File carpeta = new File(rutaImagen);
 
-        File [] archivos = carpeta.listFiles();
+		if (!(carpeta.exists())) { // Verificar que el directorio exista y sea un directorio
+			nombreFinal="porDefecto.png";
+		}else {
+			File[] archivo = carpeta.listFiles();
+			for (File item : archivo) {
 
-        for (File item : archivos) {
+				int posInicial = item.getName().lastIndexOf(".");
+				imagenSinExtension = item.getName().substring(posInicial + 1);
 
-            int posInicial = item.getName().lastIndexOf(".");
-            imagenSinExtension = item.getName().substring(posInicial+1);
+				if (!(imagenSinExtension.contains("llista"))) {
+					int posFinalRuta = item.getName().lastIndexOf("\"");
+					imagenConExtension = item.getName().substring(posFinalRuta + 1);
 
-            if (!(imagenSinExtension.contains("llista"))) {
-                int posFinalRuta=item.getName().lastIndexOf("\"");
-                imagenConExtension=item.getName().substring(posFinalRuta+1);
+					extension = item.getName().substring(posInicial);
 
-                extension=item.getName().substring(posInicial);
+					if (imagenConExtension.contains("porDefecto.png")) {
+						nombreFinal = imagenConExtension;
+					} else {
+						nombreFinal = nomUserFinal + extension;
+					}
+				}
+			}
+		}
+		return nombreFinal;
+	}
 
-                if (imagenConExtension.contains("porDefecto.png")) {
-                    nombreFinal= imagenConExtension;
-                } else {
-                    nombreFinal= nomUserFinal +extension;
-                }
-            }
-        }
-        return nombreFinal;
-    }
-	
 	public static void cambiarImagen() {
 		// OBTENEMOS EL NOMBRE DE LA IMAGEN EN NUESTRA CARPETA DE USUARIO //
 		String nombreImagen;
-		String rutaImagen = "src/com/proyecto/usuariosCarpetas/" + nomUserFinal ;
+		String rutaImagen = "src/com/proyecto/usuariosCarpetas/" + nomUserFinal;
 		File archivo = new File(rutaImagen);
 		if (archivo.exists() && archivo.isDirectory()) { // Verificar que el directorio exista y sea un directorio
-            File[] files = archivo.listFiles();
-            for (File file : files) {
-                if (file.isFile() && ValidarImagen(file.getName())) { // Verificar que sea un archivo y que tenga una extensión de imagen
-                    
-                	//guardamos el nombre de la imagen
-                	nombreImagen=file.getName();
-                	System.out.println(nombreImagen+"nombre de la imagen inicial");
-                }
-            }
-        } else {
-            System.err.println("El directorio especificado no existe o no es un directorio");
-        }
-		
-		
-		//TOCA PEDIR AL USUARIO LA NUEVA RUTA DE LA IMAGEN
+			File[] files = archivo.listFiles();
+			for (File file : files) {
+				if (file.isFile() && ValidarImagen(file.getName())) { // Verificar que sea un archivo y que tenga una
+																		// extensión de imagen
+
+					// guardamos el nombre de la imagen
+					nombreImagen = file.getName();
+					System.out.println(nombreImagen + "nombre de la imagen inicial");
+				}
+			}
+		} else {
+			System.err.println("El directorio especificado no existe o no es un directorio");
+		}
+
+		// TOCA PEDIR AL USUARIO LA NUEVA RUTA DE LA IMAGEN
 		String nuevaImagen;
 		System.out.println("Introduce la ruta de la nueva imagen");
-		nuevaImagen=leer.nextLine();
-	
-		File fotoAGuardar =new File(nuevaImagen);
+		nuevaImagen = leer.nextLine();
+
+		File fotoAGuardar = new File(nuevaImagen);
 		if (fotoAGuardar.exists() && fotoAGuardar.isFile()) {
-			//validamos que la ruta que se introduzca sea de una imagen
+			// validamos que la ruta que se introduzca sea de una imagen
 			if (ValidarImagen(fotoAGuardar.getName())) {
 				System.out.println(fotoAGuardar.getName());
-				 //copiamos la imagen
+				// copiamos la imagen
 				try {
 					// ABRIR EL ARCHIVO DONDE SE ENCUENTRA LA IMAGEN
 					FileInputStream rutaOrigen = new FileInputStream(nuevaImagen);
 					// ABRIR PARA ESCRIBIR EL ARCHIVO DE IMAGEN EN LA CARPETA DE USUARIO
-					FileOutputStream rutaDestino = new FileOutputStream("src/com/proyecto/usuariosCarpetas/" + nomUserFinal +"/"+nomUserFinal+"."+validarExtension(fotoAGuardar.getName()) );
-					System.out.println("src/com/proyecto/usuariosCarpetas/" + nomUserFinal +"/" );
+					FileOutputStream rutaDestino = new FileOutputStream("src/com/proyecto/usuariosCarpetas/"
+							+ nomUserFinal + "/" + nomUserFinal + "." + validarExtension(fotoAGuardar.getName()));
+					System.out.println("src/com/proyecto/usuariosCarpetas/" + nomUserFinal + "/");
 					// CREAMOS UN BUFFER DE BYTES PARA ALMACENAR TEMPORALMENTE LOS DATOS LEIDOS
 					byte[] buffer = new byte[8192];
 
@@ -1736,9 +1743,9 @@ public class Funciones {
 				} catch (Exception e) {
 					System.out.println("Error imagen: " + e);
 				}
-				//ahora cambiamos el nombre 
-				//ESTO NO HACE FALTA DE MOMENTO
-				
+				// ahora cambiamos el nombre
+				// ESTO NO HACE FALTA DE MOMENTO
+
 //				if (archivo.exists() && archivo.isDirectory()) { // Verificar que el directorio exista y sea un directorio
 //		            File[] files = archivo.listFiles();
 //		            for (File file : files) {
@@ -1761,38 +1768,38 @@ public class Funciones {
 //		
 //				
 //			}
-			
-		}else {
-			System.err.println("La ruta introducida es erronea");
-			System.err.println("Proceso finalizado");
+
+			} else {
+				System.err.println("La ruta introducida es erronea");
+				System.err.println("Proceso finalizado");
+			}
 		}
-		
-	
-	}//
-	
-	
-	
-	//con este metodo verificamos si el archivo seleccionado es una imagen
-    private static boolean ValidarImagen(String fileName) {
-        String extension = validarExtension(fileName);
-        
-        if (extension != null) {
-            return extension.equals("jpg") || extension.equals("png") || extension.equals("gif") || extension.equals("jpeg");
-        }
-        
-        return false;
-    }
-    //con este metodo sacamos la extension del archivo pa comprovar luego si es una imagen
-    private static String validarExtension(String fileName) {
-        int punto = fileName.lastIndexOf(".");
-        
-        if (punto > 0) {
-            return fileName.substring(punto +1);
-        }
-        
-        return null;
-    }
-    
+
+	}
+
+	// con este metodo verificamos si el archivo seleccionado es una imagen
+	private static boolean ValidarImagen(String fileName) {
+		String extension = validarExtension(fileName);
+
+		if (extension != null) {
+			return extension.equals("jpg") || extension.equals("png") || extension.equals("gif")
+					|| extension.equals("jpeg");
+		}
+
+		return false;
+	}
+
+	// con este metodo sacamos la extension del archivo pa comprovar luego si es una
+	// imagen
+	private static String validarExtension(String fileName) {
+		int punto = fileName.lastIndexOf(".");
+
+		if (punto > 0) {
+			return fileName.substring(punto + 1);
+		}
+
+		return null;
+	}
 
 	// ELIMINAR USUARIO //
 
