@@ -195,15 +195,15 @@ public class Funciones {
 			PrintWriter escriureUser = new PrintWriter(new FileWriter(file, true));
 
 			// Escribir los datos del usuario en un formato fijo
-			String datos = String.format("%-17s|%03d|%-18s|%-18s|%-30s|%-18s|%-13s|%-12s|%-14s", nomUser, ID, nombre,
+			String datos = String.format("%-17s|%03d|%-18s|%-18s|%-18s|%-30s|%-18s|%-13s|%-12s|%-14s", nomUser, ID, nombre,
 					apellidos, email, contraseña, poblacion, rol, fecha);
 
 			// Comprobar si el archivo está vacío para escribir el encabezado
 			if (file.length() == 0) {
 				escriureUser.println(
-						"#USUARIO         |ID | Nombre           | Apellidos        | Email                        | Contraseña       | Población   | Rol        | Fecha        ");
+						"#USUARIO         |ID | IMAGEN           | Nombre           | Apellidos        | Email                        | Contraseña       | Población   | Rol        | Fecha        ");
 				escriureUser.println(
-						"#----------------+---+------------------+------------------+------------------------------+------------------+-------------+------------+--------------");
+						"#----------------+---+------------------+------------------+------------------+------------------------------+------------------+-------------+------------+--------------");
 			}
 
 			// Escribir los datos del usuario en el archivo
@@ -218,6 +218,7 @@ public class Funciones {
 			System.err.println("Error: " + e);
 		}
 	}
+
 
 	// GUARDAR EL USUARIO PARA LISTAS PERSONALES //
 	public static String devolverNombreUser(String usr) {
