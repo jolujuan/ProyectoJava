@@ -1,6 +1,5 @@
 package com.proyecto.utils;
 
-import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,8 +10,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.io.RandomAccessFile;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -1694,14 +1695,14 @@ public class Funciones {
 	public static void cambiarImagen() {
 		// OBTENEMOS EL NOMBRE DE LA IMAGEN EN NUESTRA CARPETA DE USUARIO //
 		String nombreImagen;
+		System.out.println();
 		String rutaImagen = "src/com/proyecto/usuariosCarpetas/" + nomUserFinal;
 		File archivo = new File(rutaImagen);
 		if (archivo.exists() && archivo.isDirectory()) { // Verificar que el directorio exista y sea un directorio
 			File[] files = archivo.listFiles();
 			for (File file : files) {
-				if (file.isFile() && ValidarImagen(file.getName())) { // Verificar que sea un archivo y que tenga una
-																		// extensión de imagen
-
+				// Verificar que sea un archivo y que tenga una extensión de imagen
+				if (file.isFile() && ValidarImagen(file.getName())) {
 					// guardamos el nombre de la imagen
 					nombreImagen = file.getName();
 					System.out.println(nombreImagen + "nombre de la imagen inicial");
@@ -1775,41 +1776,48 @@ public class Funciones {
 			}
 		}
 	}
+	File f = new File("src/com/proyecto/utils/usersGuardados.txt");
 
 	public static void cambiarImagenRegistro() {
-		try {
+	    nomUserFinal = "2edu";
+
+	    try {
 			File f = new File("src/com/proyecto/utils/usersGuardados.txt");
 			FileReader fr = new FileReader(f);
 			BufferedReader br = new BufferedReader(fr);
 
+			File file = new File("src/com/proyecto/utils/usersGuardados.txt");
+			RandomAccessFile raf = new RandomAccessFile(file, "rw");
+
 			String linia = br.readLine();
 			linia = br.readLine();
-
-			boolean trobat = false;
-			boolean login = false;
-
 			while ((linia = br.readLine()) != null) {
 				String[] dades = linia.split("[|]");
 
 				if (dades[0].contains(nomUserFinal)) {
-					System.out.println(dades[2]);
-					System.out.println("esto es un mensaje de prueba");
-					try {
-						File file = new File("src/com/proyecto/utils/usersGuardados.txt");
-						PrintWriter escriureUser = new PrintWriter(new FileWriter(file, true));
 
-					} catch (Exception e) {
-						System.out.println("Error cambiar registre: " + e);
+					if (dades[2] != null) {
+						try {
+							System.out.println("columna  " + dades[2]);
+							int pos = linia.indexOf(dades[2]);
+							System.out.println("posicion  " + pos);
+							raf.seek(pos);
+							raf.writeBytes("nuevaImagen");
+
+						} catch (Exception e) {
+							System.out.println("Error cambiar nom imatge registre: " + e);
+						}
 					}
 				}
-
 			}
-
+			raf.close();
 			br.close();
 		} catch (IOException e) {
 			System.err.println("Error: " + e);
 		}
 	}
+
+
 
 	// con este metodo verificamos si el archivo seleccionado es una imagen
 	private static boolean ValidarImagen(String fileName) {

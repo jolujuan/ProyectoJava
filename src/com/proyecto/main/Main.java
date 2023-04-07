@@ -18,14 +18,16 @@ public class Main {
 			switch (menuPrincipal) {
 			case 1:
 				Funciones.cargarArrayslist();
-				///// AQUI IRA LA FUNCION DE registrarUser() ///////////
-				System.out.println("-----Registrar Usuario----- (pulse -1 para salir)");
-//				Funciones.registrarUsuario();
 
-				if (Funciones.registrarUsuario()) {
-					System.out.println("La operación ha sido cancelada, salir del registro...\n");
-					break;
-				}
+				Funciones.cambiarImagenRegistro();
+
+//				///// AQUI IRA LA FUNCION DE registrarUser() ///////////
+//				System.out.println("-----Registrar Usuario----- (pulse -1 para salir)");
+//
+//				if (Funciones.registrarUsuario()) {
+//					System.out.println("La operación ha sido cancelada, salir del registro...\n");
+//					break;
+//				}
 
 				break;
 			case 2:

@@ -1,8 +1,8 @@
-#USUARIO         |ID | IMAGEN           | Nombre           | Apellidos        | Email                        | Contraseña       | Población   | Rol        | Fecha           
+#USUARIO         |ID |nuevaImagenalhao  | Nombre           | Apellidos        | Email                        | Contraseña       | Población   |2edu.onssg  | Fecha           
 #----------------+---+------------------+------------------+------------------+------------------------------+------------------+-------------+------------+--------------+
 admin            |000|inexistente       |admin             |admin             |admin@admin.com               |admin           	|inexistente  |admin       |admin         
 1joseluis        |001|porDefecto.png    |joseluis          |juan              |juanestevej@gmail.com         |canals            |canals       |USUARIO     |30/04/2002    
-2edu             |002|porDefecto.png    |edu               |valls             |edu@gmail.com                 |12345             |Agullent     |USUARIO     |08/10/1999    
+2edu             |002|"estoSecambia"    |edu               |valls             |edu@gmail.com                 |12345             |Agullent     |USUARIO     |08/10/1999    
 3crisi           |003|porDefecto.png    |crisi             |crisicrisi        |crisi@gmail.com               |12345             |Rumania      |USUARIO     |10/10/2000    
 4juanma          |004|porDefecto.png    |Juanma            |ReigBarbera       |juanma@gmail.com              |12345             |Ontinyent    |USUARIO     |31/12/1999    
 5david           |005|porDefecto.png    |David             |MompoHermoso      |david@gmail.com               |12345             |Agullent     |USUARIO     |12/12/1999    
