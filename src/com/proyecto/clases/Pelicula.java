@@ -7,6 +7,8 @@ import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import com.proyecto.utils.Funciones;
+
 public class Pelicula  implements Serializable  {
 
 	/// ATRIBUTOS PELICULAS ///
@@ -16,6 +18,7 @@ public class Pelicula  implements Serializable  {
 	private int duracion;
 	private String anioEmision;
 	private String genero;
+	private String nomUser;
 
 	/// CONSTRUCTOR ///
 	public Pelicula(String nombrePelicula, int duracion, String anioEmision, String genero) {
@@ -36,6 +39,7 @@ public class Pelicula  implements Serializable  {
 		this.duracion = duracion;
 		this.anioEmision = anioEmision;
 		this.genero = genero;
+		this.nomUser=Funciones.nomUserFinal;
 	}
 
 	// Haremos una comparacion hacia el ultimo id de la clase y lo asignaremos
@@ -128,7 +132,7 @@ public class Pelicula  implements Serializable  {
 
 	@Override
 	public String toString() {
-		return idPelicula + "-. " + nombrePelicula;
+		return idPelicula + "-. " + nombrePelicula+" -> "+nomUser;
 	}
 
 }

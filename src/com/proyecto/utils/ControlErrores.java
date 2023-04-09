@@ -53,10 +53,10 @@ public class ControlErrores {
 				entrada.nextLine();
 			} else {
 				n = entrada.nextInt();
-				if (n == 1 || n == 2 || n == 3 || n == 4 || n == 5 || n == 6) {
+				if (n == 1 || n == 2 || n == 3 || n == 4 || n == 5 || n == 6 || n == 7 || n == 8) {
 					correcto = true;
 				} else {
-					System.err.println("Error: El numero introducido debe ser 1, 2, 3, 4, 5 o 6.");
+					System.err.println("Error: El numero introducido debe ser 1, 2, 3, 4, 5, 6, 7 o 8.");
 					entrada.nextLine();
 				}
 			}
@@ -255,11 +255,11 @@ public class ControlErrores {
 
 				if (dades.length >= 6) { // asegurarse de que hay suficientes columnas
 					dades[0] = dades[0].trim();
-					dades[5] = dades[5].trim();
+					dades[6] = dades[6].trim();
 
 					if (dades[0].equals(usr)) {
 						trobat = true;
-						if (dades[5].equals(pwd)) {
+						if (dades[6].equals(pwd)) {
 							System.out.println("\nHola " + usr + ", has iniciado sesion " + "\u2714");
 							// missatge benvinguda, nom apellido
 							login = true;
@@ -329,5 +329,31 @@ public class ControlErrores {
 			i++;
 		}
 		return trobat;
+	}
+
+	// VALIDAR IMAGENES
+	// ---------------------------------------------------------------------------------------------------------------
+
+	// con este metodo verificamos si el archivo seleccionado es una imagen
+	public static boolean ValidarImagen(String fileName) {
+		String extension = validarExtension(fileName);
+
+		if (extension != null) {
+			return extension.equals("jpg") || extension.equals("png") || extension.equals("gif")
+					|| extension.equals("jpeg");
+		}
+		return false;
+	}
+
+	// con este metodo sacamos la extension del archivo pa comprovar luego si es una
+	// imagen
+	public static String validarExtension(String fileName) {
+		int punto = fileName.lastIndexOf(".");
+
+		if (punto > 0) {
+			return fileName.substring(punto + 1);
+		}
+
+		return null;
 	}
 }
