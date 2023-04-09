@@ -1,14 +1,20 @@
 package com.proyecto.utils;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.io.RandomAccessFile;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -27,14 +33,16 @@ import com.proyecto.users.User.Rol;
 public class Funciones {
 
 	// MOSTRAR CREADORES DEL CODIGO //
-	public static void mostrarColaboradores() {
+	public static String mostrarColaboradores() {
 		MostrarNombreEdu colaborador1 = new MostrarNombreEdu();
 		MostrarNombreIsma colaborador2 = new MostrarNombreIsma();
 		MostrarNombreJavier colaborador3 = new MostrarNombreJavier();
 		MostrarNombreJoselu colaborador4 = new MostrarNombreJoselu();
 		MostrarNombreMaikol colaborador5 = new MostrarNombreMaikol();
-		System.out.println("-------Creado por------- \n- " + colaborador1 + "\n- " + colaborador2 + "\n- "
-				+ colaborador3 + "\n- " + colaborador4 + "\n- " + colaborador5 + "\n");
+		return "<html><div style='text-align:center;'>-------Creado por-------<br>" + colaborador1 + "<br>"
+				+ colaborador2 + "<br>" + colaborador3 + "<br>" + colaborador4 + "<br>" + colaborador5
+				+ "</div></html>";
+
 	}
 
 	static Scanner leer = new Scanner(System.in);
@@ -136,6 +144,10 @@ public class Funciones {
 				File listDirector = new File("src/com/proyecto/usuariosCarpetas/" + nomUser + "/director.llista");
 				File listPelicula = new File("src/com/proyecto/usuariosCarpetas/" + nomUser + "/pelicula.llista");
 
+				// ESTA ES LA RUTA QUE LE PASAREMOS A LA FUNCION DE CREAR LA IMAGEN POR DEFECTO
+				File rutaCarpetaUsuario = new File("src/com/proyecto/usuariosCarpetas/" + nomUser);
+				crearImagenPorDefecto(rutaCarpetaUsuario);
+
 				listACtor.createNewFile();
 				listDirector.createNewFile();
 				listPelicula.createNewFile();
@@ -152,6 +164,32 @@ public class Funciones {
 		return nomUser;
 	}
 
+	/// CREAR IMAGEN POR DEFECTO AL REGISTRAR UN USUARIO ///
+	public static void crearImagenPorDefecto(File ruta) {
+		try {
+			// ABRIR EL ARCHIVO DONDE SE ENCUENTRA LA IMAGEN
+			FileInputStream rutaOrigen = new FileInputStream("src/com/proyecto/imagenes/porDefecto.png");
+			// ABRIR PARA ESCRIBIR EL ARCHIVO DE IMAGEN EN LA CARPETA DE USUARIO
+			FileOutputStream rutaDestino = new FileOutputStream(ruta + "/" + "porDefecto.png");
+
+			// CREAMOS UN BUFFER DE BYTES PARA ALMACENAR TEMPORALMENTE LOS DATOS LEIDOS
+			byte[] buffer = new byte[1024];
+
+			// LEER DATOS DEL FILEINPUTSTREAM Y ESCRIBIRLOS EN EL FILEOUTPUSTREAM HASTA QUE
+			// NO HAYA MAS DATOS QUE LEER
+			int lenght;
+			while ((lenght = rutaOrigen.read(buffer)) > 0) {
+				rutaDestino.write(buffer, 0, lenght);
+			}
+
+			// CERRAMOS
+			rutaOrigen.close();
+			rutaDestino.close();
+		} catch (Exception e) {
+			System.out.println("Error imagen: " + e);
+		}
+	}
+
 	// GUARDAR USUARIOS EN FICHERO TXT //
 	// ---------------------------------------------------------------------------------------------------------------
 	public static void guardarUsuario(String nomUser, int ID, String nombre, String apellidos, String email,
@@ -160,16 +198,17 @@ public class Funciones {
 			File file = new File("src/com/proyecto/utils/usersGuardados.txt");
 			PrintWriter escriureUser = new PrintWriter(new FileWriter(file, true));
 
+			String nomImage = comprobarNombreImagen();
 			// Escribir los datos del usuario en un formato fijo
-			String datos = String.format("%-17s|%03d|%-18s|%-18s|%-30s|%-18s|%-13s|%-12s|%-14s", nomUser, ID, nombre,
-					apellidos, email, contraseña, poblacion, rol, fecha);
+			String datos = String.format("%-17s|%03d|%-18s|%-18s|%-18s|%-30s|%-18s|%-13s|%-12s|%-14s", nomUser, ID,
+					nomImage, nombre, apellidos, email, contraseña, poblacion, rol, fecha);
 
 			// Comprobar si el archivo está vacío para escribir el encabezado
 			if (file.length() == 0) {
 				escriureUser.println(
-						"#USUARIO         |ID | Nombre           | Apellidos        | Email                        | Contraseña       | Población   | Rol        | Fecha        ");
+						"#USUARIO         |ID | IMAGEN           | Nombre           | Apellidos        | Email                        | Contraseña       | Población   | Rol        | Fecha        ");
 				escriureUser.println(
-						"#----------------+---+------------------+------------------+------------------------------+------------------+-------------+------------+--------------");
+						"#----------------+---+------------------+------------------+------------------+------------------------------+------------------+-------------+------------+--------------");
 			}
 
 			// Escribir los datos del usuario en el archivo
@@ -638,15 +677,15 @@ public class Funciones {
 		switch (opcion) {
 		case 1:
 			mostrarListaGeneral("src/com/proyecto/listasPeliculas/peliculas.llista",
-					"La lista general de Peliculas es:\n", new ArrayList<Pelicula>());
+					"La lista general de Peliculas es:\n", PelisGeneral);
 			break;
 		case 2:
 			mostrarListaGeneral("src/com/proyecto/listasPeliculas/actores.llista", "La lista general de Actores es:\n",
-					new ArrayList<Actor>());
+					ActorGeneral);
 			break;
 		case 3:
 			mostrarListaGeneral("src/com/proyecto/listasPeliculas/directores.llista",
-					"La lista general de Directores es:\n", new ArrayList<Director>());
+					"La lista general de Directores es:\n", DirectorGeneral);
 			break;
 		default:
 			System.out.println("Opcion no valida");
@@ -656,7 +695,7 @@ public class Funciones {
 
 	private static <objeto> void mostrarListaGeneral(String archivo, String mensaje, ArrayList<objeto> listaArray) {
 		File fitxer = new File(archivo);
-		if (fitxer.length() < 0 || fitxer.length() == 0) {
+		if (fitxer.length() < 0 || fitxer.length() == 0 || listaArray.size() <= 0) {
 			System.err.println("No hay nada que mostrar");
 		} else {
 			try {
@@ -825,7 +864,7 @@ public class Funciones {
 	}
 
 	// GUARDAR DATOS LISTA PERSONAL ACTOR //
-	public static void registrarListaPersonalActor(ArrayList<Actor> llistaArray ,String nombreMetodo) {
+	public static void registrarListaPersonalActor(ArrayList<Actor> llistaArray, String nombreMetodo) {
 		// serialització
 		ObjectOutputStream oos = null;
 		FileOutputStream fout = null;
@@ -839,7 +878,7 @@ public class Funciones {
 			oos.writeObject(llistaArray);
 			oos.flush();
 			oos.close();
-			
+
 			if (nombreMetodo.equals("agregar")) {
 				System.out.println("El actor/a ha sido registrado correctamente a tu lista personal.");
 
@@ -1327,140 +1366,138 @@ public class Funciones {
 		}
 	}
 
-	
 	// COMPROBAR ACTORES //
-		public static void comprobarModificacionUsuarioActor() {
-			File peligeneral = new File("src/com/proyecto/listasPeliculas/actores.llista");
-			if (peligeneral.length() == 0 || peligeneral.length() < 0) {
-			} else {
+	public static void comprobarModificacionUsuarioActor() {
+		File peligeneral = new File("src/com/proyecto/listasPeliculas/actores.llista");
+		if (peligeneral.length() == 0 || peligeneral.length() < 0) {
+		} else {
+			try {
+				// obrim fitxer per a lectura
+				FileInputStream file = new FileInputStream("src/com/proyecto/listasPeliculas/actores.llista");
+				ObjectInputStream reader = new ObjectInputStream(file);
+
+				FileInputStream filePersonal = new FileInputStream(
+						"src/com/proyecto/usuariosCarpetas/" + nomUserFinal + "/actor.llista");
+				ObjectInputStream readerPersonal = new ObjectInputStream(filePersonal);
+
 				try {
-					// obrim fitxer per a lectura
-					FileInputStream file = new FileInputStream("src/com/proyecto/listasPeliculas/actores.llista");
-					ObjectInputStream reader = new ObjectInputStream(file);
+					// llegim l'objecte que hi ha al fitxer (1 sol array List)
+					ActorGeneral = (ArrayList<Actor>) reader.readObject();
+					ActorPersonal = (ArrayList<Actor>) readerPersonal.readObject();
 
-					FileInputStream filePersonal = new FileInputStream(
-							"src/com/proyecto/usuariosCarpetas/" + nomUserFinal + "/actor.llista");
-					ObjectInputStream readerPersonal = new ObjectInputStream(filePersonal);
+					boolean elementosBorrados = false;
+					List<Actor> actoresBorrar = new ArrayList<>();
 
-					try {
-						// llegim l'objecte que hi ha al fitxer (1 sol array List)
-						ActorGeneral = (ArrayList<Actor>) reader.readObject();
-						ActorPersonal = (ArrayList<Actor>) readerPersonal.readObject();
+					for (int i = 0; i < ActorPersonal.size(); i++) {
+						Actor actorPersonal = ActorPersonal.get(i);
+						int idPersonal = actorPersonal.getId();
+						boolean trobat = false;
 
-						boolean elementosBorrados = false;
-						List<Actor> actoresBorrar = new ArrayList<>();
-
-						for (int i = 0; i < ActorPersonal.size(); i++) {
-							Actor actorPersonal = ActorPersonal.get(i);
-							int idPersonal = actorPersonal.getId();
-							boolean trobat = false;
-
-							// Si el id no coincide significara que la pelicula en la lista personal no
-							// existe en la general, por lo tanto trobat se evalua como false
-							for (int j = 0; j < ActorGeneral.size(); j++) {
-								Actor actorGeneral = ActorGeneral.get(j);
-								if ((actorGeneral.getId() == idPersonal)) {
-									trobat = true;
-									break;
-								}
-							}
-							if (!trobat) {
-								elementosBorrados = true;
-								actoresBorrar.add(actorPersonal);
+						// Si el id no coincide significara que la pelicula en la lista personal no
+						// existe en la general, por lo tanto trobat se evalua como false
+						for (int j = 0; j < ActorGeneral.size(); j++) {
+							Actor actorGeneral = ActorGeneral.get(j);
+							if ((actorGeneral.getId() == idPersonal)) {
+								trobat = true;
+								break;
 							}
 						}
-						if (elementosBorrados) {
-							System.out.println(
-									"\nExistem Actores en tu lista personal que han sido borrados de la general");
-							System.out.println(
-									"¿Desea borrarlos de la personal? (pulse 1 para borrarlos o -1 para cancelar)");
-							int borrado = ControlErrores.validarInt();
-							if (borrado == -1) {
-								System.out.println("Se ha cancelado la operación");
-							} else if (borrado == 1) {
-								ActorPersonal.removeAll(actoresBorrar);
-								registrarListaPersonalActor(ActorPersonal, "actualizar");
-							}
+						if (!trobat) {
+							elementosBorrados = true;
+							actoresBorrar.add(actorPersonal);
 						}
-					} catch (Exception ex) {
 					}
-
-					reader.close();
-					file.close();
-					filePersonal.close();
-					readerPersonal.close();
+					if (elementosBorrados) {
+						System.out
+								.println("\nExistem Actores en tu lista personal que han sido borrados de la general");
+						System.out.println(
+								"¿Desea borrarlos de la personal? (pulse 1 para borrarlos o -1 para cancelar)");
+						int borrado = ControlErrores.validarInt();
+						if (borrado == -1) {
+							System.out.println("Se ha cancelado la operación");
+						} else if (borrado == 1) {
+							ActorPersonal.removeAll(actoresBorrar);
+							registrarListaPersonalActor(ActorPersonal, "actualizar");
+						}
+					}
 				} catch (Exception ex) {
 				}
+
+				reader.close();
+				file.close();
+				filePersonal.close();
+				readerPersonal.close();
+			} catch (Exception ex) {
 			}
 		}
-		
-		// COMPROBAR DIRECTORES //
-		public static void comprobarModificacionUsuarioDirector() {
-			File peligeneral = new File("src/com/proyecto/listasPeliculas/directores.llista");
-			if (peligeneral.length() == 0 || peligeneral.length() < 0) {
-			} else {
+	}
+
+	// COMPROBAR DIRECTORES //
+	public static void comprobarModificacionUsuarioDirector() {
+		File peligeneral = new File("src/com/proyecto/listasPeliculas/directores.llista");
+		if (peligeneral.length() == 0 || peligeneral.length() < 0) {
+		} else {
+			try {
+				// obrim fitxer per a lectura
+				FileInputStream file = new FileInputStream("src/com/proyecto/listasPeliculas/directores.llista");
+				ObjectInputStream reader = new ObjectInputStream(file);
+
+				FileInputStream filePersonal = new FileInputStream(
+						"src/com/proyecto/usuariosCarpetas/" + nomUserFinal + "/director.llista");
+				ObjectInputStream readerPersonal = new ObjectInputStream(filePersonal);
+
 				try {
-					// obrim fitxer per a lectura
-					FileInputStream file = new FileInputStream("src/com/proyecto/listasPeliculas/directores.llista");
-					ObjectInputStream reader = new ObjectInputStream(file);
+					// llegim l'objecte que hi ha al fitxer (1 sol array List)
+					DirectorGeneral = (ArrayList<Director>) reader.readObject();
+					DirectorPersonal = (ArrayList<Director>) readerPersonal.readObject();
 
-					FileInputStream filePersonal = new FileInputStream(
-							"src/com/proyecto/usuariosCarpetas/" + nomUserFinal + "/director.llista");
-					ObjectInputStream readerPersonal = new ObjectInputStream(filePersonal);
+					boolean elementosBorrados = false;
+					List<Director> directorBorrar = new ArrayList<>();
 
-					try {
-						// llegim l'objecte que hi ha al fitxer (1 sol array List)
-						DirectorGeneral = (ArrayList<Director>) reader.readObject();
-						DirectorPersonal = (ArrayList<Director>) readerPersonal.readObject();
+					for (int i = 0; i < DirectorPersonal.size(); i++) {
+						Director directorPersonal = DirectorPersonal.get(i);
+						int idPersonal = directorPersonal.getId();
+						boolean trobat = false;
 
-						boolean elementosBorrados = false;
-						List<Director> directorBorrar = new ArrayList<>();
-
-						for (int i = 0; i < DirectorPersonal.size(); i++) {
-							Director directorPersonal = DirectorPersonal.get(i);
-							int idPersonal = directorPersonal.getId();
-							boolean trobat = false;
-
-							// Si el id no coincide significara que la pelicula en la lista personal no
-							// existe en la general, por lo tanto trobat se evalua como false
-							for (int j = 0; j < DirectorGeneral.size(); j++) {
-								Director directorGeneral = DirectorGeneral.get(j);
-								if ((directorGeneral.getId() == idPersonal)) {
-									trobat = true;
-									break;
-								}
-							}
-							if (!trobat) {
-								elementosBorrados = true;
-								directorBorrar.add(directorPersonal);
+						// Si el id no coincide significara que la pelicula en la lista personal no
+						// existe en la general, por lo tanto trobat se evalua como false
+						for (int j = 0; j < DirectorGeneral.size(); j++) {
+							Director directorGeneral = DirectorGeneral.get(j);
+							if ((directorGeneral.getId() == idPersonal)) {
+								trobat = true;
+								break;
 							}
 						}
-						if (elementosBorrados) {
-							System.out.println(
-									"\nExistem Directores en tu lista personal que han sido borrados de la general");
-							System.out.println(
-									"¿Desea borrarlos de la personal? (pulse 1 para borrarlos o -1 para cancelar)");
-							int borrado = ControlErrores.validarInt();
-							if (borrado == -1) {
-								System.out.println("Se ha cancelado la operación");
-							} else if (borrado == 1) {
-								DirectorPersonal.removeAll(directorBorrar);
-								registrarListaPersonalDirector(DirectorPersonal, "actualizar");
-							}
+						if (!trobat) {
+							elementosBorrados = true;
+							directorBorrar.add(directorPersonal);
 						}
-					} catch (Exception ex) {
 					}
-
-					reader.close();
-					file.close();
-					filePersonal.close();
-					readerPersonal.close();
+					if (elementosBorrados) {
+						System.out.println(
+								"\nExistem Directores en tu lista personal que han sido borrados de la general");
+						System.out.println(
+								"¿Desea borrarlos de la personal? (pulse 1 para borrarlos o -1 para cancelar)");
+						int borrado = ControlErrores.validarInt();
+						if (borrado == -1) {
+							System.out.println("Se ha cancelado la operación");
+						} else if (borrado == 1) {
+							DirectorPersonal.removeAll(directorBorrar);
+							registrarListaPersonalDirector(DirectorPersonal, "actualizar");
+						}
+					}
 				} catch (Exception ex) {
 				}
+
+				reader.close();
+				file.close();
+				filePersonal.close();
+				readerPersonal.close();
+			} catch (Exception ex) {
 			}
 		}
-		
-		
+	}
+
 	// CARGAR LOS ARRAYS GENERALES AL PRINCIPIO DEL PROGRAMA //
 	// ---------------------------------------------------------------------------------------------------------------
 	public static void cargarArrayslist() {
@@ -1543,9 +1580,7 @@ public class Funciones {
 				try {
 					DirectorPersonal = (ArrayList<Director>) reader.readObject();
 				} catch (Exception ex) {
-//				System.err.println("Error: " + ex);
 				}
-
 				reader.close();
 				file.close();
 			} catch (Exception ex) {
@@ -1566,7 +1601,6 @@ public class Funciones {
 					PelisPersonal = (ArrayList<Pelicula>) reader.readObject();
 				} catch (Exception ex) {
 				}
-
 				reader.close();
 				file.close();
 			} catch (Exception ex) {
@@ -1587,11 +1621,257 @@ public class Funciones {
 					ActorPersonal = (ArrayList<Actor>) reader.readObject();
 				} catch (Exception ex) {
 				}
-
 				reader.close();
 				file.close();
 			} catch (Exception ex) {
 			}
+		}
+	}
+
+	/// METODO PARA ABRIR LA IMAGEN /// AUN NO ESTA TERMINADO
+	// ---------------------------------------------------------------------------------------------------------------
+
+	public static void abrirImagenNavegador(String nombreImagen) {
+
+		// OBTENEMOS EL NOMBRE DEL SISTEMA EN MINUSCULAS
+		String rutaImagen = System.getProperty("user.dir") + "/src/com/proyecto/usuariosCarpetas/" + nomUserFinal + "/"
+				+ nombreImagen;
+		String comando = "";
+
+		// COMPROBAMOS SI ES MAC, WINDOWS O OTRO
+		if (System.getProperty("os.name").startsWith("Windows")) {
+			comando = "cmd /c start chrome file:///" + rutaImagen;
+		} else if (System.getProperty("os.name").startsWith("Mac")) {
+			comando = "open -a /Applications/Google\\ Chrome.app " + rutaImagen;
+		} else {
+			comando = "google-chrome " + rutaImagen;
+		}
+
+		// EJECUTAMOS EL COMANDO DE ACUERDO AL SISMTE OPERATIVO PARA ABRIR LA IMAGEN EN
+		// EL NAVEGADOR
+		try {
+			Runtime.getRuntime().exec(comando);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	// COMPROBAR SI LA IMAGEN HA CAMBIADO
+	// ---------------------------------------------------------------------------------------------------------------
+
+	public static String comprobarNombreImagen() {
+		String nombreFinal = "porDefecto.png"; // Establecer la imagen por defecto como nombre inicial
+
+		// Definir la ruta de la carpeta del usuario
+		String rutaImagen = "src/com/proyecto/usuariosCarpetas/" + nomUserFinal;
+		File carpeta = new File(rutaImagen);
+
+		// Si la carpeta del usuario existe
+		if (carpeta.exists()) {
+			// Obtener la lista de archivos en la carpeta
+			File[] archivos = carpeta.listFiles();
+			for (File archivo : archivos) {
+				// Si el archivo es una imagen y no contiene "llista" en su nombre
+				if (archivo.isFile() && !archivo.getName().contains("llista")) {
+					// Guardar la extensión del archivo
+					String extension = archivo.getName().substring(archivo.getName().lastIndexOf("."));
+					// Si el nombre del archivo contiene "porDefecto.png", mantenerlo como nombre
+					// final
+					if (archivo.getName().contains("porDefecto.png")) {
+						nombreFinal = archivo.getName();
+					} else {
+						// Si no, establecer el nombre del usuario y la extensión como nombre final
+						nombreFinal = nomUserFinal + extension;
+					}
+					break; // Salir del bucle, ya que se encontró una imagen válida
+				}
+			}
+		}
+		// Devolver el nombre final de la imagen
+		return nombreFinal;
+	}
+
+	// CAMBIAR LA IMAGEN
+	// ---------------------------------------------------------------------------------------------------------------
+
+	public static void cambiarImagen() {
+		// OBTENEMOS EL NOMBRE DE LA IMAGEN EN NUESTRA CARPETA DE USUARIO //
+		String nombreImagen;
+		System.out.println();
+		String rutaImagen = "src/com/proyecto/usuariosCarpetas/" + nomUserFinal;
+		File archivo = new File(rutaImagen);
+		if (archivo.exists() && archivo.isDirectory()) { // Verificar que el directorio exista y sea un directorio
+			File[] files = archivo.listFiles();
+			for (File file : files) {
+				// Verificar que sea un archivo y que tenga una extensión de imagen
+				if (file.isFile() && ControlErrores.ValidarImagen(file.getName())) {
+					// guardamos el nombre de la imagen
+					nombreImagen = file.getName();
+					System.out.println("Nombre de la imagen inicial: " + nombreImagen);
+				}
+			}
+		} else {
+			System.err.println("El directorio especificado no existe o no es un directorio");
+		}
+
+		// TOCA PEDIR AL USUARIO LA NUEVA RUTA DE LA IMAGEN
+
+		String nuevaImagen = "";
+		boolean encertatRuta = false;
+		do {
+
+			System.out.println("Introduce la ruta de la nueva imagen, para cancelar pulse (-1):");
+			nuevaImagen = leer.nextLine();
+
+			File fotoAGuardar = new File(nuevaImagen);
+			// Validamos que la ruta que se introduzca sea de una imagen
+			if ((fotoAGuardar.exists()) && fotoAGuardar.isFile()) {
+				encertatRuta = true;
+			} else {
+				encertatRuta = false;
+			}
+
+			// Dar opcion para cancelar
+			if (nuevaImagen.equals("-1")) {
+				break;
+			}
+
+			if (ControlErrores.ValidarImagen(fotoAGuardar.getName())) {
+				// copiamos la imagen
+				try {
+					// ABRIR EL ARCHIVO DONDE SE ENCUENTRA LA IMAGEN
+					FileInputStream rutaOrigen = new FileInputStream(nuevaImagen);
+
+					// ABRIR PARA ESCRIBIR EL ARCHIVO DE IMAGEN EN LA CARPETA DE USUARIO
+					FileOutputStream rutaDestino = new FileOutputStream(
+							"src/com/proyecto/usuariosCarpetas/" + nomUserFinal + "/" + nomUserFinal + "."
+									+ ControlErrores.validarExtension(fotoAGuardar.getName()));
+
+					// CREAMOS UN BUFFER DE BYTES PARA ALMACENAR TEMPORALMENTE LOS DATOS LEIDOS
+					byte[] buffer = new byte[1024];
+
+					// LEER DATOS DEL FILEINPUTSTREAM Y ESCRIBIRLOS EN EL FILEOUTPUSTREAM HASTA QUE
+					// NO HAYA MAS DATOS QUE LEER
+					int lenght;
+					while ((lenght = rutaOrigen.read(buffer)) > 0) {
+						rutaDestino.write(buffer, 0, lenght);
+					}
+					System.out.println("\nLa foto se ha cambiado correctamente");
+					// CERRAMOS
+					rutaOrigen.close();
+					rutaDestino.close();
+
+					// ELIMINAMOS LA IMAGEN ORIGINAL
+					try {
+						// Crear una instancia de la clase File utilizando la ruta del archivo
+						String ruta = "src/com/proyecto/usuariosCarpetas/" + nomUserFinal + "/porDefecto.png";
+						File imagenOriginal = new File(ruta);
+
+						// Eliminar el archivo solo si existe, sin mostrar mensajes ni lanzar
+						// excepciones
+						if (imagenOriginal.exists()) {
+							imagenOriginal.delete();
+						}
+					} catch (Exception e) {
+						// No hacer nada si ocurre una excepción
+					}
+				} catch (Exception e) {
+				}
+				// ahora cambiamos el nombre
+				// ESTO NO HACE FALTA DE MOMENTO
+//				if (archivo.exists() && archivo.isDirectory()) { // Verificar que el directorio exista y sea un directorio
+//		            File[] files = archivo.listFiles();
+//		            for (File file : files) {
+//		                if (file.isFile() && ValidarImagen(file.getName())) { // Verificar que sea un archivo y que tenga una extensión de imagen
+//		                  
+//		                	File nuevoNombre =new File("src/com/proyecto/usuariosCarpetas/" + nomUserFinal+"/"+nomUserFinal+"."+validarExtension(fotoAGuardar.getName()));
+//		                	//guardamos el nombre de la imagen
+//		                	
+//		                	System.out.println(file.getAbsolutePath()+"-------absoluta");
+//		                	System.out.println(nuevoNombre.getAbsolutePath()+"-------absoluta");
+//		                	boolean  cambiado=file.renameTo(nuevoNombre);
+//		                	System.out.println(cambiado);
+//
+//		                	System.out.println(nuevoNombre+"Cambio de nombre del archivo");
+//		                }
+//		            }
+//		        } else {
+//		            System.err.println("No se ha cambiado el nombre");
+//		        }	
+//			}
+
+			} else {
+				System.err.println("La ruta introducida es erronea");
+				System.err.println("Proceso finalizado");
+			}
+		} while (!encertatRuta && !(nuevaImagen.equals("-1")));
+
+	}
+
+	// CAMBIAR EL NOMBRE DE L A IMAGEN EN EL REGISTRO
+	// ---------------------------------------------------------------------------------------------------------------
+
+	public static void cambiarImagenRegistro(String nombreExtension) {
+		// Obtener el nombre de la extensión
+		int posExtensio = nombreExtension.lastIndexOf(".");
+		nombreExtension = nombreExtension.substring(posExtensio, nombreExtension.length());
+
+		File originalFile = new File("src/com/proyecto/utils/usersGuardados.txt");
+		File tempFile = new File("src/com/proyecto/utils/tempFile.txt");
+
+		try {
+			// Abrir el archivo original para lectura
+			FileReader fr = new FileReader(originalFile);
+			BufferedReader br = new BufferedReader(fr);
+
+			// Abrir un archivo temporal para escritura
+			FileWriter fw = new FileWriter(tempFile);
+			BufferedWriter bw = new BufferedWriter(fw);
+
+			String linia;
+			while ((linia = br.readLine()) != null) {
+				String[] dades = linia.split("[|]");
+
+				// Si la línea contiene el nombre de usuario deseado
+				if (dades[0].contains(nomUserFinal)) {
+					// Calcular la posición de inicio de la columna que queremos cambiar
+					int pos = linia.indexOf(dades[0]) + dades[0].length() + 1 + dades[1].length() + 1;
+
+					// Calcular la diferencia de longitud entre la cadena original y la nueva
+					int diferencia = dades[2].length() - (nomUserFinal + nombreExtension).length();
+					String espacios = "";
+
+					// Si la diferencia es positiva, agregar espacios para mantener el formato de
+					// las columnas
+					if (diferencia > 0) {
+						for (int i = 0; i < diferencia; i++) {
+							espacios += " ";
+						}
+					}
+
+					// Construir la nueva línea con la columna actualizada y mantener las otras
+					// columnas intactas
+					String newLine = linia.substring(0, pos) + nomUserFinal+nombreExtension + espacios
+							+ linia.substring(pos + dades[2].length());
+					bw.write(newLine);
+				} else {
+					// Si la línea no contiene el nombre de usuario, copiar la línea sin cambios al
+					// archivo temporal
+					bw.write(linia);
+				}
+				// Agregar un salto de línea en el archivo temporal
+				bw.newLine();
+			}
+
+			System.out.println("La imagen ha sido actualizada del registro");
+			br.close();
+			bw.close();
+			originalFile.delete();
+			// Renombrar el archivo temporal como el archivo original
+			tempFile.renameTo(originalFile);
+
+		} catch (IOException e) {
+			System.err.println("Error: " + e);
 		}
 	}
 

@@ -2,6 +2,7 @@ package com.proyecto.main;
 
 import com.proyecto.utils.ControlErrores;
 import com.proyecto.utils.Funciones;
+import com.proyecto.utils.Interficie;
 
 public class Main {
 
@@ -19,7 +20,6 @@ public class Main {
 				Funciones.cargarArrayslist();
 				///// AQUI IRA LA FUNCION DE registrarUser() ///////////
 				System.out.println("-----Registrar Usuario----- (pulse -1 para salir)");
-				Funciones.registrarUsuario();
 
 				if (Funciones.registrarUsuario()) {
 					System.out.println("La operación ha sido cancelada, salir del registro...\n");
@@ -134,7 +134,7 @@ public class Main {
 						Funciones.comprobarModificacionUsuarioDirector();
 						do {
 							System.out.println(
-									"\n-> 1. Ver lista general \n-> 2. Ver lista personal \n-> 3. Añadir nuevo elemento a lista personal \n-> 4. Añadir nuevo elemento a lista general \n-> 5. Borrar elemento lista personal \n-> 6. Salir");
+									"\n-> 1. Ver lista general \n-> 2. Ver lista personal \n-> 3. Añadir nuevo elemento a lista personal \n-> 4. Añadir nuevo elemento a lista general \n-> 5. Ver imagen de perfil \n-> 6. Editar foto de perfil \n-> 7. Borrar elemento lista personal \n-> 8. Salir");
 							menuUsuario = ControlErrores.validarSecundario();
 							switch (menuUsuario) {
 							case 1:
@@ -215,11 +215,11 @@ public class Main {
 									}
 								} while (menuUsuarioSecundario != 4);
 								break;
-								
+
 							case 4:
 								Funciones.cargarArrayslist();
 								System.out.println("-----Añadir elemento a lista GENERAL-----");
-								
+
 								do {
 									System.out.println(
 											"\n-> 1. Añadir Peliculas \n-> 2. Añadir Actores \n-> 3. Añadir Directores \n-> 4. Salir");
@@ -242,8 +242,18 @@ public class Main {
 									}
 								} while (menuUsuarioSecundario != 4);
 								break;
-								
 							case 5:
+								System.out.println("-----Ver imagen de perfil-----");
+                                String nombreImagenVer=Funciones.comprobarNombreImagen();
+                                Funciones.abrirImagenNavegador(nombreImagenVer);
+                                break;
+							case 6:
+								System.out.println("-----Editar foto de perfil-----");
+								Funciones.cambiarImagen();
+                                String nombreImagenCambiar=Funciones.comprobarNombreImagen();
+								Funciones.cambiarImagenRegistro(nombreImagenCambiar);
+								break;
+							case 7:
 								System.out.println("-----Borrar elemento lista PERSONAL-----");
 								do {
 									System.out.println(
@@ -271,12 +281,12 @@ public class Main {
 							default:
 								System.out.println("Salir");
 							}
-						} while (menuUsuario != 6);
+						} while (menuUsuario != 8);
 					}
 				}
 				break;
 			default:
-				System.out.println("Has cerrado el programa maquina");
+				Interficie.interficieFinalitzat();
 			}
 		} while (menuPrincipal != 3);
 	}
