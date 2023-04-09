@@ -330,4 +330,30 @@ public class ControlErrores {
 		}
 		return trobat;
 	}
+
+	// VALIDAR IMAGENES
+	// ---------------------------------------------------------------------------------------------------------------
+
+	// con este metodo verificamos si el archivo seleccionado es una imagen
+	public static boolean ValidarImagen(String fileName) {
+		String extension = validarExtension(fileName);
+
+		if (extension != null) {
+			return extension.equals("jpg") || extension.equals("png") || extension.equals("gif")
+					|| extension.equals("jpeg");
+		}
+		return false;
+	}
+
+	// con este metodo sacamos la extension del archivo pa comprovar luego si es una
+	// imagen
+	public static String validarExtension(String fileName) {
+		int punto = fileName.lastIndexOf(".");
+
+		if (punto > 0) {
+			return fileName.substring(punto + 1);
+		}
+
+		return null;
+	}
 }

@@ -1,6 +1,7 @@
 package com.proyecto.utils;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -1579,9 +1580,7 @@ public class Funciones {
 				try {
 					DirectorPersonal = (ArrayList<Director>) reader.readObject();
 				} catch (Exception ex) {
-//				System.err.println("Error: " + ex);
 				}
-
 				reader.close();
 				file.close();
 			} catch (Exception ex) {
@@ -1602,7 +1601,6 @@ public class Funciones {
 					PelisPersonal = (ArrayList<Pelicula>) reader.readObject();
 				} catch (Exception ex) {
 				}
-
 				reader.close();
 				file.close();
 			} catch (Exception ex) {
@@ -1623,7 +1621,6 @@ public class Funciones {
 					ActorPersonal = (ArrayList<Actor>) reader.readObject();
 				} catch (Exception ex) {
 				}
-
 				reader.close();
 				file.close();
 			} catch (Exception ex) {
@@ -1632,6 +1629,8 @@ public class Funciones {
 	}
 
 	/// METODO PARA ABRIR LA IMAGEN /// AUN NO ESTA TERMINADO
+	// ---------------------------------------------------------------------------------------------------------------
+
 	public static void abrirImagenNavegador(String nombreImagen) {
 
 		// OBTENEMOS EL NOMBRE DEL SISTEMA EN MINUSCULAS
@@ -1657,40 +1656,43 @@ public class Funciones {
 		}
 	}
 
-	public static String comprobarNombreImagen() {
-		String imagenSinExtension = "";
-		String imagenConExtension = "";
-		String extension = "";
-		String nombreFinal = "";
+	// COMPROBAR SI LA IMAGEN HA CAMBIADO
+	// ---------------------------------------------------------------------------------------------------------------
 
+	public static String comprobarNombreImagen() {
+		String nombreFinal = "porDefecto.png"; // Establecer la imagen por defecto como nombre inicial
+
+		// Definir la ruta de la carpeta del usuario
 		String rutaImagen = "src/com/proyecto/usuariosCarpetas/" + nomUserFinal;
 		File carpeta = new File(rutaImagen);
 
-		if (!(carpeta.exists())) { // Verificar que el directorio exista y sea un directorio
-			nombreFinal = "porDefecto.png";
-		} else {
-			File[] archivo = carpeta.listFiles();
-			for (File item : archivo) {
-
-				int posInicial = item.getName().lastIndexOf(".");
-				imagenSinExtension = item.getName().substring(posInicial + 1);
-
-				if (!(imagenSinExtension.contains("llista"))) {
-					int posFinalRuta = item.getName().lastIndexOf("\"");
-					imagenConExtension = item.getName().substring(posFinalRuta + 1);
-
-					extension = item.getName().substring(posInicial);
-
-					if (imagenConExtension.contains("porDefecto.png")) {
-						nombreFinal = imagenConExtension;
+		// Si la carpeta del usuario existe
+		if (carpeta.exists()) {
+			// Obtener la lista de archivos en la carpeta
+			File[] archivos = carpeta.listFiles();
+			for (File archivo : archivos) {
+				// Si el archivo es una imagen y no contiene "llista" en su nombre
+				if (archivo.isFile() && !archivo.getName().contains("llista")) {
+					// Guardar la extensión del archivo
+					String extension = archivo.getName().substring(archivo.getName().lastIndexOf("."));
+					// Si el nombre del archivo contiene "porDefecto.png", mantenerlo como nombre
+					// final
+					if (archivo.getName().contains("porDefecto.png")) {
+						nombreFinal = archivo.getName();
 					} else {
+						// Si no, establecer el nombre del usuario y la extensión como nombre final
 						nombreFinal = nomUserFinal + extension;
 					}
+					break; // Salir del bucle, ya que se encontró una imagen válida
 				}
 			}
 		}
+		// Devolver el nombre final de la imagen
 		return nombreFinal;
 	}
+
+	// CAMBIAR LA IMAGEN
+	// ---------------------------------------------------------------------------------------------------------------
 
 	public static void cambiarImagen() {
 		// OBTENEMOS EL NOMBRE DE LA IMAGEN EN NUESTRA CARPETA DE USUARIO //
@@ -1702,10 +1704,10 @@ public class Funciones {
 			File[] files = archivo.listFiles();
 			for (File file : files) {
 				// Verificar que sea un archivo y que tenga una extensión de imagen
-				if (file.isFile() && ValidarImagen(file.getName())) {
+				if (file.isFile() && ControlErrores.ValidarImagen(file.getName())) {
 					// guardamos el nombre de la imagen
 					nombreImagen = file.getName();
-					System.out.println(nombreImagen + "nombre de la imagen inicial");
+					System.out.println("Nombre de la imagen inicial: " + nombreImagen);
 				}
 			}
 		} else {
@@ -1713,24 +1715,37 @@ public class Funciones {
 		}
 
 		// TOCA PEDIR AL USUARIO LA NUEVA RUTA DE LA IMAGEN
-		String nuevaImagen;
-		System.out.println("Introduce la ruta de la nueva imagen");
-		nuevaImagen = leer.nextLine();
 
-		File fotoAGuardar = new File(nuevaImagen);
-		if (fotoAGuardar.exists() && fotoAGuardar.isFile()) {
-			// validamos que la ruta que se introduzca sea de una imagen
-			if (ValidarImagen(fotoAGuardar.getName())) {
-				System.out.println(fotoAGuardar.getName());
+		String nuevaImagen = "";
+		boolean encertatRuta = false;
+		do {
+
+			System.out.println("Introduce la ruta de la nueva imagen, para cancelar pulse (-1):");
+			nuevaImagen = leer.nextLine();
+
+			File fotoAGuardar = new File(nuevaImagen);
+			// Validamos que la ruta que se introduzca sea de una imagen
+			if ((fotoAGuardar.exists()) && fotoAGuardar.isFile()) {
+				encertatRuta = true;
+			} else {
+				encertatRuta = false;
+			}
+
+			// Dar opcion para cancelar
+			if (nuevaImagen.equals("-1")) {
+				break;
+			}
+
+			if (ControlErrores.ValidarImagen(fotoAGuardar.getName())) {
 				// copiamos la imagen
 				try {
 					// ABRIR EL ARCHIVO DONDE SE ENCUENTRA LA IMAGEN
 					FileInputStream rutaOrigen = new FileInputStream(nuevaImagen);
 
 					// ABRIR PARA ESCRIBIR EL ARCHIVO DE IMAGEN EN LA CARPETA DE USUARIO
-					FileOutputStream rutaDestino = new FileOutputStream("src/com/proyecto/usuariosCarpetas/"
-							+ nomUserFinal + "/" + nomUserFinal + "." + validarExtension(fotoAGuardar.getName()));
-					System.out.println("src/com/proyecto/usuariosCarpetas/" + nomUserFinal + "/");
+					FileOutputStream rutaDestino = new FileOutputStream(
+							"src/com/proyecto/usuariosCarpetas/" + nomUserFinal + "/" + nomUserFinal + "."
+									+ ControlErrores.validarExtension(fotoAGuardar.getName()));
 
 					// CREAMOS UN BUFFER DE BYTES PARA ALMACENAR TEMPORALMENTE LOS DATOS LEIDOS
 					byte[] buffer = new byte[1024];
@@ -1741,12 +1756,26 @@ public class Funciones {
 					while ((lenght = rutaOrigen.read(buffer)) > 0) {
 						rutaDestino.write(buffer, 0, lenght);
 					}
+					System.out.println("\nLa foto se ha cambiado correctamente");
 					// CERRAMOS
 					rutaOrigen.close();
 					rutaDestino.close();
 
+					// ELIMINAMOS LA IMAGEN ORIGINAL
+					try {
+						// Crear una instancia de la clase File utilizando la ruta del archivo
+						String ruta = "src/com/proyecto/usuariosCarpetas/" + nomUserFinal + "/porDefecto.png";
+						File imagenOriginal = new File(ruta);
+
+						// Eliminar el archivo solo si existe, sin mostrar mensajes ni lanzar
+						// excepciones
+						if (imagenOriginal.exists()) {
+							imagenOriginal.delete();
+						}
+					} catch (Exception e) {
+						// No hacer nada si ocurre una excepción
+					}
 				} catch (Exception e) {
-					System.out.println("Error imagen: " + e);
 				}
 				// ahora cambiamos el nombre
 				// ESTO NO HACE FALTA DE MOMENTO
@@ -1770,77 +1799,80 @@ public class Funciones {
 //		            System.err.println("No se ha cambiado el nombre");
 //		        }	
 //			}
+
 			} else {
 				System.err.println("La ruta introducida es erronea");
 				System.err.println("Proceso finalizado");
 			}
-		}
+		} while (!encertatRuta && !(nuevaImagen.equals("-1")));
+
 	}
-	File f = new File("src/com/proyecto/utils/usersGuardados.txt");
 
-	public static void cambiarImagenRegistro() {
-	    nomUserFinal = "2edu";
+	// CAMBIAR EL NOMBRE DE L A IMAGEN EN EL REGISTRO
+	// ---------------------------------------------------------------------------------------------------------------
 
-	    try {
-			File f = new File("src/com/proyecto/utils/usersGuardados.txt");
-			FileReader fr = new FileReader(f);
+	public static void cambiarImagenRegistro(String nombreExtension) {
+		// Obtener el nombre de la extensión
+		int posExtensio = nombreExtension.lastIndexOf(".");
+		nombreExtension = nombreExtension.substring(posExtensio, nombreExtension.length());
+
+		File originalFile = new File("src/com/proyecto/utils/usersGuardados.txt");
+		File tempFile = new File("src/com/proyecto/utils/tempFile.txt");
+
+		try {
+			// Abrir el archivo original para lectura
+			FileReader fr = new FileReader(originalFile);
 			BufferedReader br = new BufferedReader(fr);
 
-			File file = new File("src/com/proyecto/utils/usersGuardados.txt");
-			RandomAccessFile raf = new RandomAccessFile(file, "rw");
+			// Abrir un archivo temporal para escritura
+			FileWriter fw = new FileWriter(tempFile);
+			BufferedWriter bw = new BufferedWriter(fw);
 
-			String linia = br.readLine();
-			linia = br.readLine();
+			String linia;
 			while ((linia = br.readLine()) != null) {
 				String[] dades = linia.split("[|]");
 
+				// Si la línea contiene el nombre de usuario deseado
 				if (dades[0].contains(nomUserFinal)) {
+					// Calcular la posición de inicio de la columna que queremos cambiar
+					int pos = linia.indexOf(dades[0]) + dades[0].length() + 1 + dades[1].length() + 1;
 
-					if (dades[2] != null) {
-						try {
-							System.out.println("columna  " + dades[2]);
-							int pos = linia.indexOf(dades[2]);
-							System.out.println("posicion  " + pos);
-							raf.seek(pos);
-							raf.writeBytes("nuevaImagen");
+					// Calcular la diferencia de longitud entre la cadena original y la nueva
+					int diferencia = dades[2].length() - (nomUserFinal + nombreExtension).length();
+					String espacios = "";
 
-						} catch (Exception e) {
-							System.out.println("Error cambiar nom imatge registre: " + e);
+					// Si la diferencia es positiva, agregar espacios para mantener el formato de
+					// las columnas
+					if (diferencia > 0) {
+						for (int i = 0; i < diferencia; i++) {
+							espacios += " ";
 						}
 					}
+
+					// Construir la nueva línea con la columna actualizada y mantener las otras
+					// columnas intactas
+					String newLine = linia.substring(0, pos) + nomUserFinal+nombreExtension + espacios
+							+ linia.substring(pos + dades[2].length());
+					bw.write(newLine);
+				} else {
+					// Si la línea no contiene el nombre de usuario, copiar la línea sin cambios al
+					// archivo temporal
+					bw.write(linia);
 				}
+				// Agregar un salto de línea en el archivo temporal
+				bw.newLine();
 			}
-			raf.close();
+
+			System.out.println("La imagen ha sido actualizada del registro");
 			br.close();
+			bw.close();
+			originalFile.delete();
+			// Renombrar el archivo temporal como el archivo original
+			tempFile.renameTo(originalFile);
+
 		} catch (IOException e) {
 			System.err.println("Error: " + e);
 		}
-	}
-
-
-
-	// con este metodo verificamos si el archivo seleccionado es una imagen
-	private static boolean ValidarImagen(String fileName) {
-		String extension = validarExtension(fileName);
-
-		if (extension != null) {
-			return extension.equals("jpg") || extension.equals("png") || extension.equals("gif")
-					|| extension.equals("jpeg");
-		}
-
-		return false;
-	}
-
-	// con este metodo sacamos la extension del archivo pa comprovar luego si es una
-	// imagen
-	private static String validarExtension(String fileName) {
-		int punto = fileName.lastIndexOf(".");
-
-		if (punto > 0) {
-			return fileName.substring(punto + 1);
-		}
-
-		return null;
 	}
 
 	// ELIMINAR USUARIO //

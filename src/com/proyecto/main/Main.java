@@ -18,16 +18,13 @@ public class Main {
 			switch (menuPrincipal) {
 			case 1:
 				Funciones.cargarArrayslist();
+				///// AQUI IRA LA FUNCION DE registrarUser() ///////////
+				System.out.println("-----Registrar Usuario----- (pulse -1 para salir)");
 
-				Funciones.cambiarImagenRegistro();
-
-//				///// AQUI IRA LA FUNCION DE registrarUser() ///////////
-//				System.out.println("-----Registrar Usuario----- (pulse -1 para salir)");
-//
-//				if (Funciones.registrarUsuario()) {
-//					System.out.println("La operación ha sido cancelada, salir del registro...\n");
-//					break;
-//				}
+				if (Funciones.registrarUsuario()) {
+					System.out.println("La operación ha sido cancelada, salir del registro...\n");
+					break;
+				}
 
 				break;
 			case 2:
@@ -247,13 +244,14 @@ public class Main {
 								break;
 							case 5:
 								System.out.println("-----Ver imagen de perfil-----");
-                                String nombreImagen=Funciones.comprobarNombreImagen();
-                                Funciones.abrirImagenNavegador(nombreImagen);
+                                String nombreImagenVer=Funciones.comprobarNombreImagen();
+                                Funciones.abrirImagenNavegador(nombreImagenVer);
                                 break;
 							case 6:
-//								System.out.println("-----Editar foto de perfil-----");
-//								Funciones.cambiarImagen();
-								Funciones.cambiarImagenRegistro();
+								System.out.println("-----Editar foto de perfil-----");
+								Funciones.cambiarImagen();
+                                String nombreImagenCambiar=Funciones.comprobarNombreImagen();
+								Funciones.cambiarImagenRegistro(nombreImagenCambiar);
 								break;
 							case 7:
 								System.out.println("-----Borrar elemento lista PERSONAL-----");
