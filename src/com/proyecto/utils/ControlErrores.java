@@ -233,7 +233,7 @@ public class ControlErrores {
 
 	// VALIDAR UN USUARI //
 	// ---------------------------------------------------------------------------------------------------------------
-	public static boolean validaUsuario() {
+	public static String validaUsuario() {
 		try {
 			File f = new File("src/com/proyecto/utils/usersGuardados.txt");
 			FileReader fr = new FileReader(f);
@@ -249,7 +249,7 @@ public class ControlErrores {
 			String linia = br.readLine();
 			linia = br.readLine();
 			boolean trobat = false;
-			boolean login = false;
+			String rol="";
 			while ((linia = br.readLine()) != null && !trobat) {
 				String[] dades = linia.split("[|]");
 
@@ -262,7 +262,7 @@ public class ControlErrores {
 						if (dades[6].equals(pwd)) {
 							System.out.println("\nHola " + usr + ", has iniciado sesion " + "\u2714");
 							// missatge benvinguda, nom apellido
-							login = true;
+							rol=dades[8].trim();
 						} else {
 							trobat = true;
 							System.err.println("ERROR. Contraseña errónea para el usuario " + usr);
@@ -274,10 +274,10 @@ public class ControlErrores {
 				System.err.println("ERROR. No se encontró un usuario con el nombre: " + usr);
 			}
 			br.close();
-			return login;
+			return rol;
 		} catch (IOException e) {
 			System.err.println("Error: " + e);
-			return false;
+			return "";
 		}
 	}
 	// VALIDAR LLISTES GENERALS //
