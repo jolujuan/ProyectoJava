@@ -21,7 +21,7 @@ public class Interficie {
 		JFrame eixidaMenu = new JFrame("Programa Finalitzat!!");
 		eixidaMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		ImageIcon icono = new ImageIcon("src/com/proyecto/utils/icono.png");
+		ImageIcon icono = new ImageIcon("src/com/proyecto/imagenes/icono.png");
 		eixidaMenu.setIconImage(icono.getImage());
 
 	
@@ -39,7 +39,6 @@ public class Interficie {
 
 		JLabel membres = new JLabel(Funciones.mostrarColaboradores());
 		membres.setPreferredSize(new Dimension(750, 750));
-		
 		
 		JLabel institut = new JLabel("IES Lluís Simarro");
 
