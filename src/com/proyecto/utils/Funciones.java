@@ -27,8 +27,8 @@ import com.proyecto.javier.MostrarNombreJavier;
 import com.proyecto.joseluis.MostrarNombreJoselu;
 import com.proyecto.maikol.MostrarNombreMaikol;
 import com.proyecto.users.Cliente;
+import com.proyecto.users.Rol;
 import com.proyecto.users.User;
-import com.proyecto.users.User.Rol;
 
 public class Funciones {
 
@@ -110,14 +110,14 @@ public class Funciones {
 
 		// Array List como null, para guardar solo información de los usuarios
 		// Obtenemos el ID de usuario con una funcion en la clase
-		Cliente N1 = new Cliente(User.getId(), usuario, apellidos, contraseña, email, poblacion, User.Rol.USUARIO,
+		Cliente N1 = new Cliente(User.getId(), usuario, apellidos, contraseña, email, poblacion, Rol.USUARIO,
 				fecha, null, null, null);
 
 		// Creamos el usuario con la funcion
 		nomUser = obtenerNomUser(User.getId(), email);
 
 		// Pasamos los parametros del objeto a la funcíon guardar usuarios
-		guardarUsuario(nomUser, User.getId(), usuario, apellidos, email, contraseña, poblacion, User.Rol.USUARIO,
+		guardarUsuario(nomUser, User.getId(), usuario, apellidos, email, contraseña, poblacion, Rol.USUARIO,
 				fecha);
 
 		// Pasamos el parametro usuario para crear carpeta
