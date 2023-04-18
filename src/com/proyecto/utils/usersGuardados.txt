@@ -1,4 +1,4 @@
-#USUARIO         |ID | Imagen           | Nombre           | Apellidos        | Email                        | Contraseña       | Población   |2edu.onssg  | Fecha           
+#USUARIO         |ID | Imagen           | Nombre           | Apellidos        | Email                        | Contraseña       | Población   |ROL         | Fecha           
 #----------------+---+------------------+------------------+------------------+------------------------------+------------------+-------------+------------+--------------+
 admin            |000|inexistente       |admin             |admin             |admin@admin.com               |admin           	|inexistente  |admin       |admin         
 1joseluis        |001|porDefecto.png    |joseluis          |juan              |juanestevej@gmail.com         |canals            |canals       |USUARIO     |30/04/2002    

@@ -12,7 +12,6 @@ public class Main {
 		// MENU PRINCIPAL //
 
 		do {
-			Funciones.mostrarColaboradores();
 			System.out.println("Escoja una opcion: \n-> 1. REGISTRAR \n-> 2. LOGIN \n-> 3. SALIR");
 			menuPrincipal = ControlErrores.validarMenuPrincipal();
 			switch (menuPrincipal) {
