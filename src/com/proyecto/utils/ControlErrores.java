@@ -266,12 +266,14 @@ public class ControlErrores {
 						} else {
 							trobat = true;
 							System.err.println("ERROR. Contraseña errónea para el usuario " + usr);
+							validaUsuario();
 						}
 					}
 				}
 			}
 			if (!trobat) {
 				System.err.println("ERROR. No se encontró un usuario con el nombre: " + usr);
+				validaUsuario();
 			}
 			br.close();
 			return rol;
