@@ -11,12 +11,20 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
-import java.io.RandomAccessFile;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
+
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 
 import com.proyecto.Ismael.MostrarNombreIsma;
 import com.proyecto.clases.Actor;
@@ -47,6 +55,11 @@ public class Funciones {
 
 	static Scanner leer = new Scanner(System.in);
 	SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
+
+	// VARIABLES GLOBALES STATICAS //
+	private static final int LONGITUD_SALTO = 16;
+	private static final int FORTALEZA = 65536;
+	private static final int LONGITUD_HASH = 64 * 8;
 
 	// Varible nombre usuario
 	public static String nomUser = "";
@@ -106,6 +119,7 @@ public class Funciones {
 		}
 
 		// registro finish
+
 		System.out.println("Registro completado");
 
 		// Array List como null, para guardar solo información de los usuarios
@@ -121,8 +135,51 @@ public class Funciones {
 
 		// Pasamos el parametro usuario para crear carpeta
 		crearCarpeta(nomUser);
-
+		encriptarPassword(nomUser, contraseña);
 		return false;
+	}
+
+	// ENCRIPTAR CONTRASEÑA //
+	public static void encriptarPassword(String nombreUsuario, String passWord) {
+		byte[] salto = null;
+
+		try {
+			File archivo = new File("src/com/proyecto/utils/passWords.txt");
+			FileWriter escribir = new FileWriter(archivo, true);
+
+			try {
+				SecureRandom random = new SecureRandom();
+				salto = new byte[LONGITUD_SALTO];
+				random.nextBytes(salto);
+
+				KeySpec spec = new PBEKeySpec(passWord.toCharArray(), salto, FORTALEZA, LONGITUD_HASH);
+				SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+
+				byte[] hash = factory.generateSecret(spec).getEncoded();
+				passWord = Base64.getEncoder().encodeToString(hash);
+				// Utilizamos un metodo para convertir los datos byte a String
+				escribir.write(nombreUsuario + ":::" + FORTALEZA + ":::" + conversionSalto(salto) + ":::"
+						+ LONGITUD_HASH + ":::" + passWord + "\n");
+
+			} catch (NoSuchAlgorithmException e) {
+				System.out.println("Error: " + e);
+			} catch (InvalidKeySpecException e) {
+				System.out.println("Error: " + e);
+			}
+			escribir.close();
+		} catch (Exception e) {
+			System.out.println("Error: " + e);
+		}
+	}
+
+	// GENERAR SALTO //
+	public static String conversionSalto(byte[] salto) {
+		String saltosTexto = "";
+		for (int i = 0; i < salto.length; i++) {
+			// PASAMOS LA CONVERSION DE BYTES A CADENA
+			saltosTexto += String.format("%02x", salto[i]);
+		}
+		return saltosTexto;
 	}
 
 	// OBTENER NOMBRE USUARIO //
