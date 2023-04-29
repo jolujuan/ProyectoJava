@@ -1,3 +1,4 @@
+
 package com.proyecto.main;
 
 import com.proyecto.utils.ControlErrores;
@@ -12,18 +13,27 @@ public class Main {
 		// MENU PRINCIPAL //
 
 		do {
-			System.out.println("Escoja una opcion: \n-> 1. REGISTRAR \n-> 2. LOGIN \n-> 3. SALIR");
+			System.out.println("Escoja una opcion: \n-> 1. PRUEBAS \n-> 2. LOGIN \n-> 3. SALIR");
 			menuPrincipal = ControlErrores.validarMenuPrincipal();
 			switch (menuPrincipal) {
 			case 1:
-				Funciones.cargarArrayslist();
-				///// AQUI IRA LA FUNCION DE registrarUser() ///////////
-				System.out.println("-----Registrar Usuario----- (pulse -1 para salir)");
 
-				if (Funciones.registrarUsuario()) {
-					System.out.println("La operación ha sido cancelada, salir del registro...\n");
-					break;
-				}
+				
+				
+				
+				
+				
+				
+				
+				
+//				Funciones.cargarArrayslist();
+//				///// AQUI IRA LA FUNCION DE registrarUser() ///////////
+//				System.out.println("-----Registrar Usuario----- (pulse -1 para salir)");
+//
+//				if (Funciones.registrarUsuario()) {
+//					System.out.println("La operación ha sido cancelada, salir del registro...\n");
+//					break;
+//				}
 
 				break;
 			case 2:
