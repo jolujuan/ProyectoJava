@@ -88,6 +88,7 @@ public class ControlErrores {
 
 		return n;
 	}
+
 	/// VALIDAR MENU TERCIARIO ///
 	public static int validarTernario() {
 		int n = 0;
@@ -100,7 +101,7 @@ public class ControlErrores {
 				entrada.nextLine();
 			} else {
 				n = entrada.nextInt();
-				if (n == 1 || n == 2 || n == 3 || n == 4|| n==5) {
+				if (n == 1 || n == 2 || n == 3 || n == 4 || n == 5) {
 					correcto = true;
 				} else {
 					System.err.println("Error: El numero introducido debe ser 1, 2, 3, 4 o 5.");
@@ -269,10 +270,15 @@ public class ControlErrores {
 			System.out.println("Introduce la contraseña: ");
 			String pwd = ControlErrores.validarString();
 
+			// Este metodo tiene que actualizarse, porque ahora la contraseña no se guarda
+			// en este fichero, temporalmente le decimos que compruebe la x guardada para
+			// proseguir
+			pwd = "x";
+
 			String linia = br.readLine();
 			linia = br.readLine();
 			boolean trobat = false;
-			String rol="";
+			String rol = "";
 			while ((linia = br.readLine()) != null && !trobat) {
 				String[] dades = linia.split("[|]");
 
@@ -285,7 +291,7 @@ public class ControlErrores {
 						if (dades[6].equals(pwd)) {
 							System.out.println("\nHola " + usr + ", has iniciado sesion " + "\u2714");
 							// missatge benvinguda, nom apellido
-							rol=dades[8].trim();
+							rol = dades[8].trim();
 						} else {
 							trobat = true;
 							System.err.println("ERROR. Contraseña errónea para el usuario " + usr);

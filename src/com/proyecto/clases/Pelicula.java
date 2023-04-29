@@ -46,60 +46,62 @@ public class Pelicula implements Serializable {
 
 	// Mostrar datos de la pelicula
 	public void mostrarDatospelicula() {
-		String datos = "1-> Nombre : " + nombrePelicula + "\n 2-> Duracion: " + duracion + "\n 3-> Año de emision: "
-				+ anioEmision + "4-> Genero: " + genero;
+		String datos = " 1-> Nombre : " + nombrePelicula + "\n 2-> Duracion: " + duracion + "\n 3-> Año de emision: "
+				+ anioEmision + "\n 4-> Genero: " + genero;
 	}
-	
-	//modificar datos de la pelicula
+
+	// modificar datos de la pelicula
 	public String[] modificarDatosPelicula() {
 		String[] retorno = { "", "" };
-		String datos = "1-> Nombre : " + nombrePelicula + "\n 2-> Duracion: " + duracion + "\n 3-> Año de emision: "
-				+ anioEmision + "4-> Genero: " + genero;
+		String datos = " 1-> Nombre: " + nombrePelicula + "\n 2-> Duración: " + duracion + "\n 3-> Año de emisión: "
+				+ anioEmision + "\n 4-> Genero: " + genero;
 		System.out.println(datos);
-		System.out.println("Selecciona una opción (pulse -1 para salir)");
 		boolean encertat = false;
 		int n = 0;
 		do {
-			System.out.println("Seleccione id del elemento a borrar( pulse -1 para salir)");
+			System.out.println("Selecciona una opción (pulse -1 para salir)");
 			n = ControlErrores.validarInt();
 			if (n == -1) {
 				System.out.println("Has cancelado el borrado de la lista");
 				encertat = true;
 
-			} else if (n > 1 || n < 4) {
-				System.err.println("El numero que has puesto no esta en la lista");
+			} else if (!(n >= 1 && n <= 4)) {
+				System.err.println("El numeroooo que has puesto no esta en la lista");
 			} else {
-				System.out.println("Has seleccionado la " + n + " opcion");
+				System.out.println("Has seleccionado la " + n + " opción");
 				switch (n) {
 				case 1: {
-					System.out.println("Que nombre de pelicula quieres ponerle");
-					String pelicula;
-
-					pelicula = ControlErrores.validarString();
+					System.out.println("El nombre de la pelicula es: "+nombrePelicula);
+					System.out.println("Que nombre le quieres poner:");
+					
+					String pelicula = ControlErrores.validarString();
 					retorno[2] = pelicula;
 					retorno[1] = "pelicula";
 
 					break;
 				}
 				case 2: {
-					System.out.println("Que duracion de pelicula quieres ponerle");
+					System.out.println("La duración de la pelicula es: "+duracion);
+					System.out.println("Que duración le quieres poner:");
 					int duracion = ControlErrores.validarInt();
 					retorno[2] = String.valueOf(duracion);
 					retorno[1] = "duracion";
 					break;
 				}
 				case 3: {
-					System.out.println("Que fecha de pelicula quieres ponerle");
+					System.out.println("La fecha de la pelicula es: "+anioEmision);
+					System.out.println("Que fecha le quieres poner:");
 					String fechaEmisio = ControlErrores.validarFecha();
 					retorno[2] = fechaEmisio;
 					retorno[1] = "fechaEmisio";
 					break;
 				}
 				case 4: {
-					System.out.println("Que genero de pelicula quieres ponerle");
+					System.out.println("El genero de la pelicula es: "+genero);
+					System.out.println("Que genero le quieres poner:");
 					String genero = ControlErrores.validarString();
 					retorno[2] = genero;
-					retorno[1]="genero";
+					retorno[1] = "genero";
 					break;
 				}
 				default:
@@ -107,7 +109,7 @@ public class Pelicula implements Serializable {
 				}
 
 				encertat = true;
-				
+
 			}
 		} while (!encertat);
 		return retorno;

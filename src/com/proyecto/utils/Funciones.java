@@ -249,13 +249,13 @@ public class Funciones {
 	// GUARDAR USUARIOS EN FICHERO TXT //
 	// ---------------------------------------------------------------------------------------------------------------
 	public static void guardarUsuario(String nomUser, int ID, String nombre, String apellidos, String email,
-			 String poblacion, Rol rol, String fecha) {
+			String poblacion, Rol rol, String fecha) {
 		try {
 			File file = new File("src/com/proyecto/utils/usersGuardados.txt");
 			PrintWriter escriureUser = new PrintWriter(new FileWriter(file, true));
 
 			String nomImage = comprobarNombreImagen();
-			String contraseña="x";
+			String contraseña = "x";
 			// Escribir los datos del usuario en un formato fijo
 			String datos = String.format("%-17s|%03d|%-18s|%-18s|%-18s|%-30s|%-10s|%-13s|%-12s|%-14s", nomUser, ID,
 					nomImage, nombre, apellidos, email, contraseña, poblacion, rol, fecha);
@@ -757,7 +757,7 @@ public class Funciones {
 			try {
 				// Obrim fitxer per a lectura
 				FileInputStream file = new FileInputStream(archivo);
-				ObjectInputStream reader = new ObjectInputStream(file);
+				ObjectInputStream reader = new ObjectInputStream(file); 
 				try {
 					// Llegim l'objecte que hi ha al fitxer (1 sol array List)
 					listaArray = (ArrayList<Pelicula>) reader.readObject();
@@ -767,7 +767,7 @@ public class Funciones {
 						System.out.println(item.toString());
 						System.out.println();
 					}
-
+				
 					// Calcular correctamente el rango de los ids
 					int min = Integer.MAX_VALUE;
 					int max = Integer.MIN_VALUE;
@@ -781,35 +781,38 @@ public class Funciones {
 							min = id;
 						}
 					}
-
 					boolean encertat = false;
 					int idUser = 0;
 					do {
-						System.out.println("Seleccione id del elemento a modificar( pulse -1 para salir)");
+						System.out.println("Seleccione id del elemento a modificar (pulse -1 para salir)");
 						idUser = ControlErrores.validarInt();
 						if (idUser == -1) {
-							System.out.println("Has cancelado modificar algo de la lista");
+							System.out.println("Has cancelado modificar la lista");
 							encertat = true;
 
 						} else if (idUser > max || idUser < min) {
 							System.err.println("El numero que has puesto no esta en la lista");
 						} else {
-//								
-//									
-//								}
-							for (Pelicula item : listaArray) {
+
+							for (Pelicula item : listaArray) { 
+
 								if (((Pelicula) item).getId() == idUser) {
-//										listaArray.remove(item);
-									String[] modificación = item.modificarDatosPelicula();
-									switch (modificación[1]) {
+									
+									String[] modificacion = item.modificarDatosPelicula();
+									switch (modificacion[1]) {
 									case "pelicula": {
 										for (Pelicula item2 : listaArray) {
-											if (((Pelicula) item2).getNombrePelicula().equals(modificación[2])) {
-												System.err.println("Ya he existe la pelicula, operacion cancelada");
+											
+											System.out.println("item2 "+item2);
+											
+											if (((Pelicula) item2).getNombrePelicula().equals(modificacion[2])) {
+												System.out.println("Nombre pelicula " + item2.getNombrePelicula());
+												System.err.println("Ya he existe la pelicula, operación cancelada");
 												modificarListaGeneral(1);
-											}else {
+											} else {
+												
 												if (((Pelicula) item2).getId() == idUser) {
-													item2.setNombrePelicula(modificación[2]);
+													item2.setNombrePelicula(modificacion[2]);
 													item2.mostrarDatospelicula();
 												}
 											}
@@ -819,50 +822,39 @@ public class Funciones {
 									case "fechaEmisio": {
 										for (Pelicula item2 : listaArray) {
 											if (((Pelicula) item2).getId() == idUser) {
-													item2.setNombrePelicula(modificación[2]);
-													item2.mostrarDatospelicula();
-												}
-											
+												item2.setNombrePelicula(modificacion[2]);
+												item2.mostrarDatospelicula();
+											}
 										}
-
 										break;
 									}
 									case "genero": {
 										for (Pelicula item2 : listaArray) {
 											if (((Pelicula) item2).getId() == idUser) {
-													item2.setGenero(modificación[2]);
-													item2.mostrarDatospelicula();
-												}
-											
+												item2.setGenero(modificacion[2]);
+												item2.mostrarDatospelicula();
+											}
 										}
-
 										break;
 									}
 									case "duracion": {
 										for (Pelicula item2 : listaArray) {
 											if (((Pelicula) item2).getId() == idUser) {
-													item2.setDuracion(Integer.valueOf(modificación[2]));
-													item2.mostrarDatospelicula();
-												}
-											
+												item2.setDuracion(Integer.valueOf(modificacion[2]));
+												item2.mostrarDatospelicula();
+											}
 										}
-
 										break;
 									}
 									default:
-										throw new IllegalArgumentException("Unexpected value: " + modificación);
+										throw new IllegalArgumentException("Unexpected value: " + modificacion);
 									}
-
-									
 									System.out.println("Se ha Modificado correctamente");
-
 									break;
 								}
 							}
 						}
-
 						encertat = true;
-
 					} while (!encertat);
 
 					ObjectOutputStream oos = null;
