@@ -131,7 +131,7 @@ public class Funciones {
 		nomUser = obtenerNomUser(User.getId(), email);
 
 		// Pasamos los parametros del objeto a la funcíon guardar usuarios
-		guardarUsuario(nomUser, User.getId(), usuario, apellidos, email, contraseña, poblacion, Rol.USUARIO, fecha);
+		guardarUsuario(nomUser, User.getId(), usuario, apellidos, email, poblacion, Rol.USUARIO, fecha);
 
 		// Pasamos el parametro usuario para crear carpeta
 		crearCarpeta(nomUser);
@@ -249,22 +249,23 @@ public class Funciones {
 	// GUARDAR USUARIOS EN FICHERO TXT //
 	// ---------------------------------------------------------------------------------------------------------------
 	public static void guardarUsuario(String nomUser, int ID, String nombre, String apellidos, String email,
-			String contraseña, String poblacion, Rol rol, String fecha) {
+			 String poblacion, Rol rol, String fecha) {
 		try {
 			File file = new File("src/com/proyecto/utils/usersGuardados.txt");
 			PrintWriter escriureUser = new PrintWriter(new FileWriter(file, true));
 
 			String nomImage = comprobarNombreImagen();
+			String contraseña="x";
 			// Escribir los datos del usuario en un formato fijo
-			String datos = String.format("%-17s|%03d|%-18s|%-18s|%-18s|%-30s|%-18s|%-13s|%-12s|%-14s", nomUser, ID,
+			String datos = String.format("%-17s|%03d|%-18s|%-18s|%-18s|%-30s|%-10s|%-13s|%-12s|%-14s", nomUser, ID,
 					nomImage, nombre, apellidos, email, contraseña, poblacion, rol, fecha);
 
 			// Comprobar si el archivo está vacío para escribir el encabezado
 			if (file.length() == 0) {
 				escriureUser.println(
-						"#USUARIO         |ID | IMAGEN           | Nombre           | Apellidos        | Email                        | Contraseña       | Población   | Rol        | Fecha        ");
+						"#USUARIO         |ID | IMAGEN           | Nombre           | Apellidos        | Email                        |Contraseña| Población   | Rol        | Fecha        ");
 				escriureUser.println(
-						"#----------------+---+------------------+------------------+------------------+------------------------------+------------------+-------------+------------+--------------");
+						"#----------------+---+------------------+------------------+------------------+------------------------------+----------+-------------+------------+--------------");
 			}
 
 			// Escribir los datos del usuario en el archivo
