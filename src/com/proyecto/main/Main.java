@@ -133,7 +133,7 @@ public class Main {
 									break;
 								}
 								case 2: {
-//									Funciones.modificarListaGeneral(2);
+									Funciones.modificarListaGeneral(2);
 									break;
 								}
 								case 3: {
@@ -144,8 +144,6 @@ public class Main {
 									System.out.println("Salir");
 								}
 							} while (menuAdminSecundariol != 4);
-							
-							
 							break;
 						default:
 							System.out.println("Salir");
@@ -161,7 +159,7 @@ public class Main {
 					Funciones.comprobarModificacionUsuarioDirector();
 					do {
 						System.out.println(
-								"\n-> 1. Ver lista general \n-> 2. Ver lista personal \n-> 3. Añadir nuevo elemento a lista personal \n-> 4. Añadir nuevo elemento a lista general \n-> 5. Ver imagen de perfil \n-> 6. Editar foto de perfil \n-> 7. Borrar elemento lista personal \n-> 8. Salir");
+								"\n-> 1. Ver lista general \n-> 2. Ver lista personal \n-> 3. Añadir nuevo elemento a lista personal \n-> 4. Añadir nuevo elemento a lista general \n-> 5. Ver imagen de perfil \n-> 6. Editar foto de perfil \n-> 7. Borrar elemento lista personal \n-> 8. Modificar elemento lista personal \n-> 9. Salir");
 						menuUsuario = ControlErrores.validarSecundario();
 						switch (menuUsuario) {
 						case 1:
@@ -305,14 +303,37 @@ public class Main {
 								}
 							} while (menuAdminSecundariol != 4);
 							break;
+							
+						case 8:
+							System.out.println("-----Modificar elemento lista Personal-----");
+							do {
+								System.out.println(
+										"\n-> 1. Modificar pelicula \n-> 2. Modificar Actor \n-> 3. Modificar Director \n-> 4. Salir");
+								menuAdminSecundariol = ControlErrores.validarTerciario();
+								Funciones.cargarArrayslist();
+								switch (menuAdminSecundariol) {
+								case 1: {
+									//Aqui iran los metodos para modificar elementos de la personal
+									break;
+								}
+								case 2: {
+									break;
+								}
+								case 3: {
+									break;
+								}
+								default:
+									System.out.println("Salir");
+								}
+							} while (menuAdminSecundariol != 4);
 						
-
+							break;
 						default:
 							System.out.println("Salir");
+							break;
 						}
-					} while (menuUsuario != 8);
+					} while (menuUsuario != 9);					
 				}
-
 				break;
 			default:
 				Interficie.interficieFinalitzat();

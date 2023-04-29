@@ -53,10 +53,10 @@ public class ControlErrores {
 				entrada.nextLine();
 			} else {
 				n = entrada.nextInt();
-				if (n == 1 || n == 2 || n == 3 || n == 4 || n == 5 || n == 6 || n == 7 || n == 8) {
+				if (n == 1 || n == 2 || n == 3 || n == 4 || n == 5 || n == 6 || n == 7 || n == 8 || n==9) {
 					correcto = true;
 				} else {
-					System.err.println("Error: El numero introducido debe ser 1, 2, 3, 4, 5, 6, 7 o 8.");
+					System.err.println("Error: El numero introducido debe ser 1, 2, 3, 4, 5, 6, 7, 8 o 9.");
 					entrada.nextLine();
 				}
 			}
