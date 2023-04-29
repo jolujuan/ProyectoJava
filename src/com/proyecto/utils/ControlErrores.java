@@ -88,6 +88,29 @@ public class ControlErrores {
 
 		return n;
 	}
+	/// VALIDAR MENU TERCIARIO ///
+	public static int validarTernario() {
+		int n = 0;
+		boolean correcto = false;
+		Scanner entrada = new Scanner(System.in);
+
+		do {
+			if (!entrada.hasNextInt()) {
+				System.err.println("Error: No has introducido un numero.");
+				entrada.nextLine();
+			} else {
+				n = entrada.nextInt();
+				if (n == 1 || n == 2 || n == 3 || n == 4|| n==5) {
+					correcto = true;
+				} else {
+					System.err.println("Error: El numero introducido debe ser 1, 2, 3, 4 o 5.");
+					entrada.nextLine();
+				}
+			}
+		} while (!correcto);
+
+		return n;
+	}
 
 	// VALIDAR UN INTEGER //
 	public static int validarInt() {

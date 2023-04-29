@@ -36,8 +36,8 @@ public class Main {
 					do {
 						System.out.println("Bienvenido, estas en el modo administrador ");
 						System.out.println(
-								"\n-> 1. Ver lista general  \n-> 2. Añadir nuevo elemento a lista general \n-> 3. Borrar elemento lista general \n-> 4. Salir");
-						menuAdmin = ControlErrores.validarTerciario();
+								"\n-> 1. Ver lista general  \n-> 2. Añadir nuevo elemento a lista general \n-> 3. Borrar elemento lista general  \n-> 4. Modificar elemento lista general \n-> 5. Salir");
+						menuAdmin = ControlErrores.validarTernario();
 
 						switch (menuAdmin) {
 						case 1:
@@ -60,6 +60,7 @@ public class Main {
 									System.out.println("-----Ver Directores (Lista GENERAL)-----");
 									Funciones.mostrarListasGenerales(3);
 									break;
+								
 								default:
 									System.out.println("Salir");
 								}
@@ -117,13 +118,39 @@ public class Main {
 								}
 							} while (menuAdminSecundariol != 4);
 							break;
-
+						case 4:
+							System.out.println("-----Modificar elemento lista General-----");
+							do {
+								System.out.println(
+										"\n-> 1. Modificar pelicula \n-> 2. Modificar Actor \n-> 3. Modificar Director \n-> 4. Salir");
+								menuAdminSecundariol = ControlErrores.validarTerciario();
+								Funciones.cargarArrayslist();
+								switch (menuAdminSecundariol) {
+								case 1: {
+									Funciones.modificarListaGeneral(1);
+									break;
+								}
+								case 2: {
+									Funciones.modificarListaGeneral(2);
+									break;
+								}
+								case 3: {
+									Funciones.modificarListaGeneral(3);
+									break;
+								}
+								default:
+									System.out.println("Salir");
+								}
+							} while (menuAdminSecundariol != 4);
+							
+							
+							break;
 						default:
 							System.out.println("Salir");
 							break;
 						}
 
-					} while (menuAdmin != 4);
+					} while (menuAdmin != 5);
 					break;
 
 				} else {
@@ -276,6 +303,8 @@ public class Main {
 								}
 							} while (menuAdminSecundariol != 4);
 							break;
+						
+
 						default:
 							System.out.println("Salir");
 						}

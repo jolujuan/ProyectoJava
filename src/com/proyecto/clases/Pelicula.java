@@ -6,10 +6,12 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Scanner;
 
+import com.proyecto.utils.ControlErrores;
 import com.proyecto.utils.Funciones;
 
-public class Pelicula  implements Serializable  {
+public class Pelicula implements Serializable {
 
 	/// ATRIBUTOS PELICULAS ///
 	private static int countIdPelicula = 0;
@@ -39,7 +41,76 @@ public class Pelicula  implements Serializable  {
 		this.duracion = duracion;
 		this.anioEmision = anioEmision;
 		this.genero = genero;
-		this.nomUser=Funciones.nomUserFinal;
+		this.nomUser = Funciones.nomUserFinal;
+	}
+
+	// Mostrar datos de la pelicula
+	public void mostrarDatospelicula() {
+		String datos = "1-> Nombre : " + nombrePelicula + "\n 2-> Duracion: " + duracion + "\n 3-> Año de emision: "
+				+ anioEmision + "4-> Genero: " + genero;
+	}
+	
+	//modificar datos de la pelicula
+	public String[] modificarDatosPelicula() {
+		String[] retorno = { "", "" };
+		String datos = "1-> Nombre : " + nombrePelicula + "\n 2-> Duracion: " + duracion + "\n 3-> Año de emision: "
+				+ anioEmision + "4-> Genero: " + genero;
+		System.out.println(datos);
+		System.out.println("Selecciona una opción (pulse -1 para salir)");
+		boolean encertat = false;
+		int n = 0;
+		do {
+			System.out.println("Seleccione id del elemento a borrar( pulse -1 para salir)");
+			n = ControlErrores.validarInt();
+			if (n == -1) {
+				System.out.println("Has cancelado el borrado de la lista");
+				encertat = true;
+
+			} else if (n > 1 || n < 4) {
+				System.err.println("El numero que has puesto no esta en la lista");
+			} else {
+				System.out.println("Has seleccionado la " + n + " opcion");
+				switch (n) {
+				case 1: {
+					System.out.println("Que nombre de pelicula quieres ponerle");
+					String pelicula;
+
+					pelicula = ControlErrores.validarString();
+					retorno[2] = pelicula;
+					retorno[1] = "pelicula";
+
+					break;
+				}
+				case 2: {
+					System.out.println("Que duracion de pelicula quieres ponerle");
+					int duracion = ControlErrores.validarInt();
+					retorno[2] = String.valueOf(duracion);
+					retorno[1] = "duracion";
+					break;
+				}
+				case 3: {
+					System.out.println("Que fecha de pelicula quieres ponerle");
+					String fechaEmisio = ControlErrores.validarFecha();
+					retorno[2] = fechaEmisio;
+					retorno[1] = "fechaEmisio";
+					break;
+				}
+				case 4: {
+					System.out.println("Que genero de pelicula quieres ponerle");
+					String genero = ControlErrores.validarString();
+					retorno[2] = genero;
+					retorno[1]="genero";
+					break;
+				}
+				default:
+					throw new IllegalArgumentException("Unexpected value: " + n);
+				}
+
+				encertat = true;
+				
+			}
+		} while (!encertat);
+		return retorno;
 	}
 
 	// Haremos una comparacion hacia el ultimo id de la clase y lo asignaremos
@@ -77,11 +148,11 @@ public class Pelicula  implements Serializable  {
 	}
 
 	/// GETTERS Y SETTERS ///
-	
+
 	public int getId() {
 		return idPelicula;
 	}
-	
+
 	public int getIdPelicula() {
 		return idPelicula;
 	}
@@ -132,7 +203,7 @@ public class Pelicula  implements Serializable  {
 
 	@Override
 	public String toString() {
-		return idPelicula + "-. " + nombrePelicula+" -> "+nomUser;
+		return idPelicula + "-. " + nombrePelicula + " -> " + nomUser;
 	}
 
 }
