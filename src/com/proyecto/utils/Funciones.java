@@ -802,9 +802,7 @@ public class Funciones {
 									switch (modificacion[1]) {
 									case "pelicula": {
 										for (Pelicula item2 : listaArray) {
-											
-											System.out.println("item2 "+item2);
-											
+																						
 											if (((Pelicula) item2).getNombrePelicula().equals(modificacion[2])) {
 												System.out.println("Nombre pelicula " + item2.getNombrePelicula());
 												System.err.println("Ya he existe la pelicula, operación cancelada");

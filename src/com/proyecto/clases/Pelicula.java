@@ -48,11 +48,12 @@ public class Pelicula implements Serializable {
 	public void mostrarDatospelicula() {
 		String datos = " 1-> Nombre : " + nombrePelicula + "\n 2-> Duracion: " + duracion + "\n 3-> Año de emision: "
 				+ anioEmision + "\n 4-> Genero: " + genero;
+		System.out.println(datos);
 	}
 
 	// modificar datos de la pelicula
 	public String[] modificarDatosPelicula() {
-		String[] retorno = { "", "" };
+		String[] retorno = new String[3];
 		String datos = " 1-> Nombre: " + nombrePelicula + "\n 2-> Duración: " + duracion + "\n 3-> Año de emisión: "
 				+ anioEmision + "\n 4-> Genero: " + genero;
 		System.out.println(datos);
