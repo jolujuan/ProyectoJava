@@ -150,10 +150,7 @@ public class Funciones {
 			try {
 				SecureRandom random = new SecureRandom();
 				salto = new byte[LONGITUD_SALTO];
-				System.out.println(salto);
 				random.nextBytes(salto);
-				System.out.println(salto);
-				System.out.println(conversionSalto(salto));
 
 				KeySpec spec = new PBEKeySpec(passWord.toCharArray(), salto, FORTALEZA, LONGITUD_HASH);
 				SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");

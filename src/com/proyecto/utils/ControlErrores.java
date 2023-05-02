@@ -290,14 +290,11 @@ public class ControlErrores {
 
 						// Començem a encriptar
 						try {
-							System.out.println(dades[2].getBytes());
 							KeySpec spec = new PBEKeySpec(pwd.toCharArray(), Funciones.revertirSalto(dades[2]),
 									Integer.parseInt(dades[1]), Integer.parseInt(dades[3]));
 							SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
 							byte[] hash = factory.generateSecret(spec).getEncoded();
 							pwd = Base64.getEncoder().encodeToString(hash);
-							System.out.println(dades[4]);
-							System.out.println(pwd);
 							if (dades[4].equals(pwd)) {
 								System.out.println("\nHola " + usr + ", has iniciado sesion " + "\u2714");
 							} else {
