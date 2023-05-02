@@ -150,7 +150,10 @@ public class Funciones {
 			try {
 				SecureRandom random = new SecureRandom();
 				salto = new byte[LONGITUD_SALTO];
+				System.out.println(salto);
 				random.nextBytes(salto);
+				System.out.println(salto);
+				System.out.println(conversionSalto(salto));
 
 				KeySpec spec = new PBEKeySpec(passWord.toCharArray(), salto, FORTALEZA, LONGITUD_HASH);
 				SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
@@ -180,6 +183,17 @@ public class Funciones {
 			saltosTexto += String.format("%02x", salto[i]);
 		}
 		return saltosTexto;
+	}
+
+	public static byte[] revertirSalto(String salto) {
+		byte[] saltoBytes = new byte[salto.length() / 2];// Cada dos caracters de la String representen un byte de
+															// l'array
+		for (int i = 0; i < saltoBytes.length; i++) {
+			int rango = i * 2;
+			String pareja = salto.substring(rango, rango + 2);
+			saltoBytes[i] = (byte) Integer.parseInt(pareja,16);
+		}
+		return saltoBytes;
 	}
 
 	// OBTENER NOMBRE USUARIO //

@@ -4,12 +4,19 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Scanner;
 import java.util.regex.Pattern;
+
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 
 import com.proyecto.clases.Actor;
 import com.proyecto.clases.Director;
@@ -53,7 +60,7 @@ public class ControlErrores {
 				entrada.nextLine();
 			} else {
 				n = entrada.nextInt();
-				if (n == 1 || n == 2 || n == 3 || n == 4 || n == 5 || n == 6 || n == 7 || n == 8 || n==9) {
+				if (n == 1 || n == 2 || n == 3 || n == 4 || n == 5 || n == 6 || n == 7 || n == 8 || n == 9) {
 					correcto = true;
 				} else {
 					System.err.println("Error: El numero introducido debe ser 1, 2, 3, 4, 5, 6, 7, 8 o 9.");
@@ -259,7 +266,7 @@ public class ControlErrores {
 	// ---------------------------------------------------------------------------------------------------------------
 	public static String validaUsuario() {
 		try {
-			File f = new File("src/com/proyecto/utils/usersGuardados.txt");
+			File f = new File("src/com/proyecto/utils/passWords.txt");
 			FileReader fr = new FileReader(f);
 			BufferedReader br = new BufferedReader(fr);
 
@@ -270,33 +277,41 @@ public class ControlErrores {
 			System.out.println("Introduce la contraseña: ");
 			String pwd = ControlErrores.validarString();
 
-			// Este metodo tiene que actualizarse, porque ahora la contraseña no se guarda
-			// en este fichero, temporalmente le decimos que compruebe la x guardada para
-			// proseguir
-			pwd = "x";
-
 			String linia = br.readLine();
-			linia = br.readLine();
 			boolean trobat = false;
 			String rol = "";
 			while ((linia = br.readLine()) != null && !trobat) {
-				String[] dades = linia.split("[|]");
+				String[] dades = linia.split(":::");
 
-				if (dades.length >= 6) { // asegurarse de que hay suficientes columnas
-					dades[0] = dades[0].trim();
-					dades[6] = dades[6].trim();
+				if (dades.length == 5) { // asegurarse de que hay suficientes columnas
 
 					if (dades[0].equals(usr)) {
 						trobat = true;
-						if (dades[6].equals(pwd)) {
-							System.out.println("\nHola " + usr + ", has iniciado sesion " + "\u2714");
-							// missatge benvinguda, nom apellido
-							rol = dades[8].trim();
-						} else {
-							trobat = true;
-							System.err.println("ERROR. Contraseña errónea para el usuario " + usr);
-							validaUsuario();
+
+						// Començem a encriptar
+						try {
+							System.out.println(dades[2].getBytes());
+							KeySpec spec = new PBEKeySpec(pwd.toCharArray(), Funciones.revertirSalto(dades[2]),
+									Integer.parseInt(dades[1]), Integer.parseInt(dades[3]));
+							SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+							byte[] hash = factory.generateSecret(spec).getEncoded();
+							pwd = Base64.getEncoder().encodeToString(hash);
+							System.out.println(dades[4]);
+							System.out.println(pwd);
+							if (dades[4].equals(pwd)) {
+								System.out.println("\nHola " + usr + ", has iniciado sesion " + "\u2714");
+							} else {
+								trobat = true;
+								System.err.println("ERROR. Contraseña errónea para el usuario " + usr);
+								validaUsuario();
+							}
+						} catch (NoSuchAlgorithmException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (InvalidKeySpecException e) {
+							System.out.println("Error: " + e);
 						}
+
 					}
 				}
 			}

@@ -20,3 +20,6 @@ admin            |000|inexistente       |admin             |admin             |a
 17edu            |017|porDefecto.png    |edu               |valls             |edu@gmail.com                 |x         |agullent     |USUARIO     |08/10/1999    
 18edu            |018|porDefecto.png    |edu               |valls             |edu@gmail.com                 |x         |agullent     |USUARIO     |08/10/1999    
 19jose           |019|porDefecto.png    |joseluis          |juan              |jose@hotmail.com              |x         |canals       |USUARIO     |30/04/2002    
+20bolen          |020|porDefecto.png    |bolen             |bolenov           |bolen@gmail.com               |x         |Olleria      |USUARIO     |07/05/2000    
+21vicent         |021|porDefecto.png    |Vicent            |Bases             |vicent@gmail.com              |x         |canals       |USUARIO     |01/01/1990    
+22jcalatayud     |022|porDefecto.png    |Jose              |Calata            |jcalatayud@gmail.com          |x         |pepeland     |USUARIO     |31/02/2000       
