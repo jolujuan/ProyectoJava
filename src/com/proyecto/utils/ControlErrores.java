@@ -280,6 +280,9 @@ public class ControlErrores {
 			String linia = br.readLine();
 			boolean trobat = false;
 			String rol = "";
+			if (usr.equals("admin")) {
+				rol="admin";
+			}
 			while ((linia = br.readLine()) != null && !trobat) {
 				String[] dades = linia.split(":::");
 

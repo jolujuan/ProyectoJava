@@ -19,7 +19,7 @@ public class Actor implements Serializable {
 	private String apellidoActor;
 	private int edadActor;
 	private String nacionalidadActor;
-	private String nomUser;
+	private String nomUser=Funciones.nomUserFinal;
 
 	/// CONSTRUCTOR ///
 	public Actor(String nombreActor, String apellidoActor, int edadActor, String nacionalidadActor) {

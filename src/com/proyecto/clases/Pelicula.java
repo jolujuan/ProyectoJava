@@ -20,7 +20,7 @@ public class Pelicula implements Serializable {
 	private int duracion;
 	private String anioEmision;
 	private String genero;
-	private String nomUser;
+	private String nomUser=Funciones.nomUserFinal;
 
 	/// CONSTRUCTOR ///
 	public Pelicula(String nombrePelicula, int duracion, String anioEmision, String genero) {
@@ -158,6 +158,11 @@ public class Pelicula implements Serializable {
 
 	public int getIdPelicula() {
 		return idPelicula;
+	}
+	
+	// Recuperar el nombre del usuario
+	public  String getNomUser() {
+		return this.nomUser;
 	}
 
 	public void setIdPelicula(int idPelicula) {

@@ -13,7 +13,7 @@ public class Main {
 		// MENU PRINCIPAL //
 
 		do {
-			System.out.println("Escoja una opcion: \n-> 1. PRUEBAS \n-> 2. LOGIN \n-> 3. SALIR");
+			System.out.println("Escoja una opcion: \n-> 1. REGISTRAR \n-> 2. LOGIN \n-> 3. SALIR");
 			menuPrincipal = ControlErrores.validarMenuPrincipal();
 			switch (menuPrincipal) {
 			case 1:
@@ -32,6 +32,7 @@ public class Main {
 				///// AQUI IRA LA FUNCION DE loginUser() ///////////
 				System.out.println("-----Iniciar Sesion-----");
 				String rol = ControlErrores.validaUsuario();
+				
 				// dependiendo de si es admin o no Se dirigira a los menus de admin o de users
 				if (rol.equals("admin")) {
 
@@ -137,7 +138,7 @@ public class Main {
 									break;
 								}
 								case 3: {
-//									Funciones.modificarListaGeneral(3);
+									Funciones.modificarListaGeneral(3);
 									break;
 								}
 								default:
@@ -313,8 +314,7 @@ public class Main {
 								Funciones.cargarArrayslist();
 								switch (menuAdminSecundariol) {
 								case 1: {
-									//Aqui iran los metodos para modificar elementos de la personal
-									break;
+									Funciones.modificarListaPersonal(1);									break;
 								}
 								case 2: {
 									break;
