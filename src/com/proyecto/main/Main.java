@@ -314,12 +314,15 @@ public class Main {
 								Funciones.cargarArrayslist();
 								switch (menuAdminSecundariol) {
 								case 1: {
-									Funciones.modificarListaPersonal(1);									break;
+									Funciones.modificarListaPersonal(1);
+									break;
 								}
 								case 2: {
+									Funciones.modificarListaPersonal(2);
 									break;
 								}
 								case 3: {
+									Funciones.modificarListaPersonal(3);
 									break;
 								}
 								default:

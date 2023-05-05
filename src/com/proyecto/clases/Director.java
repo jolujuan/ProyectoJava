@@ -206,6 +206,10 @@ public class Director implements  Serializable {
 	public void setGoyas(int goyas) {
 		this.goyas = goyas;
 	}
+	
+	public  String getNomUser() {
+		return this.nomUser;
+	}
 
 	@Override
 	public String toString() {

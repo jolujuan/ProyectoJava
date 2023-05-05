@@ -1153,9 +1153,9 @@ public class Funciones {
 					"La lista personal de Peliculas es:\n", PelisPersonal);
 			break;
 		case 2:
-			// modificarListaPersonalActor("src/com/proyecto/usuariosCarpetas/" +
-			// nomUserFinal + "/actor.llista",
-			// "La lista personal de Actores es:\n", ActorPersonal);
+			modificarListaPersonalActor("src/com/proyecto/usuariosCarpetas/" +
+			nomUserFinal + "/actor.llista",
+			"La lista personal de Actores es:\n", ActorPersonal);
 			break;
 		case 3:
 			// modificarListaPersonalDirector("src/com/proyecto/usuariosCarpetas/" +
@@ -1168,7 +1168,7 @@ public class Funciones {
 		}
 	}
 
-	// MODIFICAR DATOS LISTAS GENERALES- Pelicula
+	// MODIFICAR DATOS LISTAS PERSONALES- Pelicula
 	private static void modificarListaPersonalPelicula(String archivo, String mensaje, ArrayList<Pelicula> listaArray) {
 		File fitxer = new File(archivo);
 		if (fitxer.length() < 0 || fitxer.length() == 0 || listaArray.size() <= 0) {
@@ -1305,7 +1305,283 @@ public class Funciones {
 			}
 		}
 	}
+	
+	//MODIFICAR LISTA PERSONAL-actor
+	private static void modificarListaPersonalActor(String archivo, String mensaje, ArrayList<Actor> listaArray) {
+		File fitxer = new File(archivo);
+		if (fitxer.length() < 0 || fitxer.length() == 0 || listaArray.size() <= 0) {
+			System.err.println("No hay nada que mostrar");
+		} else {
+			try {
+				// Obrim fitxer per a lectura
+				FileInputStream file = new FileInputStream(archivo);
+				ObjectInputStream reader = new ObjectInputStream(file);
+				try {
+					// Llegim l'objecte que hi ha al fitxer (1 sol array List)
+					listaArray = (ArrayList<Actor>) reader.readObject();
+					System.out.println(mensaje);
 
+					for (Actor item : listaArray) {
+						System.out.println(item.toString());
+						System.out.println();
+					}
+
+					// Calcular correctamente el rango de los ids
+					int min = Integer.MAX_VALUE;
+					int max = Integer.MIN_VALUE;
+
+					for (Actor item : listaArray) {
+						int id = ((Actor) item).getId();
+						if (id > max) {
+							max = id;
+						}
+						if (id < min) {
+							min = id;
+						}
+					}
+					boolean encertat = false;
+					int idUser = 0;
+
+					do {
+						System.out.println("Seleccione id del actor a modificar (pulse -1 para salir)");
+						idUser = ControlErrores.validarInt();
+						if (idUser == -1) {
+							System.out.println("Has cancelado modificar la lista");
+							encertat = true;
+
+						} else if (idUser > max || idUser < min) {
+							System.err.println("El numero que has puesto no esta en la lista");
+						} else {
+							
+							for (Actor item : listaArray) {
+
+								if (((Actor) item).getId() == idUser) {
+									
+									// Comprobar que la introducido el usuario
+									if (((Actor) item).getNomUser().equals(nomUserFinal)) {
+
+										String[] modificacion = item.modificarDatosActor();
+										switch (modificacion[1]) {
+										case "nombre": {
+											for (Actor item2 : listaArray) {
+
+												if (((Actor) item2).getNombreActor().equals(modificacion[2])) {
+													System.out.println("Nombre Actor: " + item2.getNombreActor());
+													System.err.println("\nYa existe el actor, operación cancelada");
+													modificarListaGeneral(1);
+												} else {
+
+													if (((Actor) item2).getId() == idUser) {
+														item2.setNombreActor(modificacion[2]);
+														item2.mostrarDatosActor();
+													}
+												}
+											}
+											break;
+										}
+										case "apellidos": {
+											for (Actor item2 : listaArray) {
+												if (((Actor) item2).getId() == idUser) {
+													item2.setApellidoActor(modificacion[2]);
+													item2.mostrarDatosActor();
+												}
+											}
+											break;
+										}
+										case "edad": {
+											for (Actor item2 : listaArray) {
+												if (((Actor) item2).getId() == idUser) {
+													item2.setEdadActor(Integer.parseInt(modificacion[2]));
+													item2.mostrarDatosActor();
+												}
+											}
+											break;
+										}
+										case "nacionalidad": {
+											for (Actor item2 : listaArray) {
+												if (((Actor) item2).getId() == idUser) {
+													item2.setNacionalidadActor(modificacion[2]);
+													item2.mostrarDatosActor();
+												}
+											}
+											break;
+										}
+										default:
+											throw new IllegalArgumentException("Unexpected value: " + modificacion);
+										}
+										System.out.println("\nSe ha Modificado correctamente");
+										break;
+
+									} else {
+										// Usuario puede modificar lo que el ha introducido
+										System.err
+												.println("No puedes modificar una lista introducida por otra persona");
+									}
+								}
+							}
+						}
+						encertat = true;
+					} while (!encertat);
+
+					ObjectOutputStream oos = null;
+					FileOutputStream fout = null;
+
+					fout = new FileOutputStream(archivo, false);
+					oos = new ObjectOutputStream(fout);
+					// escrivim ArrayList sencer en el fitxer (1 sol objecte)
+					oos.writeObject(listaArray);
+					oos.flush();
+					oos.close();
+
+				} catch (Exception ex) {
+					System.err.println("Error en llegir " + archivo + ": " + ex);
+				}
+				reader.close();
+				file.close();
+			} catch (Exception ex) {
+				System.err.println("Error en llegir " + archivo + ": " + ex);
+			}
+		}
+	}
+	
+	// MODIFICAR DATOS LISTAS PERSONALES-director
+		private static void modificarListaPersonalDirector(String archivo, String mensaje, ArrayList<Director> listaArray) {
+			File fitxer = new File(archivo);
+			if (fitxer.length() < 0 || fitxer.length() == 0 || listaArray.size() <= 0) {
+				System.err.println("No hay nada que mostrar");
+			} else {
+				try {
+					// Obrim fitxer per a lectura
+					FileInputStream file = new FileInputStream(archivo);
+					ObjectInputStream reader = new ObjectInputStream(file);
+					try {
+						// Llegim l'objecte que hi ha al fitxer (1 sol array List)
+						listaArray = (ArrayList<Director>) reader.readObject();
+						System.out.println(mensaje);
+
+						for (Director item : listaArray) {
+							System.out.println(item.toString());
+							System.out.println();
+						}
+
+						// Calcular correctamente el rango de los ids
+						int min = Integer.MAX_VALUE;
+						int max = Integer.MIN_VALUE;
+
+						for (Director item : listaArray) {
+							int id = ((Director) item).getId();
+							if (id > max) {
+								max = id;
+							}
+							if (id < min) {
+								min = id;
+							}
+						}
+						boolean encertat = false;
+						int idUser = 0;
+
+						do {
+							System.out.println("Seleccione id del elemento a modificar (pulse -1 para salir)");
+							idUser = ControlErrores.validarInt();
+							if (idUser == -1) {
+								System.out.println("Has cancelado modificar la lista");
+								encertat = true;
+
+							} else if (idUser > max || idUser < min) {
+								System.err.println("El numero que has puesto no esta en la lista");
+							} else {
+								
+								for (Director item : listaArray) {
+
+									if (((Director) item).getId() == idUser) {
+										
+										// Comprobar que la introducido el usuario
+										if (((Director) item).getNomUser().equals(nomUserFinal)) {
+
+											String[] modificacion = item.modificarDatosDirector();
+											switch (modificacion[1]) {
+											case "nombre": {
+												for (Director item2 : listaArray) {
+
+													if (((Director) item2).getNombreDirector().equals(modificacion[2])) {
+														System.out.println("Nombre director " + item2.getNombreDirector());
+														System.err.println("\nYa existe la pelicula, operación cancelada");
+														modificarListaGeneral(1);
+													} else {
+
+														if (((Director) item2).getId() == idUser) {
+															item2.setNombreDirector(modificacion[2]);
+															item2.mostrarDatosDirector();
+														}
+													}
+												}
+												break;
+											}
+											case "apellidos": {
+												for (Director item2 : listaArray) {
+													if (((Director) item2).getId() == idUser) {
+														item2.setApellidoDirector(modificacion[2]);
+														item2.mostrarDatosDirector();
+													}
+												}
+												break;
+											}
+											case "edad": {
+												for (Director item2 : listaArray) {
+													if (((Director) item2).getId() == idUser) {
+														item2.setEdadDirector(Integer.parseInt(modificacion[2]));
+														item2.mostrarDatosDirector();
+													}
+												}
+												break;
+											}
+											case "goyas": {
+												for (Director item2 : listaArray) {
+													if (((Director) item2).getId() == idUser) {
+														item2.setGoyas(Integer.valueOf(modificacion[2]));
+														item2.mostrarDatosDirector();
+													}
+												}
+												break;
+											}
+											default:
+												throw new IllegalArgumentException("Unexpected value: " + modificacion);
+											}
+											System.out.println("\nSe ha Modificado correctamente");
+											break;
+
+										} else {
+											// Usuario puede modificar lo que el ha introducido
+											System.err
+													.println("No puedes modificar una lista introducida por otra persona");
+										}
+									}
+								}
+							}
+							encertat = true;
+						} while (!encertat);
+
+						ObjectOutputStream oos = null;
+						FileOutputStream fout = null;
+
+						fout = new FileOutputStream(archivo, false);
+						oos = new ObjectOutputStream(fout);
+						// escrivim ArrayList sencer en el fitxer (1 sol objecte)
+						oos.writeObject(listaArray);
+						oos.flush();
+						oos.close();
+
+					} catch (Exception ex) {
+						System.err.println("Error en llegir " + archivo + ": " + ex);
+					}
+					reader.close();
+					file.close();
+				} catch (Exception ex) {
+					System.err.println("Error en llegir " + archivo + ": " + ex);
+				}
+			}
+		}
+		
 	// MOSTRAR LISTAS GENERALES
 	// ---------------------------------------------------------------------------------------------------------------
 

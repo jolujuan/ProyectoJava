@@ -206,6 +206,10 @@ public class Actor implements Serializable {
 	public void setNacionalidadActor(String nacionalidadActor) {
 		this.nacionalidadActor = nacionalidadActor;
 	}
+	
+	public  String getNomUser() {
+		return this.nomUser;
+	}
 
 	@Override
 	public String toString() {
