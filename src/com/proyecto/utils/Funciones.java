@@ -1638,7 +1638,7 @@ public class Funciones {
 	// PEDIR DATOS LISTA PERSONAL PELICULA //
 	public static void pedirListaPersonalPelicula() {
 		File vacio = new File("src/com/proyecto/listasPeliculas/peliculas.llista");
-		if (vacio.length() < 0 || vacio.length() == 0) {
+		if (vacio.length() < 0 || vacio.length() == 0 || PelisGeneral.size()==0) {
 			System.err.println("No puedes añadir nada ya que la lista general esta vacia");
 		} else {
 			System.out.println("Introduce el  id de la Pelicula que quieres ( pulse -1 para salir)");
@@ -1726,7 +1726,7 @@ public class Funciones {
 	// PEDIR DATO LISTA PERSONAL ACTOR //
 	public static void pedirListaPersonalActor() {
 		File vacio = new File("src/com/proyecto/listasPeliculas/actores.llista");
-		if (vacio.length() < 0 ||  vacio.length() == 0) {
+		if (vacio.length() < 0 ||  vacio.length() == 0 || ActorGeneral.size()==0) {
 			System.err.println("No puedes añadir nada ya que la lista general esta vacia");
 		} else {
 			System.out.println("Introduce el  id del Actor/a que quieres (pulse -1 para salir)");
@@ -1812,7 +1812,7 @@ public class Funciones {
 	// PEDIR LISTA PERSONAL DIRECTOR //
 	public static void pedirListaPersonalDirector() {
 		File vacio = new File("src/com/proyecto/listasPeliculas/directores.llista");
-		if (vacio.length() < 0 || vacio.length() == 0) {
+		if (vacio.length() < 0 || vacio.length() == 0 || DirectorGeneral.size()==0 ) {
 			System.err.println("No puedes añadir nada ya que la lista general esta vacia");
 		} else {
 			System.out.println("Introduce el  id de la Pelicula que quieres ( pulse -1 para salir)");
