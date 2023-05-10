@@ -19,12 +19,7 @@ public class User {
 	protected String email;
 	protected String poblacion;
 	protected String fechaNacimiento;
-
-	Rol roles;
-
-	public enum Rol {
-		USUARIO, ADMIN
-	}
+	protected Rol rolUsu;
 
 	/// CONTRUCTOR ///
 	public User(int id, String nombre, String apellidos, String contrasenia, String email, String poblacion, Rol roles,
@@ -48,7 +43,7 @@ public class User {
 		this.contrasenia = contrasenia;
 		this.email = email;
 		this.poblacion = poblacion;
-		this.roles = roles;
+		this.rolUsu = roles;
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
@@ -143,11 +138,11 @@ public class User {
 	}
 
 	public Rol getRoles() {
-		return roles;
+		return rolUsu;
 	}
 
 	public void setRoles(Rol roles) {
-		this.roles = roles;
+		this.rolUsu = roles;
 	}
 
 	public String getFechaNacimiento() {
@@ -212,7 +207,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "Id: " + id + "\nNombre: " + nombre + "\nApellidos: " + apellidos + "\nContraseña: " + contrasenia
-				+ "\nEmail: " + email + "\nPoblacion: " + poblacion + "\nRol: " + roles + "\nFecha Nacimiento: "
+				+ "\nEmail: " + email + "\nPoblacion: " + poblacion + "\nRol: " + rolUsu + "\nFecha Nacimiento: "
 				+ fechaNacimiento;
 	}
 

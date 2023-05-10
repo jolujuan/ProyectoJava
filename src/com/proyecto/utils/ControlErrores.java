@@ -4,12 +4,19 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Scanner;
 import java.util.regex.Pattern;
+
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 
 import com.proyecto.clases.Actor;
 import com.proyecto.clases.Director;
@@ -53,10 +60,10 @@ public class ControlErrores {
 				entrada.nextLine();
 			} else {
 				n = entrada.nextInt();
-				if (n == 1 || n == 2 || n == 3 || n == 4 || n == 5 || n == 6 || n == 7 || n == 8) {
+				if (n == 1 || n == 2 || n == 3 || n == 4 || n == 5 || n == 6 || n == 7 || n == 8 || n == 9) {
 					correcto = true;
 				} else {
-					System.err.println("Error: El numero introducido debe ser 1, 2, 3, 4, 5, 6, 7 o 8.");
+					System.err.println("Error: El numero introducido debe ser 1, 2, 3, 4, 5, 6, 7, 8 o 9.");
 					entrada.nextLine();
 				}
 			}
@@ -81,6 +88,30 @@ public class ControlErrores {
 					correcto = true;
 				} else {
 					System.err.println("Error: El numero introducido debe ser 1, 2, 3 o 4.");
+					entrada.nextLine();
+				}
+			}
+		} while (!correcto);
+
+		return n;
+	}
+
+	/// VALIDAR MENU TERCIARIO ///
+	public static int validarTernario() {
+		int n = 0;
+		boolean correcto = false;
+		Scanner entrada = new Scanner(System.in);
+
+		do {
+			if (!entrada.hasNextInt()) {
+				System.err.println("Error: No has introducido un numero.");
+				entrada.nextLine();
+			} else {
+				n = entrada.nextInt();
+				if (n == 1 || n == 2 || n == 3 || n == 4 || n == 5) {
+					correcto = true;
+				} else {
+					System.err.println("Error: El numero introducido debe ser 1, 2, 3, 4 o 5.");
 					entrada.nextLine();
 				}
 			}
@@ -233,9 +264,9 @@ public class ControlErrores {
 
 	// VALIDAR UN USUARI //
 	// ---------------------------------------------------------------------------------------------------------------
-	public static boolean validaUsuario() {
+	public static String validaUsuario() {
 		try {
-			File f = new File("src/com/proyecto/utils/usersGuardados.txt");
+			File f = new File("src/com/proyecto/utils/passWords.txt");
 			FileReader fr = new FileReader(f);
 			BufferedReader br = new BufferedReader(fr);
 
@@ -247,37 +278,52 @@ public class ControlErrores {
 			String pwd = ControlErrores.validarString();
 
 			String linia = br.readLine();
-			linia = br.readLine();
 			boolean trobat = false;
-			boolean login = false;
+			String rol = "";
+			if (usr.equals("admin")) {
+				rol="admin";
+			}
 			while ((linia = br.readLine()) != null && !trobat) {
-				String[] dades = linia.split("[|]");
+				String[] dades = linia.split(":::");
 
-				if (dades.length >= 6) { // asegurarse de que hay suficientes columnas
-					dades[0] = dades[0].trim();
-					dades[6] = dades[6].trim();
+				if (dades.length == 5) { // asegurarse de que hay suficientes columnas
 
 					if (dades[0].equals(usr)) {
 						trobat = true;
-						if (dades[6].equals(pwd)) {
-							System.out.println("\nHola " + usr + ", has iniciado sesion " + "\u2714");
-							// missatge benvinguda, nom apellido
-							login = true;
-						} else {
-							trobat = true;
-							System.err.println("ERROR. Contraseña errónea para el usuario " + usr);
+
+						// Començem a encriptar
+						try {
+							KeySpec spec = new PBEKeySpec(pwd.toCharArray(), Funciones.revertirSalto(dades[2]),
+									Integer.parseInt(dades[1]), Integer.parseInt(dades[3]));
+							SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+							byte[] hash = factory.generateSecret(spec).getEncoded();
+							pwd = Base64.getEncoder().encodeToString(hash);
+							if (dades[4].equals(pwd)) {
+								System.out.println("\nHola " + usr + ", has iniciado sesion " + "\u2714");
+							} else {
+								trobat = true;
+								System.err.println("ERROR. Contraseña errónea para el usuario " + usr);
+								validaUsuario();
+							}
+						} catch (NoSuchAlgorithmException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (InvalidKeySpecException e) {
+							System.out.println("Error: " + e);
 						}
+
 					}
 				}
 			}
 			if (!trobat) {
 				System.err.println("ERROR. No se encontró un usuario con el nombre: " + usr);
+				validaUsuario();
 			}
 			br.close();
-			return login;
+			return rol;
 		} catch (IOException e) {
 			System.err.println("Error: " + e);
-			return false;
+			return "";
 		}
 	}
 	// VALIDAR LLISTES GENERALS //
