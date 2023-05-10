@@ -160,7 +160,7 @@ public class Main {
 					Funciones.comprobarModificacionUsuarioDirector();
 					do {
 						System.out.println(
-								"\n-> 1. Ver lista general \n-> 2. Ver lista personal \n-> 3. Añadir nuevo elemento a lista personal \n-> 4. Añadir nuevo elemento a lista general \n-> 5. Ver imagen de perfil \n-> 6. Editar foto de perfil \n-> 7. Borrar elemento lista personal \n-> 8. Modificar elemento lista personal \n-> 9. Salir");
+								"\n-> 1. Ver lista general \n-> 2. Ver lista personal \n-> 3. Añadir nuevo elemento a lista personal \n-> 4. Añadir nuevo elemento a lista general \n-> 5. Ver imagen de perfil \n-> 6. Editar foto de perfil \n-> 7. Borrar elemento lista personal \n-> 8. Modificar elemento lista general \n-> 9. Salir");
 						menuUsuario = ControlErrores.validarSecundario();
 						switch (menuUsuario) {
 						case 1:
@@ -306,10 +306,10 @@ public class Main {
 							break;
 							
 						case 8:
-							System.out.println("-----Modificar elemento lista Personal-----");
+							System.out.println("-----Modificar elemento lista General-----");
 							do {
 								System.out.println(
-										"\n-> 1. Modificar pelicula \n-> 2. Modificar Actor \n-> 3. Modificar Director \n-> 4. Salir");
+										"\n-> 1. Modificar Pelicula \n-> 2. Modificar Actor \n-> 3. Modificar Director \n-> 4. Salir");
 								menuAdminSecundariol = ControlErrores.validarTerciario();
 								Funciones.cargarArrayslist();
 								switch (menuAdminSecundariol) {

@@ -3,3 +3,4 @@
 admin            |000|inexistente       |admin             |admin             |admin@admin.com               |x        	|inexistente  |admin       |admin         
 1jose            |001|porDefecto.png    |joseluis          |juan              |jose@jose.com                 |x         |canals       |USUARIO     |30/04/2002    
 2edu             |002|porDefecto.png    |edu               |vals              |edu@edu.com                   |x         |agullent     |USUARIO     |01/01/2010    
+3raul            |003|porDefecto.png    |raul              |valls             |raul@raul.com                 |x         |xativa       |USUARIO     |10/01/2010    

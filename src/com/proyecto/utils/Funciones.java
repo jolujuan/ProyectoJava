@@ -1149,16 +1149,16 @@ public class Funciones {
 	public static void modificarListaPersonal(int opcion) {
 		switch (opcion) {
 		case 1:
-			modificarListaPersonalPelicula("src/com/proyecto/usuariosCarpetas/" + nomUserFinal + "/pelicula.llista",
-					"La lista personal de Peliculas es:\n", PelisPersonal);
+			modificarListaPersonalPelicula("src/com/proyecto/listasPeliculas/peliculas.llista",
+					"La lista general de Peliculas es:\n", PelisGeneral);
 			break;
 		case 2:
-			modificarListaPersonalActor("src/com/proyecto/usuariosCarpetas/" + nomUserFinal + "/actor.llista",
-					"La lista personal de Actores es:\n", ActorPersonal);
+			modificarListaPersonalActor("src/com/proyecto/listasPeliculas/actores.llista",
+					"La lista general de Actores es:\n", ActorGeneral);
 			break;
 		case 3:
-			modificarListaPersonalDirector("src/com/proyecto/usuariosCarpetas/" + nomUserFinal + "/director.llista",
-					"La lista personal de Directores es:\n", DirectorPersonal);
+			modificarListaPersonalDirector("src/com/proyecto/listasPeliculas/directores.llista",
+					"La lista general de Directores es:\n", DirectorGeneral);
 			break;
 		default:
 			System.out.println("Opcion no valida");
@@ -1214,64 +1214,70 @@ public class Funciones {
 						} else {
 
 							for (Pelicula item : listaArray) {
-
 								if (((Pelicula) item).getId() == idUser) {
 
 									// Comprobar que la introducido el usuario
 									if (((Pelicula) item).getNomUser().equals(nomUserFinal)) {
 
 										String[] modificacion = item.modificarDatosPelicula();
-										switch (modificacion[1]) {
-										case "pelicula": {
-											for (Pelicula item2 : listaArray) {
 
-												if (((Pelicula) item2).getNombrePelicula().equals(modificacion[2])) {
-													System.out.println("Nombre pelicula " + item2.getNombrePelicula());
-													System.err.println("\nYa existe la pelicula, operación cancelada");
-													modificarListaGeneral(1);
-												} else {
+										if (modificacion[1] == null) {
+											encertat = true;
+										} else {
+											switch (modificacion[1]) {
+											case "pelicula": {
+												for (Pelicula item2 : listaArray) {
 
+													if (((Pelicula) item2).getNombrePelicula()
+															.equals(modificacion[2])) {
+														System.out.println(
+																"Nombre pelicula " + item2.getNombrePelicula());
+														System.err.println(
+																"\nYa existe la pelicula, operación cancelada");
+														modificarListaGeneral(1);
+													} else {
+
+														if (((Pelicula) item2).getId() == idUser) {
+															item2.setNombrePelicula(modificacion[2]);
+															item2.mostrarDatospelicula();
+														}
+													}
+												}
+												break;
+											}
+											case "fechaEmisio": {
+												for (Pelicula item2 : listaArray) {
 													if (((Pelicula) item2).getId() == idUser) {
 														item2.setNombrePelicula(modificacion[2]);
 														item2.mostrarDatospelicula();
 													}
 												}
+												break;
 											}
-											break;
-										}
-										case "fechaEmisio": {
-											for (Pelicula item2 : listaArray) {
-												if (((Pelicula) item2).getId() == idUser) {
-													item2.setNombrePelicula(modificacion[2]);
-													item2.mostrarDatospelicula();
+											case "genero": {
+												for (Pelicula item2 : listaArray) {
+													if (((Pelicula) item2).getId() == idUser) {
+														item2.setGenero(modificacion[2]);
+														item2.mostrarDatospelicula();
+													}
 												}
+												break;
 											}
-											break;
-										}
-										case "genero": {
-											for (Pelicula item2 : listaArray) {
-												if (((Pelicula) item2).getId() == idUser) {
-													item2.setGenero(modificacion[2]);
-													item2.mostrarDatospelicula();
+											case "duracion": {
+												for (Pelicula item2 : listaArray) {
+													if (((Pelicula) item2).getId() == idUser) {
+														item2.setDuracion(Integer.valueOf(modificacion[2]));
+														item2.mostrarDatospelicula();
+													}
 												}
+												break;
 											}
+											default:
+												throw new IllegalArgumentException("Unexpected value: " + modificacion);
+											}
+											System.out.println("\nSe ha Modificado correctamente");
 											break;
 										}
-										case "duracion": {
-											for (Pelicula item2 : listaArray) {
-												if (((Pelicula) item2).getId() == idUser) {
-													item2.setDuracion(Integer.valueOf(modificacion[2]));
-													item2.mostrarDatospelicula();
-												}
-											}
-											break;
-										}
-										default:
-											throw new IllegalArgumentException("Unexpected value: " + modificacion);
-										}
-										System.out.println("\nSe ha Modificado correctamente");
-										break;
-
 									} else {
 										// Usuario puede modificar lo que el ha introducido
 										System.err
@@ -1280,12 +1286,11 @@ public class Funciones {
 								}
 							}
 						}
-						encertat = true;
 					} while (!encertat);
 
-					ObjectOutputStream oos = null;
+					ObjectOutputStream oos;
+					oos = null;
 					FileOutputStream fout = null;
-
 					fout = new FileOutputStream(archivo, false);
 					oos = new ObjectOutputStream(fout);
 					// escrivim ArrayList sencer en el fitxer (1 sol objecte)
@@ -1359,57 +1364,60 @@ public class Funciones {
 									if (((Actor) item).getNomUser().equals(nomUserFinal)) {
 
 										String[] modificacion = item.modificarDatosActor();
-										switch (modificacion[1]) {
-										case "nombre": {
-											for (Actor item2 : listaArray) {
+										if (modificacion[1] == null) {
+											encertat = true;
+										} else {
+											switch (modificacion[1]) {
+											case "nombre": {
+												for (Actor item2 : listaArray) {
 
-												if (((Actor) item2).getNombreActor().equals(modificacion[2])) {
-													System.out.println("Nombre Actor: " + item2.getNombreActor());
-													System.err.println("\nYa existe el actor, operación cancelada");
-													modificarListaGeneral(1);
-												} else {
+													if (((Actor) item2).getNombreActor().equals(modificacion[2])) {
+														System.out.println("Nombre Actor: " + item2.getNombreActor());
+														System.err.println("\nYa existe el actor, operación cancelada");
+														modificarListaGeneral(1);
+													} else {
 
+														if (((Actor) item2).getId() == idUser) {
+															item2.setNombreActor(modificacion[2]);
+															item2.mostrarDatosActor();
+														}
+													}
+												}
+												break;
+											}
+											case "apellidos": {
+												for (Actor item2 : listaArray) {
 													if (((Actor) item2).getId() == idUser) {
-														item2.setNombreActor(modificacion[2]);
+														item2.setApellidoActor(modificacion[2]);
 														item2.mostrarDatosActor();
 													}
 												}
+												break;
 											}
-											break;
-										}
-										case "apellidos": {
-											for (Actor item2 : listaArray) {
-												if (((Actor) item2).getId() == idUser) {
-													item2.setApellidoActor(modificacion[2]);
-													item2.mostrarDatosActor();
+											case "edad": {
+												for (Actor item2 : listaArray) {
+													if (((Actor) item2).getId() == idUser) {
+														item2.setEdadActor(Integer.parseInt(modificacion[2]));
+														item2.mostrarDatosActor();
+													}
 												}
+												break;
 											}
-											break;
-										}
-										case "edad": {
-											for (Actor item2 : listaArray) {
-												if (((Actor) item2).getId() == idUser) {
-													item2.setEdadActor(Integer.parseInt(modificacion[2]));
-													item2.mostrarDatosActor();
+											case "nacionalidad": {
+												for (Actor item2 : listaArray) {
+													if (((Actor) item2).getId() == idUser) {
+														item2.setNacionalidadActor(modificacion[2]);
+														item2.mostrarDatosActor();
+													}
 												}
+												break;
 											}
+											default:
+												throw new IllegalArgumentException("Unexpected value: " + modificacion);
+											}
+											System.out.println("\nSe ha Modificado correctamente");
 											break;
 										}
-										case "nacionalidad": {
-											for (Actor item2 : listaArray) {
-												if (((Actor) item2).getId() == idUser) {
-													item2.setNacionalidadActor(modificacion[2]);
-													item2.mostrarDatosActor();
-												}
-											}
-											break;
-										}
-										default:
-											throw new IllegalArgumentException("Unexpected value: " + modificacion);
-										}
-										System.out.println("\nSe ha Modificado correctamente");
-										break;
-
 									} else {
 										// Usuario puede modificar lo que el ha introducido
 										System.err
@@ -1497,57 +1505,63 @@ public class Funciones {
 									if (((Director) item).getNomUser().equals(nomUserFinal)) {
 
 										String[] modificacion = item.modificarDatosDirector();
-										switch (modificacion[1]) {
-										case "nombre": {
-											for (Director item2 : listaArray) {
+										if (modificacion[1] == null) {
+											encertat = true;
+										} else {
+											switch (modificacion[1]) {
+											case "nombre": {
+												for (Director item2 : listaArray) {
 
-												if (((Director) item2).getNombreDirector().equals(modificacion[2])) {
-													System.out.println("Nombre director " + item2.getNombreDirector());
-													System.err.println("\nYa existe la pelicula, operación cancelada");
-													modificarListaGeneral(1);
-												} else {
+													if (((Director) item2).getNombreDirector()
+															.equals(modificacion[2])) {
+														System.out.println(
+																"Nombre director " + item2.getNombreDirector());
+														System.err.println(
+																"\nYa existe la pelicula, operación cancelada");
+														modificarListaGeneral(1);
+													} else {
 
+														if (((Director) item2).getId() == idUser) {
+															item2.setNombreDirector(modificacion[2]);
+															item2.mostrarDatosDirector();
+														}
+													}
+												}
+												break;
+											}
+											case "apellidos": {
+												for (Director item2 : listaArray) {
 													if (((Director) item2).getId() == idUser) {
-														item2.setNombreDirector(modificacion[2]);
+														item2.setApellidoDirector(modificacion[2]);
 														item2.mostrarDatosDirector();
 													}
 												}
+												break;
 											}
-											break;
-										}
-										case "apellidos": {
-											for (Director item2 : listaArray) {
-												if (((Director) item2).getId() == idUser) {
-													item2.setApellidoDirector(modificacion[2]);
-													item2.mostrarDatosDirector();
+											case "edad": {
+												for (Director item2 : listaArray) {
+													if (((Director) item2).getId() == idUser) {
+														item2.setEdadDirector(Integer.parseInt(modificacion[2]));
+														item2.mostrarDatosDirector();
+													}
 												}
+												break;
 											}
-											break;
-										}
-										case "edad": {
-											for (Director item2 : listaArray) {
-												if (((Director) item2).getId() == idUser) {
-													item2.setEdadDirector(Integer.parseInt(modificacion[2]));
-													item2.mostrarDatosDirector();
+											case "goyas": {
+												for (Director item2 : listaArray) {
+													if (((Director) item2).getId() == idUser) {
+														item2.setGoyas(Integer.valueOf(modificacion[2]));
+														item2.mostrarDatosDirector();
+													}
 												}
+												break;
 											}
+											default:
+												throw new IllegalArgumentException("Unexpected value: " + modificacion);
+											}
+											System.out.println("\nSe ha Modificado correctamente");
 											break;
 										}
-										case "goyas": {
-											for (Director item2 : listaArray) {
-												if (((Director) item2).getId() == idUser) {
-													item2.setGoyas(Integer.valueOf(modificacion[2]));
-													item2.mostrarDatosDirector();
-												}
-											}
-											break;
-										}
-										default:
-											throw new IllegalArgumentException("Unexpected value: " + modificacion);
-										}
-										System.out.println("\nSe ha Modificado correctamente");
-										break;
-
 									} else {
 										// Usuario puede modificar lo que el ha introducido
 										System.err
@@ -1638,7 +1652,7 @@ public class Funciones {
 	// PEDIR DATOS LISTA PERSONAL PELICULA //
 	public static void pedirListaPersonalPelicula() {
 		File vacio = new File("src/com/proyecto/listasPeliculas/peliculas.llista");
-		if (vacio.length() < 0 || vacio.length() == 0 || PelisGeneral.size()==0) {
+		if (vacio.length() < 0 || vacio.length() == 0 || PelisGeneral.size() == 0) {
 			System.err.println("No puedes añadir nada ya que la lista general esta vacia");
 		} else {
 			System.out.println("Introduce el  id de la Pelicula que quieres ( pulse -1 para salir)");
@@ -1726,7 +1740,7 @@ public class Funciones {
 	// PEDIR DATO LISTA PERSONAL ACTOR //
 	public static void pedirListaPersonalActor() {
 		File vacio = new File("src/com/proyecto/listasPeliculas/actores.llista");
-		if (vacio.length() < 0 ||  vacio.length() == 0 || ActorGeneral.size()==0) {
+		if (vacio.length() < 0 || vacio.length() == 0 || ActorGeneral.size() == 0) {
 			System.err.println("No puedes añadir nada ya que la lista general esta vacia");
 		} else {
 			System.out.println("Introduce el  id del Actor/a que quieres (pulse -1 para salir)");
@@ -1812,7 +1826,7 @@ public class Funciones {
 	// PEDIR LISTA PERSONAL DIRECTOR //
 	public static void pedirListaPersonalDirector() {
 		File vacio = new File("src/com/proyecto/listasPeliculas/directores.llista");
-		if (vacio.length() < 0 || vacio.length() == 0 || DirectorGeneral.size()==0 ) {
+		if (vacio.length() < 0 || vacio.length() == 0 || DirectorGeneral.size() == 0) {
 			System.err.println("No puedes añadir nada ya que la lista general esta vacia");
 		} else {
 			System.out.println("Introduce el  id de la Pelicula que quieres ( pulse -1 para salir)");
