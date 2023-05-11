@@ -1815,7 +1815,7 @@ public class Funciones {
 				System.out.println("El actor/a ha sido registrado correctamente a tu lista personal.");
 
 			} else if (nombreMetodo.equals("actualizar")) {
-				System.out.println("Se procedera a borrar los elementos que no existen...");
+				System.out.println("Se procedera a borrar/actualizar los elementos...");
 
 			}
 		} catch (Exception ex) {
@@ -2312,18 +2312,28 @@ public class Funciones {
 					ActorPersonal = (ArrayList<Actor>) readerPersonal.readObject();
 
 					boolean elementosBorrados = false;
+					boolean elementosModificados = false;
 					List<Actor> actoresBorrar = new ArrayList<>();
 
+					// Se itera sobre cada actor en la lista personal. Si el actor también está en
+					// la lista general pero con un nombre diferente, se actualiza el nombre en la
+					// lista personal. Si el actor no está en la lista general, se añade a la lista
+					// de actores a borrar.
 					for (int i = 0; i < ActorPersonal.size(); i++) {
 						Actor actorPersonal = ActorPersonal.get(i);
 						int idPersonal = actorPersonal.getId();
+
 						boolean trobat = false;
 
-						// Si el id no coincide significara que la pelicula en la lista personal no
-						// existe en la general, por lo tanto trobat se evalua como false
 						for (int j = 0; j < ActorGeneral.size(); j++) {
 							Actor actorGeneral = ActorGeneral.get(j);
-							if ((actorGeneral.getId() == idPersonal)) {
+							if (actorGeneral.getId() == idPersonal) {
+								String nombreActorGeneral = actorGeneral.getNombreActor();
+								if (!actorPersonal.getNombreActor().equals(nombreActorGeneral)) {
+									actorPersonal.setNombreActor(nombreActorGeneral); // Actualizamos el nombre del
+																						// actor
+									elementosModificados = true;
+								}
 								trobat = true;
 								break;
 							}
@@ -2333,7 +2343,24 @@ public class Funciones {
 							actoresBorrar.add(actorPersonal);
 						}
 					}
-					if (elementosBorrados) {
+					// Se itera sobre cada actor en la lista general. Si el actor no está en la
+					// lista personal, se añade.
+					for (Actor actorGeneral : ActorGeneral) {
+						int idGeneral = actorGeneral.getId();
+						boolean found = false;
+						for (Actor actorPersonal : ActorPersonal) {
+							if (actorPersonal.getId() == idGeneral) {
+								found = true;
+								break;
+							}
+						}
+						if (!found) {
+							elementosBorrados = true;
+							ActorPersonal.add(actorGeneral);
+						}
+					}
+
+					if (elementosBorrados || elementosModificados) {
 						ActorPersonal.removeAll(actoresBorrar);
 						registrarListaPersonalActor(ActorPersonal, "actualizar");
 					}
