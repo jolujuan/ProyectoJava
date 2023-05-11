@@ -63,7 +63,7 @@ public class Pelicula implements Serializable {
 			System.out.println("\nSelecciona una opción (pulse -1 para salir)");
 			n = ControlErrores.validarInt();
 			if (n == -1) {
-				System.out.println("Has cancelado el borrado de la lista");
+				System.out.println("Has cancelado modificar la lista");
 				encertat = true;
 
 			} else if (!(n >= 1 && n <= 4)) {

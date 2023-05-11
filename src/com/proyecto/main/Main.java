@@ -155,9 +155,9 @@ public class Main {
 					break;
 
 				} else {
-					Funciones.comprobarModificacionUsuarioPelicula();
-					Funciones.comprobarModificacionUsuarioActor();
-					Funciones.comprobarModificacionUsuarioDirector();
+					Funciones.sincronizarGeneralConPersonalPelicula();
+					Funciones.sincronizarGeneralConPersonalActor();
+					Funciones.sincronizarGeneralConPersonalDirector();
 					do {
 						System.out.println(
 								"\n-> 1. Ver lista general \n-> 2. Ver lista personal \n-> 3. Añadir nuevo elemento a lista personal \n-> 4. Añadir nuevo elemento a lista general \n-> 5. Ver imagen de perfil \n-> 6. Editar foto de perfil \n-> 7. Borrar elemento lista personal \n-> 8. Modificar elemento lista general \n-> 9. Salir");
