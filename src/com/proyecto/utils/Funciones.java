@@ -2276,18 +2276,10 @@ public class Funciones {
 							pelisBorrar.add(peliculaPersonal);
 						}
 					}
-					/*
-					 * if (elementosBorrados) { System.out.println(
-					 * "\nExistem peliculas en tu lista personal que han sido borrados de la general"
-					 * ); System.out.println(
-					 * "¿Desea borrarlos de la personal? (pulse 1 para borrarlos o -1 para cancelar)"
-					 * ); int borrado = ControlErrores.validarInt(); if (borrado == -1) {
-					 * System.out.println("Se ha cancelado la operación"); } else if (borrado == 1)
-					 * {
-					 */ PelisPersonal.removeAll(pelisBorrar);
-					registrarListaPersonalPelicula(PelisPersonal, "actualizar");
-					// }
-					// }
+					if (elementosBorrados) {
+						PelisPersonal.removeAll(pelisBorrar);
+						registrarListaPersonalPelicula(PelisPersonal, "actualizar");
+					}
 				} catch (Exception ex) {
 				}
 
@@ -2341,19 +2333,10 @@ public class Funciones {
 							actoresBorrar.add(actorPersonal);
 						}
 					}
-					/*
-					 * if (elementosBorrados) { System.out
-					 * .println("\nExistem Actores en tu lista personal que han sido borrados de la general"
-					 * ); System.out.println(
-					 * "¿Desea borrarlos de la personal? (pulse 1 para borrarlos o -1 para cancelar)"
-					 * ); int borrado = ControlErrores.validarInt(); if (borrado == -1) {
-					 * System.out.println("Se ha cancelado la operación"); } else if (borrado == 1)
-					 * {
-					 */
-					ActorPersonal.removeAll(actoresBorrar);
-					registrarListaPersonalActor(ActorPersonal, "actualizar");
-					// }
-					// }
+					if (elementosBorrados) {
+						ActorPersonal.removeAll(actoresBorrar);
+						registrarListaPersonalActor(ActorPersonal, "actualizar");
+					}
 				} catch (Exception ex) {
 				}
 
@@ -2407,11 +2390,10 @@ public class Funciones {
 							directorBorrar.add(directorPersonal);
 						}
 					}
-
-					DirectorPersonal.removeAll(directorBorrar);
-					registrarListaPersonalDirector(DirectorPersonal, "actualizar");
-					// }
-					// }
+					if (elementosBorrados) {
+						DirectorPersonal.removeAll(directorBorrar);
+						registrarListaPersonalDirector(DirectorPersonal, "actualizar");
+					}
 				} catch (Exception ex) {
 				}
 
@@ -2690,8 +2672,9 @@ public class Funciones {
 					// ELIMINAMOS LA IMAGEN ORIGINAL
 					try {
 						// Crear una instancia de la clase File utilizando la ruta del archivo
-						//String ruta = "src/com/proyecto/usuariosCarpetas/" + nomUserFinal + "/porDefecto.png";
-						
+						// String ruta = "src/com/proyecto/usuariosCarpetas/" + nomUserFinal +
+						// "/porDefecto.png";
+
 						// NECESARIO PONER EL NOMBRE DE LA IMAGEN PARA CUANDO SE ACTUALICE
 						String ruta = "src/com/proyecto/usuariosCarpetas/" + nomUserFinal + "/" + nombreImagen;
 						File imagenOriginal = new File(ruta);
