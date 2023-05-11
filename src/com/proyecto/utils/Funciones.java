@@ -2622,7 +2622,7 @@ public class Funciones {
 
 	public static void cambiarImagen() {
 		// OBTENEMOS EL NOMBRE DE LA IMAGEN EN NUESTRA CARPETA DE USUARIO //
-		String nombreImagen;
+		String nombreImagen = "";
 		System.out.println();
 		String rutaImagen = "src/com/proyecto/usuariosCarpetas/" + nomUserFinal;
 		File archivo = new File(rutaImagen);
@@ -2690,7 +2690,10 @@ public class Funciones {
 					// ELIMINAMOS LA IMAGEN ORIGINAL
 					try {
 						// Crear una instancia de la clase File utilizando la ruta del archivo
-						String ruta = "src/com/proyecto/usuariosCarpetas/" + nomUserFinal + "/porDefecto.png";
+						//String ruta = "src/com/proyecto/usuariosCarpetas/" + nomUserFinal + "/porDefecto.png";
+						
+						// NECESARIO PONER EL NOMBRE DE LA IMAGEN PARA CUANDO SE ACTUALICE
+						String ruta = "src/com/proyecto/usuariosCarpetas/" + nomUserFinal + "/" + nombreImagen;
 						File imagenOriginal = new File(ruta);
 
 						// Eliminar el archivo solo si existe, sin mostrar mensajes ni lanzar
