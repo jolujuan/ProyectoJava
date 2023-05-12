@@ -1203,6 +1203,7 @@ public class Funciones {
 						}
 					}
 					boolean encertat = false;
+					boolean cambiar=false;
 					int idUser = 0;
 
 					do {
@@ -1221,7 +1222,7 @@ public class Funciones {
 
 									// Comprobar que la introducido el usuario
 									if (((Pelicula) item).getNomUser().equals(nomUserFinal)) {
-
+										cambiar=true;
 										String[] modificacion = item.modificarDatosPelicula();
 										if (modificacion[1] == null) {
 											encertat = true;
@@ -1285,6 +1286,7 @@ public class Funciones {
 										// Usuario puede modificar lo que el ha introducido
 										System.err
 												.println("No puedes modificar una lista introducida por otra persona");
+										cambiar=false;
 									}
 								}
 							}
@@ -1302,8 +1304,10 @@ public class Funciones {
 					oos.flush();
 					oos.close();
 
-					// Llamar al metodo para sincronizar con lista personal
-					Funciones.sincronizarGeneralConPersonalPelicula();
+					if (cambiar) {
+						// Llamar al metodo para sincronizar con lista personal
+						Funciones.sincronizarGeneralConPersonalPelicula();
+					}
 
 				} catch (Exception ex) {
 					System.err.println("Error en llegir " + archivo + ": " + ex);
@@ -1350,6 +1354,7 @@ public class Funciones {
 						}
 					}
 					boolean encertat = false;
+					boolean cambiar=false;
 					int idUser = 0;
 
 					do {
@@ -1369,7 +1374,7 @@ public class Funciones {
 
 									// Comprobar que la introducido el usuario
 									if (((Actor) item).getNomUser().equals(nomUserFinal)) {
-
+										cambiar=true;
 										String[] modificacion = item.modificarDatosActor();
 										if (modificacion[1] == null) {
 											encertat = true;
@@ -1429,6 +1434,7 @@ public class Funciones {
 										// Usuario puede modificar lo que el ha introducido
 										System.err
 												.println("No puedes modificar una lista introducida por otra persona");
+										cambiar=false;
 									}
 								}
 							}
@@ -1446,8 +1452,10 @@ public class Funciones {
 					oos.flush();
 					oos.close();
 
-					// Llamar al metodo para sincronizar con lista personal
-					Funciones.sincronizarGeneralConPersonalActor();
+					if (cambiar) {
+						// Llamar al metodo para sincronizar con lista personal
+						Funciones.sincronizarGeneralConPersonalPelicula();
+					}
 
 				} catch (Exception ex) {
 					System.err.println("Error en llegir " + archivo + ": " + ex);
@@ -1494,6 +1502,7 @@ public class Funciones {
 						}
 					}
 					boolean encertat = false;
+					boolean cambiar=false;
 					int idUser = 0;
 
 					do {
@@ -1510,7 +1519,7 @@ public class Funciones {
 							for (Director item : listaArray) {
 
 								if (((Director) item).getId() == idUser) {
-
+									cambiar=true;
 									// Comprobar que la introducido el usuario
 									if (((Director) item).getNomUser().equals(nomUserFinal)) {
 
@@ -1576,6 +1585,7 @@ public class Funciones {
 										// Usuario puede modificar lo que el ha introducido
 										System.err
 												.println("No puedes modificar una lista introducida por otra persona");
+										cambiar=false;
 									}
 								}
 							}
@@ -1593,8 +1603,10 @@ public class Funciones {
 					oos.flush();
 					oos.close();
 
-					// Llamar al metodo para sincronizar con lista personal
-					Funciones.sincronizarGeneralConPersonalDirector();
+					if (cambiar) {
+						// Llamar al metodo para sincronizar con lista personal
+						Funciones.sincronizarGeneralConPersonalDirector();
+					}
 
 				} catch (Exception ex) {
 					System.err.println("Error en llegir " + archivo + ": " + ex);
